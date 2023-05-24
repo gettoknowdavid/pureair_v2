@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 import '../failures/failures.dart';
 import 'value_object.dart';
@@ -39,7 +40,7 @@ class Name extends ValueObject<String> {
   /// transformed to begin with an uppercase letter, and empty inputs are
   /// considered invalid.
   factory Name(String input) {
-    return Name._(validateEmpty(input));
+    return Name._(validateEmpty(toBeginningOfSentenceCase(input)));
   }
 
   /// Private constructor that creates a Name object with the given [value].
