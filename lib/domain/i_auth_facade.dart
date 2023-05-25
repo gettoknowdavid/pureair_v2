@@ -19,11 +19,6 @@ abstract class IAuthFacade {
   /// Returns a [Future] that completes with a [User] object representing the current user, or `null` if there is no authenticated user.
   Future<User?> currentUser();
 
-  /// Sends a password reset email to the specified [email].
-  ///
-  /// Returns a [Future] that completes with an [Either] object containing either an [AuthError] or `Unit` if the operation was successful.
-  Future<Either<AuthError, Unit>> forgotPassword(Email email);
-
   /// Signs in the user using their Google account.
   ///
   /// Returns a [Future] that completes with an [Either] object containing either an [AuthError] or `Unit` if the operation was successful.
@@ -59,6 +54,11 @@ abstract class IAuthFacade {
   ///
   /// Returns a [Future] that completes when the operation is complete.
   Future<void> reload();
+
+  /// Sends a password reset email to the specified [email].
+  ///
+  /// Returns a [Future] that completes with an [Either] object containing either an [AuthError] or `Unit` if the operation was successful.
+  Future<Either<AuthError, Unit>> sendPasswordResetEmail(Email email);
 
   /// Sends a verification email to the current user's email address.
   ///
