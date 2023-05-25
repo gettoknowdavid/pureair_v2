@@ -30,6 +30,9 @@ class FirebaseAuthService {
   /// Checks if the current user is signed in.
   bool get isSignedIn => _firebaseAuth.currentUser != null;
 
+  /// Checks if the current signed in user is verified.
+  bool? get isVerified => _firebaseAuth.currentUser?.emailVerified;
+
   /// Signs in the user with the given email and password.
   Future<UserCredential> signIn(String email, String password) async {
     try {
