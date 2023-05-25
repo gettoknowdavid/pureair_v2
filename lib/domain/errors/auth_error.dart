@@ -4,6 +4,7 @@ part 'auth_error.freezed.dart';
 
 @freezed
 class AuthError with _$AuthError {
+  const factory AuthError.cannotComplete() = _CannotComplete;
   const factory AuthError.emailInUse() = _EmailInUse;
   const factory AuthError.error([String? message]) = _AuthErrorMessage;
   const factory AuthError.invalidEmail() = _InvalidEmail;
@@ -14,5 +15,6 @@ class AuthError with _$AuthError {
   const factory AuthError.notVerified() = _NotVerified;
   const factory AuthError.requiresRecentLogin() = _RequiresRecentLogin;
   const factory AuthError.serverError() = _ServerError;
+  const factory AuthError.timeOut() = _TimeOut;
   const factory AuthError.userNotFound() = _UserNotFound;
 }

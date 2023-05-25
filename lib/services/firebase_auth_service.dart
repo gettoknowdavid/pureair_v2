@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
+const Duration _limit = Duration(seconds: 30);
+
 FirebaseAuthException _getError(e) {
   return FirebaseAuthException(
     code: e.code,
@@ -12,8 +14,6 @@ FirebaseAuthException _getError(e) {
     tenantId: e.tenantId,
   );
 }
-
-const Duration _limit = Duration(seconds: 30);
 
 /// A service that provides access to Firebase Authentication.
 class FirebaseAuthService {
@@ -48,7 +48,7 @@ class FirebaseAuthService {
     }
   }
 
-  /// Sends a password reset email to the given email address.
+  /// Sends a password reset email to the given [email] address.
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email).timeout(_limit);
@@ -59,7 +59,20 @@ class FirebaseAuthService {
     }
   }
 
-  /// Signs in the user with the given email and password.
+  /// Sends a verification email to a user.
+  Future<void> sendVerificationEmail() async {
+    try {
+      return await _firebaseAuth.currentUser
+          ?.sendEmailVerification()
+          .timeout(_limit);
+    } on FirebaseAuthException catch (e) {
+      throw _getError(e);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
+    }
+  }
+
+  /// Signs in the user with the given [email] and [password].
   Future<UserCredential> signIn(String email, String password) async {
     try {
       return await _firebaseAuth
@@ -92,5 +105,27 @@ class FirebaseAuthService {
     } on TimeoutException catch (e) {
       throw TimeoutException(e.message);
     }
+  }
+
+  /// Signs up a new user with the given [name], [email] and [password].
+  Future<UserCredential> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      return await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .whenComplete(() => _updateName(name))
+          .timeout(_limit);
+    } on FirebaseAuthException catch (e) {
+      throw _getError(e);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
+    }
+  }
+
+  Future<void> _updateName(String name) async {
+    return await _firebaseAuth.currentUser?.updateDisplayName(name);
   }
 }

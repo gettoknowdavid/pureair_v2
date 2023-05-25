@@ -50,10 +50,10 @@ abstract class IAuthFacade {
     required Password password,
   });
 
-  /// Reloads the current user's information.
-  ///
-  /// Returns a [Future] that completes when the operation is complete.
-  Future<void> reload();
+  // /// Reloads the current user's information.
+  // ///
+  // /// Returns a [Future] that completes when the operation is complete.
+  // Future<void> reload();
 
   /// Sends a password reset email to the specified [email].
   ///

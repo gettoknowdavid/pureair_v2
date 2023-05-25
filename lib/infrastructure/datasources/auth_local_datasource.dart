@@ -34,9 +34,9 @@ class AuthLocalDatasource {
   /// Stores the authenticated user's data in local storage.
   ///
   /// [dto] - the user data to store
-  Future<void> storeUser(UserDto dto) async {
+  Future<void> storeUser(UserDto? dto) async {
     // Encode the UserDto object into a JSON string.
-    final encodedString = jsonEncode(dto.toJson());
+    final encodedString = jsonEncode(dto?.toJson());
 
     // Store the JSON string in secure storage.
     await _storage.write(key: AppKeys.authUser, value: encodedString);
