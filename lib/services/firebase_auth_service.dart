@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 FirebaseAuthException _getError(e) {
@@ -10,6 +12,8 @@ FirebaseAuthException _getError(e) {
     tenantId: e.tenantId,
   );
 }
+
+const Duration _limit = Duration(seconds: 30);
 
 /// A service that provides access to Firebase Authentication.
 class FirebaseAuthService {
@@ -36,30 +40,35 @@ class FirebaseAuthService {
   /// If the current user is signed in, it refreshes
   Future<void> reload() async {
     try {
-      await _firebaseAuth.currentUser?.reload();
+      await _firebaseAuth.currentUser?.reload().timeout(_limit);
     } on FirebaseAuthException catch (e) {
       throw _getError(e);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
     }
   }
 
   /// Sends a password reset email to the given email address.
   Future<void> sendPasswordResetEmail(String email) async {
     try {
-      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      await _firebaseAuth.sendPasswordResetEmail(email: email).timeout(_limit);
     } on FirebaseAuthException catch (e) {
       throw _getError(e);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
     }
   }
 
   /// Signs in the user with the given email and password.
   Future<UserCredential> signIn(String email, String password) async {
     try {
-      return await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      return await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .timeout(_limit);
     } on FirebaseAuthException catch (e) {
       throw _getError(e);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
     }
   }
 
@@ -69,15 +78,19 @@ class FirebaseAuthService {
       return await _firebaseAuth.signInWithProvider(GoogleAuthProvider());
     } on FirebaseAuthException catch (e) {
       throw _getError(e);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
     }
   }
 
   /// Signs out the current user.
   Future<void> signOut() async {
     try {
-      await _firebaseAuth.signOut();
+      await _firebaseAuth.signOut().timeout(_limit);
     } on FirebaseAuthException catch (e) {
       throw _getError(e);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
     }
   }
 }
