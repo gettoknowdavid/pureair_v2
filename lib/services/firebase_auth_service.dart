@@ -33,6 +33,24 @@ class FirebaseAuthService {
   /// Checks if the current signed in user is verified.
   bool? get isVerified => _firebaseAuth.currentUser?.emailVerified;
 
+  /// If the current user is signed in, it refreshes
+  Future<void> reload() async {
+    try {
+      await _firebaseAuth.currentUser?.reload();
+    } on FirebaseAuthException catch (e) {
+      throw _getError(e);
+    }
+  }
+
+  /// Sends a password reset email to the given email address.
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw _getError(e);
+    }
+  }
+
   /// Signs in the user with the given email and password.
   Future<UserCredential> signIn(String email, String password) async {
     try {
