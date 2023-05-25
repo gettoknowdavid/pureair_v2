@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:pureair_v2/domain/domain.dart';
-import 'package:pureair_v2/infrastructure/infrastructure.dart';
 import 'package:pureair_v2/services/services.dart';
+
+import 'datasources/datasources.dart';
+import 'dtos/dtos.dart';
+import 'mappers/mappers.dart';
 
 class AuthFacade implements IAuthFacade {
   final FirebaseAuthService _authService;
