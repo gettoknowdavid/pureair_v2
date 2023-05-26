@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
-
+@lazySingleton
 class MailAppService {
   Future<void> openMailApp(BuildContext context) async {
     final result = await OpenMailApp.openMailApp();

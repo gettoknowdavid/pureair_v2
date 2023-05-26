@@ -53,6 +53,9 @@ dependencies:
 
   open_mail_app: ^0.4.5
 
+  injectable: ^2.1.1
+  get_it: ^7.6.0
+
 dependency_overrides:
   graphs: 2.2.0
 
@@ -69,6 +72,7 @@ dev_dependencies:
   freezed: ^2.3.4
   json_serializable: ^6.7.0
   cloud_firestore_odm_generator: ^1.0.0-dev.59
+  injectable_generator: ^2.1.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

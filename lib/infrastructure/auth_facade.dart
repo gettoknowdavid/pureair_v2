@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/services/services.dart';
 
@@ -9,6 +10,7 @@ import 'datasources/datasources.dart';
 import 'dtos/dtos.dart';
 import 'mappers/mappers.dart';
 
+@Injectable(as: IAuthFacade)
 class AuthFacade implements IAuthFacade {
   final FirebaseAuthService _authService;
   final AuthLocalDatasource _localDatasource;

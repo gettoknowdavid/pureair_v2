@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 
 const Duration _limit = Duration(seconds: 30);
 
@@ -15,15 +16,15 @@ FirebaseAuthException _getError(e) {
   );
 }
 
+@injectable
+
 /// A service that provides access to Firebase Authentication.
 class FirebaseAuthService {
   /// The Firebase Authentication instance.
   final FirebaseAuth _firebaseAuth;
 
   /// Creates a new instance of the FirebaseAuthService.
-  FirebaseAuthService({
-    required FirebaseAuth firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth;
+  FirebaseAuthService(this._firebaseAuth);
 
   /// Notifies about changes to the user's sign-in state (such as sign-in or sign-out).
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();

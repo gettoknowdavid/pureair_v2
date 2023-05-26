@@ -1,13 +1,14 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:injectable/injectable.dart';
 
 /// A service that provides secure storage for sensitive data using FlutterSecureStorage.
 ///
 /// The service supports read, write, delete, and deleteAll operations for a given key.
 /// FlutterSecureStorage is used under the hood with the options to use encryptedSharedPreferences set to true on Android.
+@lazySingleton
 class SecureStorageService {
-  final _secure = const FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
-  );
+  final FlutterSecureStorage _secure;
+  SecureStorageService(this._secure);
 
   /// Deletes the value associated with the given [key].
   Future<void> delete(String key) async => await _secure.delete(key: key);

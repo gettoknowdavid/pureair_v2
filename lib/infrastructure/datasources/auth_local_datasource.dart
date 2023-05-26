@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/services/services.dart';
 
 import '../dtos/dtos.dart';
 
 /// A local data source for authentication-related data.
+@lazySingleton
 class AuthLocalDatasource {
   final SecureStorageService _storage;
 
