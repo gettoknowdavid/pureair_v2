@@ -23,7 +23,7 @@ class AuthFacade implements IAuthFacade {
   ///
   /// @return a Stream object which emits a User object or null depending on the user's authentication state changes.
   @override
-  Stream<User?> authStateChanges() {
+  Stream<User?> get authStateChanges {
     return _authService.authStateChanges.asyncMap<User?>((firebaseUser) async {
       if (firebaseUser == null) {
         return null;
