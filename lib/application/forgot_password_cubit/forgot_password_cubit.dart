@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/services/services.dart';
 
@@ -10,6 +11,7 @@ part 'forgot_password_state.dart';
 
 // Create a ForgotPasswordCubit that extends Cubit
 // and manages ForgotPasswordState
+@injectable
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   final IAuthFacade _authFacade;
   final MailAppService _mailAppService;
