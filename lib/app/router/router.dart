@@ -4,9 +4,10 @@ import 'package:injectable/injectable.dart';
 import 'router.gr.dart';
 
 @injectable
-@AutoRouterConfig()      
-class AppRouter extends $AppRouter {      
-   
- @override      
- List<AutoRoute> get routes => [];    
+@AutoRouterConfig(replaceInRouteName: 'Page,Route')
+class AppRouter extends $AppRouter {
+  @override
+  List<AutoRoute> get routes => [
+        AutoRoute(page: LoginRoute.page, initial: true),
+      ];
 }
