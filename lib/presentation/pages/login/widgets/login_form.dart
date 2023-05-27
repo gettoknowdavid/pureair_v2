@@ -9,6 +9,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final scaffoldMessenger = ScaffoldMessenger.of(context);
 
     return BlocListener<LoginCubit, LoginState>(
@@ -17,12 +18,18 @@ class LoginForm extends StatelessWidget {
           () => null,
           (either) => either.fold(
             (failure) => scaffoldMessenger.showSnackBar(SnackBar(
-              content: Text(failure.maybeMap(
-                orElse: () => '',
-                serverError: (_) => kServerError,
-                invalidEmailOrPassword: (_) => kInvalidEmailOrPassword,
-                noNetworkConnection: (_) => kNoNetworkConnection,
-              )),
+              backgroundColor: theme.colorScheme.errorContainer,
+              content: Text(
+                failure.maybeMap(
+                  orElse: () => '',
+                  serverError: (_) => kServerError,
+                  invalidEmailOrPassword: (_) => kInvalidEmailOrPassword,
+                  noNetworkConnection: (_) => kNoNetworkConnection,
+                ),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             )),
             (success) {
               context.read<AuthBloc>().add(const AuthEvent.authChecked());
