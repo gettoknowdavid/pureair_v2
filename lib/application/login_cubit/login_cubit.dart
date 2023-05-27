@@ -14,6 +14,9 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginCubit(this._authFacade) : super(LoginState.initial());
 
+  // Determine if the login button is disabled or not
+  bool get isDisabled => !state.email.isValid() || !state.password.isValid();
+
   // Update the email value in LoginState
   void emailChanged(String email) {
     emit(state.copyWith(email: Email(email), loading: false, option: none()));
