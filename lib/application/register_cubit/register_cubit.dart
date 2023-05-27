@@ -13,6 +13,14 @@ class RegisterCubit extends Cubit<RegisterState> {
   final IAuthFacade _authFacade;
   RegisterCubit(this._authFacade) : super(RegisterState.initial());
 
+  // Determine if the login button is disabled or not
+  bool get isDisabled =>
+      !state.name.isValid() ||
+      !state.email.isValid() ||
+      !state.password.isValid();
+
+  bool? get isPasswordEmpty => state.passwordController?.text.isEmpty;
+
   // Update the email value in RegisterState
   emailChanged(String email) async {
     emit(state.copyWith(email: Email(email), loading: false, option: none()));

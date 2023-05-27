@@ -1,5 +1,7 @@
-const String kServerError = 'Something wrong on our end, try again';
-const String kInvalidEmailOrPassword = 'Wrong email or password';
-const String kNoNetworkConnection = 'You have no internet connection.';
+const String kEmailInUse = 'Oops! This email is already used. Try another.';
+const String kEmpty = 'Oops! Sorry, this field cannot be empty.';
 const String kInvalidEmail = 'Not a valid email address.';
+const String kInvalidEmailOrPassword = 'Wrong email or password';
 const String kInvalidPassword = 'Not a valid password.';
+const String kNoNetworkConnection = 'You have no internet connection.';
+const String kServerError = 'Something wrong on our end, try again';
