@@ -22,6 +22,7 @@ class _PureAirAppState extends State<PureAirApp> {
       onGenerateTitle: (context) => 'PureAir',
       routerConfig: router.config(),
       theme: lightTheme,
+      darkTheme: darkTheme,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [

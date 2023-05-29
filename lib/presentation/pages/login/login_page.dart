@@ -13,26 +13,47 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-      ),
       body: ListView(
         padding: const EdgeInsets.all(kGlobalPadding),
         shrinkWrap: true,
         children: [
-          Text('Login', style: theme.textTheme.displaySmall),
-          30.verticalSpace,
+          (kToolbarHeight * 1.5).verticalSpace,
+          Text(
+            'Welcome back!',
+            style: textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 24.0,
+            ),
+          ),
+          4.verticalSpace,
+          Text(
+            'Use your credentials below to login to your account.',
+            style: textTheme.bodyLarge?.copyWith(
+              letterSpacing: 0,
+              color: colorScheme.onBackground.withOpacity(0.5),
+            ),
+          ),
+          40.verticalSpace,
           const LoginForm(),
-          20.verticalSpace,
+          30.verticalSpace,
+          Text(
+            'Or Login with',
+            textAlign: TextAlign.center,
+            style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          30.verticalSpace,
+          GoogleButton(onPressed: () {}),
+          40.verticalSpace,
           AuthRedirectionText(
             text: "Don't have an account yet? ",
             buttonText: "Register now",
-            action: () => AutoRouter.of(context).push(const RegisterRoute()),
+            action: () => context.router.push(const RegisterRoute()),
           ),
+          30.verticalSpace,
         ],
       ),
     );

@@ -1,47 +1,65 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
+import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 import 'register_form.dart';
 
 @RoutePage(deferredLoading: true)
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(kGlobalPadding),
-        shrinkWrap: true,
-        children: [
-          Text('Register', style: theme.textTheme.displaySmall),
-          30.verticalSpace,
-          const RegisterForm(),
-          20.verticalSpace,
-          AuthRedirectionText(
-            text: "Already got an account? ",
-            buttonText: "Back to Login",
-            action: () => AutoRouter.of(context).pop(),
-          ),
-          20.verticalSpace,
-          ElevatedButton(
-            onPressed: () {
-              context.read<AuthBloc>().add(const AuthEvent.logoutPressed());
-            },
-            child: const Text('Logout'),
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        context.read<RegisterCubit>().dispose();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(leading: const AppBackButton()),
+        body: ListView(
+          padding: const EdgeInsets.all(kGlobalPadding),
+          shrinkWrap: true,
+          children: [
+            4.verticalSpace,
+            Text(
+              'Register ',
+              style: textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0,
+              ),
+            ),
+            4.verticalSpace,
+            Text(
+              'Use your name, email and password below to create your new account.',
+              style: textTheme.bodyLarge?.copyWith(
+                letterSpacing: 0,
+                color: colorScheme.onBackground.withOpacity(0.5),
+              ),
+            ),
+            40.verticalSpace,
+            const RegisterForm(),
+            40.verticalSpace,
+            AuthRedirectionText(
+              text: "Already got an account? ",
+              buttonText: "Back to Login",
+              action: () => AutoRouter.of(context).pop(),
+            ),
+            30.verticalSpace,
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
 
@@ -66,7 +67,13 @@ class _Chip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check_circle, size: textStyle?.fontSize, color: ruleColor),
+          PhosphorIcon(
+            PhosphorIcons.duotone.checkCircle,
+            size: textStyle?.fontSize,
+            color: isActive ? Colors.black : unsetColor,
+            duotoneSecondaryColor: ruleColor,
+            duotoneSecondaryOpacity: isActive ? 1 : 0.1,
+          ),
           4.horizontalSpace,
           Text(label, style: textStyle?.copyWith(color: ruleColor))
         ],

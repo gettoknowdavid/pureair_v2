@@ -6,24 +6,23 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pureair_v2/constants/constants.dart';
 
 const _pageTransitionTheme = PageTransitionsTheme(builders: {
   TargetPlatform.iOS: NoShadowCupertinoPageTransitionsBuilder(),
   TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
 });
 
-final _fontFamily = GoogleFonts.notoSans().fontFamily;
-
 final lightTheme = FlexThemeData.light(
   colors: const FlexSchemeColor(
-    primary: Color(0xff4ac3bf),
-    primaryContainer: Color(0xff8ff3ef),
-    secondary: Color(0xffffd4b7),
-    secondaryContainer: Color(0xffcce8e6),
-    tertiary: Color(0xffffa9a4),
-    tertiaryContainer: Color(0xffd1e4ff),
-    appBarColor: Color(0xffcce8e6),
-    error: Color(0xffb00020),
+    primary: kPrimary,
+    primaryContainer: kPrimaryContainer,
+    secondary: kSecondary,
+    secondaryContainer: kSecondaryContainer,
+    tertiary: kTertiary,
+    tertiaryContainer: kTertiaryContainer,
+    appBarColor: kAppBarColor,
+    error: kError,
   ),
   lightIsWhite: true,
   subThemesData: const FlexSubThemesData(
@@ -66,14 +65,14 @@ final lightTheme = FlexThemeData.light(
 );
 final darkTheme = FlexThemeData.dark(
   colors: const FlexSchemeColor(
-    primary: Color(0xff4ac3bf),
-    primaryContainer: Color(0xff8ff3ef),
-    secondary: Color(0xffffd4b7),
-    secondaryContainer: Color(0xffcce8e6),
-    tertiary: Color(0xffffa9a4),
-    tertiaryContainer: Color(0xffd1e4ff),
-    appBarColor: Color(0xffcce8e6),
-    error: Color(0xffb00020),
+    primary: kPrimary,
+    primaryContainer: kPrimaryContainer,
+    secondary: kSecondary,
+    secondaryContainer: kSecondaryContainer,
+    tertiary: kTertiary,
+    tertiaryContainer: kTertiaryContainer,
+    appBarColor: kAppBarColor,
+    error: kError,
   ).defaultError.toDark(0, false),
   darkIsTrueBlack: true,
   subThemesData: const FlexSubThemesData(

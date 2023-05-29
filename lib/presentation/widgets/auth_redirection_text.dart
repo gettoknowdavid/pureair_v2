@@ -34,18 +34,23 @@ class _AuthRedirectionTextState extends State<AuthRedirectionText> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+    final style = textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold);
 
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        style: theme.textTheme.bodyMedium,
+        style: style,
         children: [
           TextSpan(text: widget.text),
           TextSpan(
             recognizer: _recognizer,
             text: widget.buttonText,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.primary,
+            style: style?.copyWith(
+              color: colorScheme.primary,
+              decoration: TextDecoration.underline,
+              decorationThickness: 2,
             ),
           ),
         ],

@@ -43,14 +43,7 @@ class LoginCubit extends Cubit<LoginState> {
       r = await _authFacade.login(email: state.email, password: state.password);
 
       // Update the state with the result of the login
-      emit(
-        state.copyWith(
-          loading: false,
-          option: some(r),
-          email: Email(''),
-          password: Password(''),
-        ),
-      );
+      emit(state.copyWith(loading: false, option: some(r)));
     }
 
     // Show an error message if the login was not successful

@@ -67,4 +67,8 @@ class RegisterCubit extends Cubit<RegisterState> {
     // Show an error message if the registration was not successful
     emit(state.copyWith(loading: false, showError: true, option: none()));
   }
+
+  void dispose() {
+    return emit(RegisterState.initial());
+  }
 }

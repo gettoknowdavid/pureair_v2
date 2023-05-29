@@ -36,7 +36,7 @@ class AppTextField extends StatefulWidget {
     this.controller,
     this.maxLines = 1,
     this.maxLength,
-    this.autofocus = false,
+    this.autofocus = true,
     this.textInputAction = TextInputAction.next,
     this.isFieldValid = false,
     this.suffixIcon,

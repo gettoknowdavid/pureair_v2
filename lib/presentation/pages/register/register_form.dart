@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/config/router/app_router.gr.dart';
 import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
 import 'package:pureair_v2/application/register_cubit/register_cubit.dart';
+import 'package:pureair_v2/config/router/app_router.gr.dart';
 import 'package:pureair_v2/constants/constants.dart';
-import 'package:pureair_v2/presentation/widgets/loading.dart';
+import 'package:pureair_v2/presentation/widgets/app_button.dart';
+import 'package:pureair_v2/presentation/widgets/app_text_field.dart';
 
 import 'password_rules.dart';
 
@@ -52,13 +53,13 @@ class RegisterForm extends StatelessWidget {
         child: Column(
           children: [
             _Name(),
-            10.verticalSpace,
+            20.verticalSpace,
             _Email(),
-            10.verticalSpace,
+            20.verticalSpace,
             _Password(),
             6.verticalSpace,
             const PasswordRules(),
-            20.verticalSpace,
+            40.verticalSpace,
             _RegisterButton(),
           ],
         ),
@@ -67,35 +68,11 @@ class RegisterForm extends StatelessWidget {
   }
 }
 
-class _Name extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final nameValidator = context.select(
-      (RegisterCubit cubit) => cubit.state.name.value.fold(
-        (f) => f.mapOrNull(empty: (_) => kEmpty),
-        (r) => null,
-      ),
-    );
-
-    return BlocBuilder<RegisterCubit, RegisterState>(
-      buildWhen: (p, c) => p.name != c.name,
-      builder: (context, state) {
-        return TextFormField(
-          key: const Key(AppKeys.registerNameInput),
-          onChanged: context.read<RegisterCubit>().nameChanged,
-          validator: (_) => nameValidator,
-          decoration: const InputDecoration(
-            labelText: 'Name',
-          ),
-        );
-      },
-    );
-  }
-}
-
 class _Email extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<RegisterCubit>();
+
     final emailValidator = context.select(
       (RegisterCubit cubit) => cubit.state.email.value.fold(
         (f) => f.mapOrNull(invalidEmail: (_) => kInvalidEmail),
@@ -104,18 +81,72 @@ class _Email extends StatelessWidget {
     );
 
     return BlocBuilder<RegisterCubit, RegisterState>(
+      bloc: bloc,
       buildWhen: (p, c) => p.email != c.email,
-      builder: (context, state) {
-        return TextFormField(
-          key: const Key(AppKeys.registerEmailInput),
-          keyboardType: TextInputType.emailAddress,
-          onChanged: context.read<RegisterCubit>().emailChanged,
-          validator: (_) => emailValidator,
-          decoration: const InputDecoration(
-            labelText: 'Email',
-          ),
-        );
-      },
+      builder: (context, state) => AppTextField(
+        key: const Key(AppKeys.registerEmailInput),
+        keyboardType: TextInputType.emailAddress,
+        onChanged: bloc.emailChanged,
+        validator: (_) => emailValidator,
+        label: 'Email address',
+        hint: 'Your Email',
+        isFieldValid: bloc.state.email.isValid(),
+      ),
+    );
+  }
+}
+
+class _Name extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.watch<RegisterCubit>();
+
+    final nameValidator = context.select(
+      (RegisterCubit cubit) => cubit.state.name.value.fold(
+        (f) => f.mapOrNull(empty: (_) => kEmpty),
+        (r) => null,
+      ),
+    );
+
+    return BlocBuilder<RegisterCubit, RegisterState>(
+      bloc: bloc,
+      buildWhen: (p, c) => p.name != c.name,
+      builder: (context, state) => AppTextField(
+        key: const Key(AppKeys.registerNameInput),
+        onChanged: bloc.nameChanged,
+        validator: (_) => nameValidator,
+        label: 'Name',
+        hint: 'Your Name',
+        isFieldValid: bloc.state.name.isValid(),
+      ),
+    );
+  }
+}
+
+class _Password extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.watch<RegisterCubit>();
+
+    final passwordValidator = context.select(
+      (RegisterCubit cubit) => cubit.state.email.value.fold(
+        (f) => f.mapOrNull(invalidPassword: (_) => kInvalidPassword),
+        (r) => null,
+      ),
+    );
+
+    return BlocBuilder<RegisterCubit, RegisterState>(
+      bloc: bloc,
+      buildWhen: (p, c) => p.password != c.password,
+      builder: (context, state) => AppTextField(
+        key: const Key(AppKeys.registerPasswordInput),
+        isPassword: true,
+        onChanged: bloc.passwordChanged,
+        validator: (_) => passwordValidator,
+        textInputAction: TextInputAction.go,
+        label: 'Password',
+        hint: 'Your Password',
+      ),
     );
   }
 }
@@ -127,37 +158,12 @@ class _RegisterButton extends StatelessWidget {
 
     return BlocBuilder<RegisterCubit, RegisterState>(
       builder: (context, state) {
-        return ElevatedButton(
+        return PrimaryButton(
           key: const Key(AppKeys.registerButton),
-          onPressed: cubit.isDisabled ? null : cubit.registerPressed,
-          child: cubit.state.loading ? const Loading() : const Text('Register'),
-        );
-      },
-    );
-  }
-}
-
-class _Password extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final passwordValidator = context.select(
-      (RegisterCubit cubit) => cubit.state.email.value.fold(
-        (f) => f.mapOrNull(invalidPassword: (_) => kInvalidPassword),
-        (r) => null,
-      ),
-    );
-
-    return BlocBuilder<RegisterCubit, RegisterState>(
-      buildWhen: (p, c) => p.password != c.password,
-      builder: (context, state) {
-        return TextFormField(
-          key: const Key(AppKeys.registerPasswordInput),
-          obscureText: true,
-          onChanged: context.read<RegisterCubit>().passwordChanged,
-          validator: (_) => passwordValidator,
-          decoration: const InputDecoration(
-            labelText: 'Password',
-          ),
+          onPressed: cubit.registerPressed,
+          disabled: cubit.isDisabled,
+          loading: cubit.state.loading,
+          title: 'Create account',
         );
       },
     );

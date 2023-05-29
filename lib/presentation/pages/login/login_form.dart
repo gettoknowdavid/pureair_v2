@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
-import 'package:pureair_v2/presentation/widgets/widgets.dart';
+import 'package:pureair_v2/presentation/widgets/app_button.dart';
+import 'package:pureair_v2/presentation/widgets/app_text_field.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -11,6 +12,7 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     final cubit = context.watch<LoginCubit>();
 
     return BlocListener<LoginCubit, LoginState>(
@@ -42,11 +44,36 @@ class LoginForm extends StatelessWidget {
         child: Column(
           children: [
             _Email(),
-            10.verticalSpace,
+            20.verticalSpace,
             _Password(),
             20.verticalSpace,
+            const _ForgotPassword(),
+            40.verticalSpace,
             _LoginButton(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ForgotPassword extends StatelessWidget {
+  const _ForgotPassword();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Align(
+      alignment: Alignment.centerRight,
+      child: InkWell(
+        // onTap: () => context.router.push(const ForgotPasswordRoute()),
+        child: Text(
+          'Forgot Password?',
+          style: theme.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            decoration: TextDecoration.underline,
+          ),
         ),
       ),
     );
@@ -56,26 +83,28 @@ class LoginForm extends StatelessWidget {
 class _Email extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final emailValidator = context.select(
-      (LoginCubit cubit) => cubit.state.email.value.fold(
+    final cubit = context.watch<LoginCubit>();
+
+    final emailValidator = context.select<LoginCubit, String?>(
+      (selector) => selector.state.email.value.fold(
         (f) => f.mapOrNull(invalidEmail: (_) => kInvalidEmail),
         (r) => null,
       ),
     );
 
     return BlocBuilder<LoginCubit, LoginState>(
+      bloc: cubit,
       buildWhen: (p, c) => p.email != c.email,
-      builder: (context, state) {
-        return TextFormField(
-          key: const Key(AppKeys.loginEmailInput),
-          keyboardType: TextInputType.emailAddress,
-          onChanged: context.read<LoginCubit>().emailChanged,
-          validator: (_) => emailValidator,
-          decoration: const InputDecoration(
-            labelText: 'Email',
-          ),
-        );
-      },
+      builder: (context, state) => AppTextField(
+        key: const Key(AppKeys.loginEmailInput),
+        keyboardType: TextInputType.emailAddress,
+        onChanged: cubit.emailChanged,
+        validator: (_) => emailValidator,
+        enabled: !cubit.state.loading,
+        label: 'Email address',
+        hint: 'example@gmail.com',
+        isFieldValid: cubit.state.email.isValid(),
+      ),
     );
   }
 }
@@ -87,10 +116,12 @@ class _LoginButton extends StatelessWidget {
 
     return BlocBuilder<LoginCubit, LoginState>(
       builder: (context, state) {
-        return ElevatedButton(
+        return PrimaryButton(
           key: const Key(AppKeys.loginButton),
-          onPressed: cubit.isDisabled ? null : cubit.loginPressed,
-          child: cubit.state.loading ? const Loading() : const Text('Login'),
+          onPressed: cubit.loginPressed,
+          loading: cubit.state.loading,
+          disabled: cubit.isDisabled,
+          title: 'Login to my account',
         );
       },
     );
@@ -100,26 +131,27 @@ class _LoginButton extends StatelessWidget {
 class _Password extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final passwordValidator = context.select(
-      (LoginCubit cubit) => cubit.state.email.value.fold(
+    final cubit = context.watch<LoginCubit>();
+
+    final passwordValidator = context.select<LoginCubit, String?>(
+      (selector) => selector.state.email.value.fold(
         (f) => f.mapOrNull(invalidPassword: (_) => kInvalidPassword),
         (r) => null,
       ),
     );
 
     return BlocBuilder<LoginCubit, LoginState>(
+      bloc: cubit,
       buildWhen: (p, c) => p.password != c.password,
-      builder: (context, state) {
-        return TextFormField(
-          key: const Key(AppKeys.loginPasswordInput),
-          obscureText: true,
-          onChanged: context.read<LoginCubit>().passwordChanged,
-          validator: (_) => passwordValidator,
-          decoration: const InputDecoration(
-            labelText: 'Password',
-          ),
-        );
-      },
+      builder: (context, state) => AppTextField(
+        key: const Key(AppKeys.loginPasswordInput),
+        isPassword: true,
+        onChanged: cubit.passwordChanged,
+        validator: (_) => passwordValidator,
+        enabled: !cubit.state.loading,
+        label: 'Password',
+        hint: 'Your password',
+      ),
     );
   }
 }
