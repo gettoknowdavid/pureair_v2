@@ -27,6 +27,7 @@ final lightTheme = FlexThemeData.light(
   ),
   lightIsWhite: true,
   subThemesData: const FlexSubThemesData(
+    appBarScrolledUnderElevation: 0.0,
     blendOnLevel: 10,
     blendOnColors: false,
     thinBorderWidth: 2.0,
@@ -60,7 +61,8 @@ final lightTheme = FlexThemeData.light(
   useMaterial3: true,
   swapLegacyOnMaterial3: true,
   pageTransitionsTheme: _pageTransitionTheme,
-  fontFamily: _fontFamily,
+  fontFamily: GoogleFonts.figtree().fontFamily,
+  textTheme: GoogleFonts.figtreeTextTheme(),
 );
 final darkTheme = FlexThemeData.dark(
   colors: const FlexSchemeColor(
@@ -75,6 +77,7 @@ final darkTheme = FlexThemeData.dark(
   ).defaultError.toDark(0, false),
   darkIsTrueBlack: true,
   subThemesData: const FlexSubThemesData(
+    appBarScrolledUnderElevation: 0.0,
     blendOnLevel: 20,
     defaultRadius: 0.0,
     thinBorderWidth: 2.0,
@@ -107,5 +110,6 @@ final darkTheme = FlexThemeData.dark(
   useMaterial3: true,
   swapLegacyOnMaterial3: true,
   pageTransitionsTheme: _pageTransitionTheme,
-  fontFamily: GoogleFonts.lato().fontFamily,
+  fontFamily: GoogleFonts.figtree().fontFamily,
+  textTheme: GoogleFonts.figtreeTextTheme(),
 );
