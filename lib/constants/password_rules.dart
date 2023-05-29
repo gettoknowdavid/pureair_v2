@@ -9,7 +9,7 @@ List<Map> passwordRules = [
   },
   {
     'name': '1 special character',
-    'rule': (String text) => RegExp("[^A-Za-z0-9]").hasMatch(text)
+    'rule': (String text) => RegExp("(?=.*[@#\$%^&+=!])").hasMatch(text)
   },
   {
     'name': 'At least 8 characters',

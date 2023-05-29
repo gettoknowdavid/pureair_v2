@@ -8,14 +8,11 @@ import 'package:pureair_v2/services/services.dart';
 
 import 'datasources/datasources.dart';
 import 'dtos/dtos.dart';
-import 'mappers/mappers.dart';
 
 @Injectable(as: IAuthFacade)
 class AuthFacade implements IAuthFacade {
   final FirebaseAuthService _authService;
   final AuthLocalDatasource _localDatasource;
-
-  final _userMapper = UserMapper();
 
   AuthFacade(this._authService, this._localDatasource);
 
@@ -25,14 +22,19 @@ class AuthFacade implements IAuthFacade {
   ///
   /// @return a Stream object which emits a User object or null depending on the user's authentication state changes.
   @override
-  Stream<User?> get authStateChanges {
-    return _authService.authStateChanges.asyncMap<User?>((firebaseUser) async {
-      if (firebaseUser == null) {
+  Stream<User?> authStateChanges() {
+    return _authService.authStateChanges().map((fUser) {
+      if (fUser == null) {
         return null;
+      } else {
+        return User(
+          uid: fUser.uid,
+          email: fUser.email == null ? null : Email(fUser.email!),
+          name: fUser.displayName == null ? null : Name(fUser.displayName!),
+          avatar: fUser.photoURL,
+          emailVerified: fUser.emailVerified,
+        );
       }
-
-      final userDto = (await usersRef.doc(firebaseUser.uid).get()).data;
-      return _userMapper.toDomain(userDto);
     });
   }
 
@@ -59,13 +61,17 @@ class AuthFacade implements IAuthFacade {
 
   @override
   Future<User?> currentUser() async {
-    // TODO: Check if there is no internet connectivity so you can load from local storage
-    if (!_authService.isSignedIn) {
+    final fUser = _authService.currentUser;
+    if (fUser == null) {
       return null;
     } else {
-      final firebaseUser = _authService.currentUser;
-      final userDto = (await usersRef.doc(firebaseUser?.uid).get()).data;
-      return _userMapper.toDomain(userDto);
+      return User(
+        uid: fUser.uid,
+        email: fUser.email == null ? null : Email(fUser.email!),
+        name: fUser.displayName == null ? null : Name(fUser.displayName!),
+        avatar: fUser.photoURL,
+        emailVerified: fUser.emailVerified,
+      );
     }
   }
 
@@ -78,7 +84,6 @@ class AuthFacade implements IAuthFacade {
   @override
   Future<Either<AuthError, Unit>> googleLogin() async {
     try {
-      // TODO: implement login
       throw UnimplementedError();
     } on FirebaseAuthException {
       // Return an error if the user's Google account cannot be accessed
@@ -161,7 +166,7 @@ class AuthFacade implements IAuthFacade {
         uid: res.user!.uid,
         name: res.user!.displayName!,
         email: res.user!.email!,
-        emailVerified: res.user?.emailVerified ?? false,
+        emailVerified: res.user!.emailVerified,
       );
 
       await usersRef.doc(user.uid).set(user);

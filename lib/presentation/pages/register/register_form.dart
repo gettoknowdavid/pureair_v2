@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/app/router/router.gr.dart';
+import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
+import 'package:pureair_v2/application/register_cubit/register_cubit.dart';
 import 'package:pureair_v2/constants/constants.dart';
-
 import 'package:pureair_v2/presentation/widgets/loading.dart';
 
 import 'password_rules.dart';
@@ -14,11 +16,14 @@ class RegisterForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final cubit = context.read<AuthBloc>();
+    final cubit = context.watch<RegisterCubit>();
+    final authBloc = context.read<AuthBloc>();
 
     return BlocListener<RegisterCubit, RegisterState>(
+      bloc: cubit,
+      listenWhen: (previous, current) => previous.option != current.option,
       listener: (context, state) {
-        state.option.fold(
+        cubit.state.option.fold(
           () => null,
           (either) => either.fold(
             (failure) => scaffoldMessenger.showSnackBar(SnackBar(
@@ -36,7 +41,9 @@ class RegisterForm extends StatelessWidget {
               ),
             )),
             (success) {
-              cubit.add(const AuthEvent.verificationMailSent());
+              authBloc.add(const AuthEvent.verificationMailSent());
+              context.router.replace(const LayoutRoute());
+              authBloc.add(const AuthEvent.verificationChecked());
             },
           ),
         );

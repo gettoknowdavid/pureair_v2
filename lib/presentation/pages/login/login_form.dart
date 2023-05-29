@@ -11,10 +11,13 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final cubit = context.watch<LoginCubit>();
 
     return BlocListener<LoginCubit, LoginState>(
+      bloc: cubit,
+      listenWhen: (previous, current) => previous.option != current.option,
       listener: (context, state) {
-        state.option.fold(
+        cubit.state.option.fold(
           () => null,
           (either) => either.fold(
             (failure) => scaffoldMessenger.showSnackBar(SnackBar(
@@ -31,9 +34,7 @@ class LoginForm extends StatelessWidget {
                 ),
               ),
             )),
-            (success) {
-              context.read<AuthBloc>().add(const AuthEvent.authChecked());
-            },
+            (success) => cubit.close(),
           ),
         );
       },

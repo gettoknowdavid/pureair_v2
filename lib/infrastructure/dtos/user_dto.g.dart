@@ -129,13 +129,13 @@ abstract class UserDtoDocumentReference
   Future<void> update({
     String uid,
     FieldValue uidFieldValue,
-    String name,
+    String? name,
     FieldValue nameFieldValue,
-    String email,
+    String? email,
     FieldValue emailFieldValue,
     String? avatar,
     FieldValue avatarFieldValue,
-    bool emailVerified,
+    bool? emailVerified,
     FieldValue emailVerifiedFieldValue,
   });
 
@@ -146,13 +146,13 @@ abstract class UserDtoDocumentReference
     Transaction transaction, {
     String uid,
     FieldValue uidFieldValue,
-    String name,
+    String? name,
     FieldValue nameFieldValue,
-    String email,
+    String? email,
     FieldValue emailFieldValue,
     String? avatar,
     FieldValue avatarFieldValue,
-    bool emailVerified,
+    bool? emailVerified,
     FieldValue emailVerifiedFieldValue,
   });
 }
@@ -220,9 +220,9 @@ class _$UserDtoDocumentReference
     final json = {
       if (uid != _sentinel) _$$_UserDtoFieldMap['uid']!: uid as String,
       if (uidFieldValue != null) _$$_UserDtoFieldMap['uid']!: uidFieldValue,
-      if (name != _sentinel) _$$_UserDtoFieldMap['name']!: name as String,
+      if (name != _sentinel) _$$_UserDtoFieldMap['name']!: name as String?,
       if (nameFieldValue != null) _$$_UserDtoFieldMap['name']!: nameFieldValue,
-      if (email != _sentinel) _$$_UserDtoFieldMap['email']!: email as String,
+      if (email != _sentinel) _$$_UserDtoFieldMap['email']!: email as String?,
       if (emailFieldValue != null)
         _$$_UserDtoFieldMap['email']!: emailFieldValue,
       if (avatar != _sentinel)
@@ -230,7 +230,7 @@ class _$UserDtoDocumentReference
       if (avatarFieldValue != null)
         _$$_UserDtoFieldMap['avatar']!: avatarFieldValue,
       if (emailVerified != _sentinel)
-        _$$_UserDtoFieldMap['emailVerified']!: emailVerified as bool,
+        _$$_UserDtoFieldMap['emailVerified']!: emailVerified as bool?,
       if (emailVerifiedFieldValue != null)
         _$$_UserDtoFieldMap['emailVerified']!: emailVerifiedFieldValue,
     };
@@ -274,9 +274,9 @@ class _$UserDtoDocumentReference
     final json = {
       if (uid != _sentinel) _$$_UserDtoFieldMap['uid']!: uid as String,
       if (uidFieldValue != null) _$$_UserDtoFieldMap['uid']!: uidFieldValue,
-      if (name != _sentinel) _$$_UserDtoFieldMap['name']!: name as String,
+      if (name != _sentinel) _$$_UserDtoFieldMap['name']!: name as String?,
       if (nameFieldValue != null) _$$_UserDtoFieldMap['name']!: nameFieldValue,
-      if (email != _sentinel) _$$_UserDtoFieldMap['email']!: email as String,
+      if (email != _sentinel) _$$_UserDtoFieldMap['email']!: email as String?,
       if (emailFieldValue != null)
         _$$_UserDtoFieldMap['email']!: emailFieldValue,
       if (avatar != _sentinel)
@@ -284,7 +284,7 @@ class _$UserDtoDocumentReference
       if (avatarFieldValue != null)
         _$$_UserDtoFieldMap['avatar']!: avatarFieldValue,
       if (emailVerified != _sentinel)
-        _$$_UserDtoFieldMap['emailVerified']!: emailVerified as bool,
+        _$$_UserDtoFieldMap['emailVerified']!: emailVerified as bool?,
       if (emailVerifiedFieldValue != null)
         _$$_UserDtoFieldMap['emailVerified']!: emailVerifiedFieldValue,
     };
@@ -407,8 +407,8 @@ abstract class UserDtoQuery
     String? isGreaterThan,
     String? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
   });
   UserDtoQuery whereEmail({
     String? isEqualTo,
@@ -418,8 +418,8 @@ abstract class UserDtoQuery
     String? isGreaterThan,
     String? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
   });
   UserDtoQuery whereAvatar({
     String? isEqualTo,
@@ -440,8 +440,8 @@ abstract class UserDtoQuery
     bool? isGreaterThan,
     bool? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<bool>? whereIn,
-    List<bool>? whereNotIn,
+    List<bool?>? whereIn,
+    List<bool?>? whereNotIn,
   });
 
   UserDtoQuery orderByDocumentId({
@@ -470,10 +470,10 @@ abstract class UserDtoQuery
 
   UserDtoQuery orderByName({
     bool descending = false,
-    String startAt,
-    String startAfter,
-    String endAt,
-    String endBefore,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
     UserDtoDocumentSnapshot? startAtDocument,
     UserDtoDocumentSnapshot? endAtDocument,
     UserDtoDocumentSnapshot? endBeforeDocument,
@@ -482,10 +482,10 @@ abstract class UserDtoQuery
 
   UserDtoQuery orderByEmail({
     bool descending = false,
-    String startAt,
-    String startAfter,
-    String endAt,
-    String endBefore,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
     UserDtoDocumentSnapshot? startAtDocument,
     UserDtoDocumentSnapshot? endAtDocument,
     UserDtoDocumentSnapshot? endBeforeDocument,
@@ -506,10 +506,10 @@ abstract class UserDtoQuery
 
   UserDtoQuery orderByEmailVerified({
     bool descending = false,
-    bool startAt,
-    bool startAfter,
-    bool endAt,
-    bool endBefore,
+    bool? startAt,
+    bool? startAfter,
+    bool? endAt,
+    bool? endBefore,
     UserDtoDocumentSnapshot? startAtDocument,
     UserDtoDocumentSnapshot? endAtDocument,
     UserDtoDocumentSnapshot? endBeforeDocument,
@@ -730,8 +730,8 @@ class _$UserDtoQuery extends QueryReference<UserDto, UserDtoQuerySnapshot>
     String? isGreaterThan,
     String? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
   }) {
     return _$UserDtoQuery(
       _collection,
@@ -759,8 +759,8 @@ class _$UserDtoQuery extends QueryReference<UserDto, UserDtoQuerySnapshot>
     String? isGreaterThan,
     String? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
   }) {
     return _$UserDtoQuery(
       _collection,
@@ -817,8 +817,8 @@ class _$UserDtoQuery extends QueryReference<UserDto, UserDtoQuerySnapshot>
     bool? isGreaterThan,
     bool? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<bool>? whereIn,
-    List<bool>? whereNotIn,
+    List<bool?>? whereIn,
+    List<bool?>? whereNotIn,
   }) {
     return _$UserDtoQuery(
       _collection,
@@ -1378,10 +1378,10 @@ Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
 
 _$_UserDto _$$_UserDtoFromJson(Map<String, dynamic> json) => _$_UserDto(
       uid: json['uid'] as String,
-      name: json['name'] as String,
-      email: json['email'] as String,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
       avatar: json['avatar'] as String?,
-      emailVerified: json['emailVerified'] as bool,
+      emailVerified: json['emailVerified'] as bool?,
     );
 
 Map<String, dynamic> _$$_UserDtoToJson(_$_UserDto instance) =>

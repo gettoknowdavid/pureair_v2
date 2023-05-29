@@ -17,6 +17,12 @@ class LoginCubit extends Cubit<LoginState> {
   // Determine if the login button is disabled or not
   bool get isDisabled => !state.email.isValid() || !state.password.isValid();
 
+  @override
+  Future<void> close() {
+    emit(LoginState.initial());
+    return super.close();
+  }
+
   // Update the email value in LoginState
   void emailChanged(String email) {
     emit(state.copyWith(email: Email(email), loading: false, option: none()));
@@ -37,7 +43,14 @@ class LoginCubit extends Cubit<LoginState> {
       r = await _authFacade.login(email: state.email, password: state.password);
 
       // Update the state with the result of the login
-      emit(state.copyWith(loading: false, option: some(r)));
+      emit(
+        state.copyWith(
+          loading: false,
+          option: some(r),
+          email: Email(''),
+          password: Password(''),
+        ),
+      );
     }
 
     // Show an error message if the login was not successful

@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
@@ -31,6 +33,13 @@ class RegisterPage extends StatelessWidget {
             text: "Already got an account? ",
             buttonText: "Back to Login",
             action: () => AutoRouter.of(context).pop(),
+          ),
+          20.verticalSpace,
+          ElevatedButton(
+            onPressed: () {
+              context.read<AuthBloc>().add(const AuthEvent.logoutPressed());
+            },
+            child: const Text('Logout'),
           ),
         ],
       ),

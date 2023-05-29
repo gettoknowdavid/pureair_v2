@@ -8,17 +8,17 @@ part 'user.freezed.dart';
 class User with _$User {
   const factory User({
     required String uid,
-    required Name name,
-    required Email email,
-    required bool emailVerified,
+    Name? name,
+    Email? email,
+    bool? emailVerified,
     String? avatar,
   }) = _User;
 
   factory User.empty() {
-    return User(
+    return const User(
       uid: '',
-      name: Name(''),
-      email: Email(''),
+      name: null,
+      email: null,
       avatar: null,
       emailVerified: false,
     );

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/app/app.dart';
 import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
 
 import 'firebase_options.dart';
 import 'injector/injector.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
         BlocProvider(create: (ctx) => di<LoginCubit>(), lazy: true),
         BlocProvider(create: (ctx) => di<RegisterCubit>(), lazy: true),
         BlocProvider(create: (ctx) => di<ForgotPasswordCubit>(), lazy: true),
+        BlocProvider(create: (ctx) => di<AuthCubit>()),
         BlocProvider(create: (ctx) => di<AuthBloc>()),
         BlocProvider(create: (ctx) => di<PasswordCubit>()),
       ],

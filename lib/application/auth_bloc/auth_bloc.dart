@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -7,17 +9,28 @@ part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
+enum AuthenticationStatus { authenticated, unauthenticated, unverified }
+
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthFacade _authFacade;
   AuthBloc(this._authFacade) : super(const _Loading()) {
-    on<AuthEvent>(
-      (e, emit) => e.mapOrNull(
-        authChecked: (event) => _authChecked(event, emit),
-        logoutPressed: (event) => _logoutPressed(event, emit),
-        verificationChecked: (event) => _verificationChecked(event, emit),
-      ),
-    );
+    on<_AuthChecked>(_authChecked);
+    on<_LogoutPressed>(_logoutPressed);
+    on<_VerificationChecked>(_verificationChecked);
+    on<_VerificationMailSent>(_verificationMailSent);
+
+    _authStatusSubscription = _authFacade.authStateChanges().listen((user) {
+      add(_AuthChecked(user));
+    });
+  }
+
+  late StreamSubscription<User?> _authStatusSubscription;
+
+  @override
+  Future<void> close() {
+    _authStatusSubscription.cancel();
+    return super.close();
   }
 
   /// Checks if the user's authentication state has changed.
@@ -25,15 +38,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   /// Sets the state to [AuthState.unverified()] if the user's email is not verified.
   /// Sets the state to [AuthState.authenticated(user)] if the user is not null and their email is verified.
   _authChecked(_AuthChecked event, Emitter<AuthState> emit) async {
-    _authFacade.authStateChanges.listen((user) {
-      if (user == null) {
-        emit(const AuthState.unauthenticated());
-      } else if (!user.emailVerified) {
-        emit(const AuthState.unverified());
-      } else {
-        emit(AuthState.authenticated(user));
-      }
-    });
+    switch (event.user) {
+      case null:
+        return emit(const _Unauthenticated());
+      default:
+        if (event.user?.emailVerified == false) {
+          return emit(const _Unverified());
+        } else {
+          return emit(_Authenticated(event.user!));
+        }
+    }
   }
 
   /// Logs the user out and sets the state to [AuthState.unauthenticated()].
@@ -58,5 +72,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (r) => emit(const AuthState.verified()),
       ),
     );
+  }
+
+  /// Checks if the user's email is verified.
+  /// Sets the state to [AuthState.unauthenticated()] if the user is null.
+  /// Sets the state to [AuthState.unverified()] if the user's email is not verified.
+  /// Sets the state to [AuthState.verified()] if the user's email is verified.
+  _verificationMailSent(
+    _VerificationMailSent event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _authFacade.sendVerificationEmail();
+    return emit(const AuthState.unverified());
   }
 }

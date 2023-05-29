@@ -7,7 +7,7 @@ import 'errors/errors.dart';
 /// An interface that defines the contract for an authentication facade.
 abstract class IAuthFacade {
   /// Returns a stream of [User] objects representing the current user's authentication state.
-  Stream<User?> get authStateChanges;
+  Stream<User?> authStateChanges();
 
   /// Checks if the current user's email address is verified.
   ///

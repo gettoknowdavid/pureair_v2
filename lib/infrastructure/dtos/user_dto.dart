@@ -23,10 +23,10 @@ final usersRef = UserDtoCollectionReference();
 class UserDto with _$UserDto {
   const factory UserDto({
     required String uid,
-    required String name,
-    required String email,
+    String? name,
+    String? email,
     String? avatar,
-    required bool emailVerified,
+    bool? emailVerified,
   }) = _UserDto;
 
   factory UserDto.fromJson(Map<String, dynamic> json) =>

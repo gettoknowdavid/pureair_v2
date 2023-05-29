@@ -10,8 +10,8 @@ class UserMapper {
 
     return UserDto(
       uid: entity.uid,
-      name: entity.name.get()!,
-      email: entity.email.get()!,
+      name: entity.name?.get(),
+      email: entity.email?.get(),
       avatar: entity.avatar,
       emailVerified: entity.emailVerified,
     );
@@ -24,8 +24,8 @@ class UserMapper {
 
     return User(
       uid: dto.uid,
-      name: Name(dto.name),
-      email: Email(dto.email),
+      name: dto.name == null ? null : Name(dto.name!),
+      email: dto.email == null ? null : Email(dto.email!),
       avatar: dto.avatar,
       emailVerified: dto.emailVerified,
     );

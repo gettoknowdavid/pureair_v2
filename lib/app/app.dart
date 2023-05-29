@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'router/router.dart';
@@ -12,7 +14,7 @@ class PureAirApp extends StatefulWidget {
 }
 
 class _PureAirAppState extends State<PureAirApp> {
-  final _router = AppRouter();
+  final router = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,11 @@ class _PureAirAppState extends State<PureAirApp> {
       title: 'PureAir',
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => 'PureAir',
-      routerConfig: _router.config(),
+      routerConfig: router.config(
+        reevaluateListenable: ReevaluateListenable.stream(
+          context.watch<AuthBloc>().stream,
+        ),
+      ),
       theme: ThemeData.dark().copyWith(
         pageTransitionsTheme: const PageTransitionsTheme(builders: {
           TargetPlatform.iOS: NoShadowCupertinoPageTransitionsBuilder(),

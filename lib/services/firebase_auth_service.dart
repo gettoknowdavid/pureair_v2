@@ -27,7 +27,7 @@ class FirebaseAuthService {
   FirebaseAuthService(this._firebaseAuth);
 
   /// Notifies about changes to the user's sign-in state (such as sign-in or sign-out).
-  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
 
   /// Gets the current user.
   User? get currentUser => _firebaseAuth.currentUser;
@@ -63,6 +63,7 @@ class FirebaseAuthService {
   /// Sends a verification email to a user.
   Future<void> sendVerificationEmail() async {
     try {
+      await _firebaseAuth.currentUser?.reload();
       return await _firebaseAuth.currentUser
           ?.sendEmailVerification()
           .timeout(_limit);
@@ -117,8 +118,11 @@ class FirebaseAuthService {
     try {
       return await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .whenComplete(() => _updateName(name))
-          .timeout(_limit);
+          .then((value) async {
+        await _firebaseAuth.currentUser?.updateDisplayName(name);
+        await _firebaseAuth.currentUser?.reload();
+        return value;
+      }).timeout(_limit);
     } on FirebaseAuthException catch (e) {
       throw _getError(e);
     } on TimeoutException catch (e) {
@@ -126,7 +130,13 @@ class FirebaseAuthService {
     }
   }
 
-  Future<void> _updateName(String name) async {
-    return await _firebaseAuth.currentUser?.updateDisplayName(name);
+  Future<void> updateName(String name) async {
+    try {
+      return await _firebaseAuth.currentUser
+          ?.updateDisplayName(name)
+          .timeout(_limit);
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.message);
+    }
   }
 }
