@@ -1,10 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
+import 'package:pureair_v2/config/app_theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'router/router.dart';
+import 'config/router/app_router.dart';
 
 class PureAirApp extends StatefulWidget {
   const PureAirApp({super.key});
@@ -22,17 +20,8 @@ class _PureAirAppState extends State<PureAirApp> {
       title: 'PureAir',
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => 'PureAir',
-      routerConfig: router.config(
-        reevaluateListenable: ReevaluateListenable.stream(
-          context.watch<AuthBloc>().stream,
-        ),
-      ),
-      theme: ThemeData.dark().copyWith(
-        pageTransitionsTheme: const PageTransitionsTheme(builders: {
-          TargetPlatform.iOS: NoShadowCupertinoPageTransitionsBuilder(),
-          TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-        }),
-      ),
+      routerConfig: router.config(),
+      theme: lightTheme,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [

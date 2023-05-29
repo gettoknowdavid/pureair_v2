@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
 import 'package:pureair_v2/injector/injector.dart';
 
-import 'router.gr.dart';
+import 'app_router.gr.dart';
 
 class AuthGuard extends AutoRouteGuard {
   @override

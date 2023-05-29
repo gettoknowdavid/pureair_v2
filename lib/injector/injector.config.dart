@@ -15,7 +15,6 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../application/auth_bloc/auth_bloc.dart' as _i16;
-import '../application/auth_cubit/auth_cubit.dart' as _i17;
 import '../application/forgot_password_cubit/forgot_password_cubit.dart'
     as _i18;
 import '../application/login_cubit/login_cubit.dart' as _i14;
@@ -62,7 +61,6 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i15.RegisterCubit>(
         () => _i15.RegisterCubit(gh<_i11.IAuthFacade>()));
     gh.factory<_i16.AuthBloc>(() => _i16.AuthBloc(gh<_i11.IAuthFacade>()));
-    gh.factory<_i17.AuthCubit>(() => _i17.AuthCubit(gh<_i11.IAuthFacade>()));
     gh.factory<_i18.ForgotPasswordCubit>(() => _i18.ForgotPasswordCubit(
           gh<_i11.IAuthFacade>(),
           gh<_i10.MailAppService>(),

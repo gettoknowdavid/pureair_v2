@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:pureair_v2/app/router/auth_guard.dart';
+import 'package:pureair_v2/config/router/auth_guard.dart';
 
-import 'router.gr.dart';
+import 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
 class AppRouter extends $AppRouter {
