@@ -53,6 +53,18 @@ class _AppTextFieldState extends State<AppTextField> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final mainStyle = theme.textTheme.titleMedium;
+
+    final inputTheme = theme.inputDecorationTheme;
+
+    final floatingLabelStyle = mainStyle?.copyWith(letterSpacing: 0);
+
+    final hintStyle = inputTheme.hintStyle?.copyWith(letterSpacing: 0);
+
+    final labelStyle = inputTheme.labelStyle?.copyWith(letterSpacing: 0);
+
+    final style = mainStyle?.copyWith(fontWeight: FontWeight.bold);
+
     return TextFormField(
       key: widget.key,
       obscureText: widget.isPassword ? !obscure : obscure,
@@ -64,7 +76,7 @@ class _AppTextFieldState extends State<AppTextField> {
       onChanged: widget.onChanged,
       validator: widget.validator,
       enabled: widget.enabled,
-      style: theme.textTheme.titleMedium,
+      style: style,
       maxLines: widget.maxLines,
       maxLength: widget.maxLength,
       autofocus: widget.autofocus,
@@ -72,8 +84,12 @@ class _AppTextFieldState extends State<AppTextField> {
       decoration: InputDecoration(
         hintText: widget.hint,
         labelText: widget.label,
+        labelStyle: labelStyle,
+        floatingLabelStyle: floatingLabelStyle,
+        hintStyle: hintStyle,
         suffixIcon: _suffixIcon(theme),
         contentPadding: const EdgeInsets.all(16),
+        enabled: widget.enabled,
       ),
     );
   }

@@ -13,6 +13,19 @@ const _pageTransitionTheme = PageTransitionsTheme(builders: {
   TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
 });
 
+final _textTheme = GoogleFonts.figtreeTextTheme();
+
+final _buttonTextStyle = MaterialStateProperty.resolveWith((states) {
+  return _textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold);
+});
+
+final _textButtonTextStyle = MaterialStateProperty.resolveWith((states) {
+  return _textTheme.labelLarge?.copyWith(
+    fontWeight: FontWeight.bold,
+    decorationThickness: 1.5,
+  );
+});
+
 final lightTheme = FlexThemeData.light(
   colors: const FlexSchemeColor(
     primary: kPrimary,
@@ -25,7 +38,7 @@ final lightTheme = FlexThemeData.light(
     error: kError,
   ),
   lightIsWhite: true,
-  subThemesData: const FlexSubThemesData(
+  subThemesData: FlexSubThemesData(
     appBarScrolledUnderElevation: 0.0,
     blendOnLevel: 10,
     blendOnColors: false,
@@ -54,6 +67,10 @@ final lightTheme = FlexThemeData.light(
     bottomNavigationBarSelectedIconSchemeColor: SchemeColor.secondary,
     bottomNavigationBarUnselectedIconSchemeColor: SchemeColor.background,
     bottomNavigationBarBackgroundSchemeColor: SchemeColor.primary,
+    filledButtonTextStyle: _buttonTextStyle,
+    elevatedButtonTextStyle: _buttonTextStyle,
+    outlinedButtonTextStyle: _buttonTextStyle,
+    textButtonTextStyle: _textButtonTextStyle,
   ),
   useMaterial3ErrorColors: true,
   visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -61,8 +78,9 @@ final lightTheme = FlexThemeData.light(
   swapLegacyOnMaterial3: true,
   pageTransitionsTheme: _pageTransitionTheme,
   fontFamily: GoogleFonts.figtree().fontFamily,
-  textTheme: GoogleFonts.figtreeTextTheme(),
+  textTheme: _textTheme,
 );
+
 final darkTheme = FlexThemeData.dark(
   colors: const FlexSchemeColor(
     primary: kPrimary,
@@ -75,7 +93,7 @@ final darkTheme = FlexThemeData.dark(
     error: kError,
   ).defaultError.toDark(0, false),
   darkIsTrueBlack: true,
-  subThemesData: const FlexSubThemesData(
+  subThemesData: FlexSubThemesData(
     appBarScrolledUnderElevation: 0.0,
     blendOnLevel: 20,
     defaultRadius: 0.0,
@@ -103,6 +121,10 @@ final darkTheme = FlexThemeData.dark(
     bottomNavigationBarSelectedIconSchemeColor: SchemeColor.secondary,
     bottomNavigationBarUnselectedIconSchemeColor: SchemeColor.background,
     bottomNavigationBarBackgroundSchemeColor: SchemeColor.primary,
+    filledButtonTextStyle: _buttonTextStyle,
+    elevatedButtonTextStyle: _buttonTextStyle,
+    outlinedButtonTextStyle: _buttonTextStyle,
+    textButtonTextStyle: _textButtonTextStyle,
   ),
   useMaterial3ErrorColors: true,
   visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -110,5 +132,5 @@ final darkTheme = FlexThemeData.dark(
   swapLegacyOnMaterial3: true,
   pageTransitionsTheme: _pageTransitionTheme,
   fontFamily: GoogleFonts.figtree().fontFamily,
-  textTheme: GoogleFonts.figtreeTextTheme(),
+  textTheme: _textTheme,
 );

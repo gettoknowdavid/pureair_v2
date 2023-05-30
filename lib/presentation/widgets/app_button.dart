@@ -49,10 +49,6 @@ class _AppButtonState extends State<AppButton> {
                   color: theme.colorScheme.onBackground,
                 ),
         ),
-        textStyle: theme.textTheme.titleMedium?.copyWith(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
       ),
       icon: widget.icon ?? 0.horizontalSpace,
       label: widget.loading ? const Loading() : Text(widget.title),
@@ -68,6 +64,20 @@ class PrimaryButton extends AppButton {
     super.loading,
     super.onPressed,
   });
+}
+
+class TertiaryButton extends AppButton {
+  const TertiaryButton({
+    super.key,
+    required super.title,
+    super.disabled,
+    super.loading,
+    super.foregroundColor,
+    super.onPressed,
+  });
+
+  @override
+  Color? get backgroundColor => Colors.transparent;
 }
 
 class GoogleButton extends AppButton {
