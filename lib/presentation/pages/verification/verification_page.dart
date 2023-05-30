@@ -33,7 +33,7 @@ class VerificationPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              4.verticalSpace,
+              const Spacer(),
               Text(
                 'Verify your account',
                 style: textTheme.titleLarge?.copyWith(

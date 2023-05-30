@@ -1,45 +1,29 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
-import 'package:pureair_v2/presentation/widgets/app_button.dart';
-import 'package:pureair_v2/presentation/widgets/app_text_field.dart';
+import 'package:pureair_v2/domain/domain.dart';
+import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-
     final cubit = context.watch<LoginCubit>();
 
     return BlocListener<LoginCubit, LoginState>(
       bloc: cubit,
       listenWhen: (previous, current) => previous.option != current.option,
-      listener: (context, state) {
-        cubit.state.option.fold(
-          () => null,
-          (either) => either.fold(
-            (failure) => scaffoldMessenger.showSnackBar(SnackBar(
-              backgroundColor: theme.colorScheme.errorContainer,
-              content: Text(
-                failure.maybeMap(
-                  orElse: () => '',
-                  serverError: (_) => kServerError,
-                  invalidEmailOrPassword: (_) => kInvalidEmailOrPassword,
-                  noNetworkConnection: (_) => kNoNetworkConnection,
-                ),
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            )),
-            (success) => cubit.close(),
-          ),
-        );
-      },
+      listener: (context, state) => state.option.fold(
+        () {},
+        (either) => either.fold(
+          (failure) => _showFailureMessage(failure, context),
+          (success) => cubit.close(),
+        ),
+      ),
       child: Form(
         child: Column(
           children: [
@@ -55,6 +39,17 @@ class LoginForm extends StatelessWidget {
       ),
     );
   }
+
+  void _showFailureMessage(AuthError failure, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(AppSnackbar(
+      theme: Theme.of(context),
+      content: SnackbarContent(failure.mapOrNull(
+        serverError: (_) => kServerError,
+        invalidEmailOrPassword: (_) => kInvalidEmailOrPassword,
+        noNetworkConnection: (_) => kNoNetworkConnection,
+      )),
+    ));
+  }
 }
 
 class _ForgotPassword extends StatelessWidget {
@@ -67,7 +62,7 @@ class _ForgotPassword extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: InkWell(
-        // onTap: () => context.router.push(const ForgotPasswordRoute()),
+        onTap: () => context.router.push(ForgotPasswordRoute()),
         child: Text(
           'Forgot Password?',
           style: theme.textTheme.bodyMedium?.copyWith(

@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
-import 'package:pureair_v2/application/register_cubit/register_cubit.dart';
-import 'package:pureair_v2/config/router/app_router.gr.dart';
+import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/config/router/router.dart';
 import 'package:pureair_v2/constants/constants.dart';
-import 'package:pureair_v2/presentation/widgets/app_button.dart';
-import 'package:pureair_v2/presentation/widgets/app_text_field.dart';
+import 'package:pureair_v2/domain/errors/errors.dart';
+import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 import 'password_rules.dart';
 
@@ -15,40 +14,23 @@ class RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
     final cubit = context.watch<RegisterCubit>();
     final authBloc = context.read<AuthBloc>();
 
     return BlocListener<RegisterCubit, RegisterState>(
       bloc: cubit,
       listenWhen: (previous, current) => previous.option != current.option,
-      listener: (context, state) {
-        cubit.state.option.fold(
-          () => null,
-          (either) => either.fold(
-            (failure) => scaffoldMessenger.showSnackBar(SnackBar(
-              backgroundColor: theme.colorScheme.errorContainer,
-              content: Text(
-                failure.maybeMap(
-                  orElse: () => '',
-                  serverError: (_) => kServerError,
-                  emailInUse: (_) => kEmailInUse,
-                  noNetworkConnection: (_) => kNoNetworkConnection,
-                ),
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            )),
-            (success) {
-              authBloc.add(const AuthEvent.verificationMailSent());
-              context.router.replace(const LayoutRoute());
-              authBloc.add(const AuthEvent.verificationChecked());
-            },
-          ),
-        );
-      },
+      listener: (context, state) => state.option.fold(
+        () {},
+        (either) => either.fold(
+          (failure) => _showFailureMessage(context, failure),
+          (success) {
+            authBloc.add(const AuthEvent.verificationMailSent());
+            context.router.replace(const LayoutRoute());
+            authBloc.add(const AuthEvent.verificationChecked());
+          },
+        ),
+      ),
       child: Form(
         child: Column(
           children: [
@@ -65,6 +47,17 @@ class RegisterForm extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showFailureMessage(BuildContext context, AuthError failure) {
+    ScaffoldMessenger.of(context).showSnackBar(AppSnackbar(
+      theme: Theme.of(context),
+      content: SnackbarContent(failure.mapOrNull(
+        serverError: (_) => kServerError,
+        emailInUse: (_) => kEmailInUse,
+        noNetworkConnection: (_) => kNoNetworkConnection,
+      )),
+    ));
   }
 }
 

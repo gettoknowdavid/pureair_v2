@@ -10,6 +10,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: LoginRoute.page),
         AutoRoute(page: RegisterRoute.page),
         AutoRoute(page: VerificationRoute.page),
+        AutoRoute(page: ForgotPasswordRoute.page),
         AutoRoute(page: LayoutRoute.page, initial: true, guards: [AuthGuard()]),
         AutoRoute(page: LoadingRoute.page),
       ];
