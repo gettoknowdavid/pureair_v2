@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
           const LoginForm(),
           30.verticalSpace,
           Text(
-            'Or Login with',
+            'or login with',
             textAlign: TextAlign.center,
             style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
