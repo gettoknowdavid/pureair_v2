@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
+import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
 
 @RoutePage()
@@ -20,6 +20,7 @@ class LayoutPage extends StatelessWidget {
             20.verticalSpace,
             ElevatedButton(
               onPressed: () {
+                context.read<LoginCubit>().dispose();
                 context.read<AuthBloc>().add(const AuthEvent.logoutPressed());
               },
               child: const Text('Logout'),

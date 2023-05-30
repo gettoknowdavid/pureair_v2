@@ -17,13 +17,18 @@ class LoginForm extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       bloc: cubit,
       listenWhen: (previous, current) => previous.option != current.option,
-      listener: (context, state) => state.option.fold(
-        () {},
-        (either) => either.fold(
-          (failure) => _showFailureMessage(failure, context),
-          (success) => cubit.close(),
-        ),
-      ),
+      listener: (context, state) {
+        state.option.fold(
+          () => null,
+          (either) => either.fold(
+            (failure) => _showFailureMessage(failure, context),
+            (success) {
+              cubit.dispose();
+              context.router.replaceAll([const LayoutRoute()]);
+            },
+          ),
+        );
+      },
       child: Form(
         child: Column(
           children: [

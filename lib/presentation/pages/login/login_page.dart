@@ -20,49 +20,56 @@ class LoginPage extends StatelessWidget {
 
     final cubit = context.read<LoginCubit>();
 
-    return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(kGlobalPadding),
-        shrinkWrap: true,
-        children: [
-          (kToolbarHeight * 1.5).verticalSpace,
-          Text(
-            'Welcome back!',
-            style: textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 24.0,
+    return WillPopScope(
+      onWillPop: () async {
+        cubit.dispose();
+        return true;
+      },
+      child: Scaffold(
+        body: ListView(
+          padding: const EdgeInsets.all(kGlobalPadding),
+          shrinkWrap: true,
+          children: [
+            (kToolbarHeight * 1.5).verticalSpace,
+            Text(
+              'Welcome back!',
+              style: textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0,
+              ),
             ),
-          ),
-          4.verticalSpace,
-          Text(
-            'Use your credentials below to login to your account.',
-            style: textTheme.bodyLarge?.copyWith(
-              letterSpacing: 0,
-              color: colorScheme.onBackground.withOpacity(0.5),
+            4.verticalSpace,
+            Text(
+              'Use your credentials below to login to your account.',
+              style: textTheme.bodyLarge?.copyWith(
+                letterSpacing: 0,
+                color: colorScheme.onBackground.withOpacity(0.5),
+              ),
             ),
-          ),
-          40.verticalSpace,
-          const LoginForm(),
-          30.verticalSpace,
-          Text(
-            'or login with',
-            textAlign: TextAlign.center,
-            style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          30.verticalSpace,
-          GoogleButton(
-            loading: cubit.state.googleSignInLoading,
-            disabled: cubit.state.loading || cubit.state.googleSignInLoading,
-            onPressed: cubit.googleSignPressed,
-          ),
-          40.verticalSpace,
-          AuthRedirectionText(
-            text: "Don't have an account yet? ",
-            buttonText: "Register now",
-            action: () => context.router.push(const RegisterRoute()),
-          ),
-          30.verticalSpace,
-        ],
+            40.verticalSpace,
+            const LoginForm(),
+            30.verticalSpace,
+            Text(
+              'or login with',
+              textAlign: TextAlign.center,
+              style:
+                  textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            30.verticalSpace,
+            GoogleButton(
+              loading: cubit.state.googleSignInLoading,
+              disabled: cubit.state.loading || cubit.state.googleSignInLoading,
+              onPressed: cubit.googleSignPressed,
+            ),
+            40.verticalSpace,
+            AuthRedirectionText(
+              text: "Don't have an account yet? ",
+              buttonText: "Register now",
+              action: () => context.router.push(const RegisterRoute()),
+            ),
+            30.verticalSpace,
+          ],
+        ),
       ),
     );
   }

@@ -20,17 +20,19 @@ class RegisterForm extends StatelessWidget {
     return BlocListener<RegisterCubit, RegisterState>(
       bloc: cubit,
       listenWhen: (previous, current) => previous.option != current.option,
-      listener: (context, state) => state.option.fold(
-        () {},
-        (either) => either.fold(
-          (failure) => _showFailureMessage(context, failure),
-          (success) {
-            authBloc.add(const AuthEvent.verificationMailSent());
-            context.router.replace(const LayoutRoute());
-            authBloc.add(const AuthEvent.verificationChecked());
-          },
-        ),
-      ),
+      listener: (context, state) {
+        state.option.fold(
+          () => null,
+          (either) => either.fold(
+            (failure) => _showFailureMessage(context, failure),
+            (success) {
+              authBloc.add(const AuthEvent.verificationMailSent());
+              context.router.replace(const LayoutRoute());
+              authBloc.add(const AuthEvent.verificationChecked());
+            },
+          ),
+        );
+      },
       child: Form(
         child: Column(
           children: [

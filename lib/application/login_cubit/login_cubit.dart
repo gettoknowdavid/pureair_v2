@@ -21,10 +21,8 @@ class LoginCubit extends Cubit<LoginState> {
       state.loading ||
       state.googleSignInLoading;
 
-  @override
-  Future<void> close() {
-    emit(LoginState.initial());
-    return super.close();
+  void dispose() {
+    return emit(LoginState.initial());
   }
 
   // Update the email value in LoginState

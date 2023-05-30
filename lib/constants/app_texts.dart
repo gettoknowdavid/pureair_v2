@@ -4,6 +4,6 @@ const String kInvalidEmail = 'Not a valid email address.';
 const String kInvalidEmailOrPassword = 'Wrong email or password';
 const String kInvalidPassword = 'Not a valid password.';
 const String kNoNetworkConnection = 'You have no internet connection.';
-const String kServerError = 'Something wrong on our end, try again';
+const String kServerError = 'Something looks wrong on our end, try again';
 const String kUserNotFound =
     'Oops! There is no user on our DB with that email address. Try another.';

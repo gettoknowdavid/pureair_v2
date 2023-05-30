@@ -91,7 +91,8 @@ final darkTheme = FlexThemeData.dark(
     tertiaryContainer: kTertiaryContainer,
     appBarColor: kAppBarColor,
     error: kError,
-  ).defaultError.toDark(0, false),
+  ),
+  // ).defaultError.toDark(0, false),
   darkIsTrueBlack: true,
   subThemesData: FlexSubThemesData(
     appBarScrolledUnderElevation: 0.0,
@@ -126,7 +127,7 @@ final darkTheme = FlexThemeData.dark(
     outlinedButtonTextStyle: _buttonTextStyle,
     textButtonTextStyle: _textButtonTextStyle,
   ),
-  useMaterial3ErrorColors: true,
+  useMaterial3ErrorColors: false,
   visualDensity: FlexColorScheme.comfortablePlatformDensity,
   useMaterial3: true,
   swapLegacyOnMaterial3: true,

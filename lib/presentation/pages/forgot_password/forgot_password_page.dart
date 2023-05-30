@@ -27,15 +27,17 @@ class ForgotPasswordPage extends StatelessWidget {
     return BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
       bloc: cubit,
       listenWhen: (previous, current) => previous.option != current.option,
-      listener: (context, state) => state.option.fold(
-        () {},
-        (either) => either.fold(
-          (failure) => _showFailureMessage(failure, context),
-          (success) => context.router.replaceAll(
-            [ForgotPasswordRoute(emailSent: true)],
+      listener: (context, state) {
+        state.option.fold(
+          () => null,
+          (either) => either.fold(
+            (failure) => _showFailureMessage(failure, context),
+            (success) => context.router.replaceAll(
+              [ForgotPasswordRoute(emailSent: true)],
+            ),
           ),
-        ),
-      ),
+        );
+      },
       child: Scaffold(
         appBar: AppBar(leading: const AppBackButton()),
         body: ListView(
