@@ -5,17 +5,13 @@ import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
+import '../../../config/router/router.dart';
 import 'register_form.dart';
 
 @RoutePage(deferredLoading: true)
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
-  @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -52,10 +48,15 @@ class _RegisterPageState extends State<RegisterPage> {
             40.verticalSpace,
             const RegisterForm(),
             40.verticalSpace,
+            PrimaryButton(
+              title: 'Go to verification',
+              onPressed: () => context.router.push(const VerificationRoute()),
+            ),
+            40.verticalSpace,
             AuthRedirectionText(
               text: "Already got an account? ",
               buttonText: "Back to Login",
-              action: () => AutoRouter.of(context).pop(),
+              action: () => context.router.pop(),
             ),
             30.verticalSpace,
           ],

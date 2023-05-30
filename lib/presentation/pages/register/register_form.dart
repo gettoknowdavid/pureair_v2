@@ -86,6 +86,7 @@ class _Email extends StatelessWidget {
       builder: (context, state) => AppTextField(
         key: const Key(AppKeys.registerEmailInput),
         keyboardType: TextInputType.emailAddress,
+        enabled: !bloc.state.loading,
         onChanged: bloc.emailChanged,
         validator: (_) => emailValidator,
         label: 'Email address',
@@ -114,6 +115,7 @@ class _Name extends StatelessWidget {
       builder: (context, state) => AppTextField(
         key: const Key(AppKeys.registerNameInput),
         onChanged: bloc.nameChanged,
+        enabled: !bloc.state.loading,
         validator: (_) => nameValidator,
         label: 'Name',
         hint: 'Your Name',
@@ -142,6 +144,7 @@ class _Password extends StatelessWidget {
         key: const Key(AppKeys.registerPasswordInput),
         isPassword: true,
         onChanged: bloc.passwordChanged,
+        enabled: !bloc.state.loading,
         validator: (_) => passwordValidator,
         textInputAction: TextInputAction.go,
         label: 'Password',
