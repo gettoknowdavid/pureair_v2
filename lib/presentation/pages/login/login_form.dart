@@ -44,34 +44,12 @@ class LoginForm extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(AppSnackbar(
       theme: Theme.of(context),
       content: SnackbarContent(failure.mapOrNull(
+        error: (value) => value.message,
         serverError: (_) => kServerError,
         invalidEmailOrPassword: (_) => kInvalidEmailOrPassword,
         noNetworkConnection: (_) => kNoNetworkConnection,
       )),
     ));
-  }
-}
-
-class _ForgotPassword extends StatelessWidget {
-  const _ForgotPassword();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Align(
-      alignment: Alignment.centerRight,
-      child: InkWell(
-        onTap: () => context.router.push(ForgotPasswordRoute()),
-        child: Text(
-          'Forgot Password?',
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            decoration: TextDecoration.underline,
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -95,10 +73,33 @@ class _Email extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         onChanged: cubit.emailChanged,
         validator: (_) => emailValidator,
-        enabled: !cubit.state.loading,
+        enabled: !cubit.state.loading || !cubit.state.googleSignInLoading,
         label: 'Email address',
         hint: 'example@gmail.com',
         isFieldValid: cubit.state.email.isValid(),
+      ),
+    );
+  }
+}
+
+class _ForgotPassword extends StatelessWidget {
+  const _ForgotPassword();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Align(
+      alignment: Alignment.centerRight,
+      child: InkWell(
+        onTap: () => context.router.push(ForgotPasswordRoute()),
+        child: Text(
+          'Forgot Password?',
+          style: theme.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            decoration: TextDecoration.underline,
+          ),
+        ),
       ),
     );
   }
@@ -143,7 +144,7 @@ class _Password extends StatelessWidget {
         isPassword: true,
         onChanged: cubit.passwordChanged,
         validator: (_) => passwordValidator,
-        enabled: !cubit.state.loading,
+        enabled: !cubit.state.loading || !cubit.state.googleSignInLoading,
         label: 'Password',
         hint: 'Your password',
       ),

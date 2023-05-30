@@ -16,18 +16,14 @@ FirebaseAuthException _getError(e) {
   );
 }
 
-@injectable
-
 /// A service that provides access to Firebase Authentication.
+@injectable
 class FirebaseAuthService {
   /// The Firebase Authentication instance.
   final FirebaseAuth _firebaseAuth;
 
   /// Creates a new instance of the FirebaseAuthService.
   FirebaseAuthService(this._firebaseAuth);
-
-  /// Notifies about changes to the user's sign-in state (such as sign-in or sign-out).
-  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
 
   /// Gets the current user.
   User? get currentUser => _firebaseAuth.currentUser;
@@ -37,6 +33,9 @@ class FirebaseAuthService {
 
   /// Checks if the current signed in user is verified.
   bool? get isVerified => _firebaseAuth.currentUser?.emailVerified;
+
+  /// Notifies about changes to the user's sign-in state (such as sign-in or sign-out).
+  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
 
   /// If the current user is signed in, it refreshes
   Future<void> reload() async {

@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/config/router/app_router.gr.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
@@ -15,6 +17,8 @@ class LoginPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+
+    final cubit = context.read<LoginCubit>();
 
     return Scaffold(
       body: ListView(
@@ -46,7 +50,11 @@ class LoginPage extends StatelessWidget {
             style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           30.verticalSpace,
-          GoogleButton(onPressed: () {}),
+          GoogleButton(
+            loading: cubit.state.googleSignInLoading,
+            disabled: cubit.state.loading || cubit.state.googleSignInLoading,
+            onPressed: cubit.googleSignPressed,
+          ),
           40.verticalSpace,
           AuthRedirectionText(
             text: "Don't have an account yet? ",

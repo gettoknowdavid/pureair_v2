@@ -84,10 +84,16 @@ class AuthFacade implements IAuthFacade {
   @override
   Future<Either<AuthError, Unit>> googleLogin() async {
     try {
-      throw UnimplementedError();
-    } on FirebaseAuthException {
+      final result = await _authService.signInWithGoogle();
+
+      // Get the user data from Firestore and store it in local storage.
+      final userDto = (await usersRef.doc(result.user!.uid).get()).data;
+      await _localDatasource.storeUser(userDto);
+
+      return right(unit);
+    } on FirebaseAuthException catch (e) {
       // Return an error if the user's Google account cannot be accessed
-      return left(const AuthError.noGoogleAccount());
+      return left(AuthError.error(e.message));
     } on TimeoutException {
       return left(const AuthError.timeOut());
     } on Exception catch (_) {
