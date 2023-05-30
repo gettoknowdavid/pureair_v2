@@ -5,7 +5,6 @@ import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
-import '../../../config/router/router.dart';
 import 'register_form.dart';
 
 @RoutePage(deferredLoading: true)
@@ -47,11 +46,6 @@ class RegisterPage extends StatelessWidget {
             ),
             40.verticalSpace,
             const RegisterForm(),
-            40.verticalSpace,
-            PrimaryButton(
-              title: 'Go to verification',
-              onPressed: () => context.router.push(const VerificationRoute()),
-            ),
             40.verticalSpace,
             AuthRedirectionText(
               text: "Already got an account? ",
