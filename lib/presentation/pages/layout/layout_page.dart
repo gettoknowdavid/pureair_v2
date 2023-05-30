@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/config/router/app_router.gr.dart';
 import 'package:pureair_v2/application/auth_bloc/auth_bloc.dart';
 import 'package:pureair_v2/constants/constants.dart';
 
@@ -26,12 +25,6 @@ class LayoutPage extends StatelessWidget {
               child: const Text('Logout'),
             ),
             20.verticalSpace,
-            ElevatedButton(
-              onPressed: () {
-                context.router.push(const SplashRoute());
-              },
-              child: const Text('Go to next page'),
-            ),
           ],
         ),
       ),

@@ -12,6 +12,5 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: VerificationRoute.page),
         AutoRoute(page: LayoutRoute.page, initial: true, guards: [AuthGuard()]),
         AutoRoute(page: LoadingRoute.page),
-        AutoRoute(page: SplashRoute.page),
       ];
 }
