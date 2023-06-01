@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/application.dart';
-import 'package:pureair_v2/constants/constants.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pureair_v2/config/router/router.dart';
+
+import 'widgets/widgets.dart';
 
 @RoutePage()
 class LayoutPage extends StatelessWidget {
@@ -10,24 +11,34 @@ class LayoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('LAYOUT'),
-            20.verticalSpace,
-            ElevatedButton(
-              onPressed: () {
-                context.read<LoginCubit>().dispose();
-                context.read<AuthBloc>().add(const AuthEvent.logoutPressed());
-              },
-              child: const Text('Logout'),
-            ),
-            20.verticalSpace,
-          ],
-        ),
+    return AutoTabsScaffold(
+      routes: const [
+        HomeRoute(),
+        ExploreRoute(),
+        RankRoute(),
+        ProfileRoute(),
+      ],
+      bottomNavigationBuilder: (context, tabsRouter) => AppBottomNavigationBar(
+        currentIndex: tabsRouter.activeIndex,
+        onTap: tabsRouter.setActiveIndex,
+        items: [
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(PhosphorIcons.fill.house),
+          ),
+          BottomNavigationBarItem(
+            label: 'Explore',
+            icon: Icon(PhosphorIcons.fill.magnifyingGlass),
+          ),
+          BottomNavigationBarItem(
+            label: 'Rank',
+            icon: Icon(PhosphorIcons.fill.chartBar),
+          ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(PhosphorIcons.fill.userCircle),
+          ),
+        ],
       ),
     );
   }
