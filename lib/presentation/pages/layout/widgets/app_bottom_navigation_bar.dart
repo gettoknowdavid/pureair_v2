@@ -51,7 +51,7 @@ class AppBottomNavigationBar extends StatelessWidget {
       constraints: _constraints,
       decoration: BoxDecoration(color: colorScheme.primary, border: kBorder2),
       child: IconTheme(
-        data: IconThemeData(color: colorScheme.background),
+        data: const IconThemeData(color: kOnPrimary),
         child: Wrap(
           alignment: WrapAlignment.spaceAround,
           runAlignment: WrapAlignment.center,

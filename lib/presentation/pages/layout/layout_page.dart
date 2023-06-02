@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/config/router/router.dart';
+import 'package:pureair_v2/presentation/pages/layout/widgets/home_app_bar.dart';
 
 import 'widgets/widgets.dart';
 
@@ -18,6 +19,20 @@ class LayoutPage extends StatelessWidget {
         RankRoute(),
         ProfileRoute(),
       ],
+      appBarBuilder: (context, tabsRouter) {
+        Widget child = const SizedBox();
+        switch (tabsRouter.activeIndex) {
+          case 0:
+            child = const HomeAppBar();
+            break;
+          default:
+        }
+
+        return PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: child,
+        );
+      },
       bottomNavigationBuilder: (context, tabsRouter) => AppBottomNavigationBar(
         currentIndex: tabsRouter.activeIndex,
         onTap: tabsRouter.setActiveIndex,

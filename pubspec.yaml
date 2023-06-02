@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore_odm: ^1.0.0-dev.59
   firebase_core: ^2.13.0
   firebase_auth: ^4.6.1
+  dio: ^5.1.2
 
   flutter_secure_storage: ^8.0.0
 
@@ -59,8 +60,10 @@ dependencies:
   auto_route: ^7.3.1
   responsive_framework: ^1.0.0
   flex_color_scheme: ^7.1.2
-  google_fonts: ^4.0.5
+  google_fonts: 
   phosphor_flutter: ^2.0.0
+  shimmer_animation: ^2.1.0+1
+  cached_network_image: ^3.2.3
 
 dependency_overrides:
   graphs: 2.2.0
