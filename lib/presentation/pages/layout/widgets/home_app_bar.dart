@@ -15,6 +15,7 @@ const _boxShadow = [
     spreadRadius: 0.9,
   )
 ];
+const _iconHeight = kToolbarHeight * 0.5;
 const _leadingMargin = EdgeInsets.only(left: 14);
 
 class HomeAppBar extends StatelessWidget {
@@ -25,6 +26,15 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: _Avatar(onTap: onTap),
+      actions: [
+        _NotificationIcon(onTap: () {}),
+        kGlobalPadding.horizontalSpace,
+        InkWell(
+          onTap: () {},
+          child: PhosphorIcon(PhosphorIcons.regular.nut),
+        ),
+        14.horizontalSpace,
+      ],
     );
   }
 }
@@ -68,6 +78,35 @@ class _Avatar extends StatelessWidget {
         }
         return const SizedBox();
       },
+    );
+  }
+}
+
+class _NotificationIcon extends StatelessWidget {
+  final void Function()? onTap;
+  const _NotificationIcon({this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        height: _iconHeight,
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: PhosphorIcon(PhosphorIcons.regular.bell),
+            ),
+            const Material(
+              color: Colors.red,
+              shape: CircleBorder(),
+              child: SizedBox(height: 5, width: 5),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
