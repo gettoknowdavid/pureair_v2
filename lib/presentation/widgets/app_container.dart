@@ -10,6 +10,7 @@ class AppContainer extends StatelessWidget {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final List<BoxShadow>? boxShadow;
+  final bool disabled;
 
   const AppContainer({
     super.key,
@@ -22,6 +23,7 @@ class AppContainer extends StatelessWidget {
     this.margin,
     this.padding,
     this.boxShadow,
+    this.disabled = false,
   });
 
   @override
@@ -32,7 +34,7 @@ class AppContainer extends StatelessWidget {
       child: CustomPaint(
         isComplex: true,
         foregroundPainter: _BorderPainter(
-          color: borderColor,
+          color:disabled?Colors.transparent: borderColor,
           thickness: thickness,
         ),
         child: Container(

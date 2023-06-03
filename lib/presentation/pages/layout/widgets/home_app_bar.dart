@@ -18,18 +18,20 @@ const _boxShadow = [
 const _leadingMargin = EdgeInsets.only(left: 14);
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key});
+  final void Function()? onTap;
+  const HomeAppBar({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: const _Avatar(),
+      leading: _Avatar(onTap: onTap),
     );
   }
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar();
+  final void Function()? onTap;
+  const _Avatar({this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +40,18 @@ class _Avatar extends StatelessWidget {
         child: state.mapOrNull(
           authenticated: (value) {
             final imageUrl = value.user.avatar;
-            return AppContainer(
-              height: _avatarHeight,
-              width: _avatarHeight,
-              margin: _leadingMargin,
-              boxShadow: _boxShadow,
-              borderColor: Colors.white,
-              child: imageUrl == null
-                  ? PhosphorIcon(PhosphorIcons.bold.user, color: kOnPrimary)
-                  : _buildImage(imageUrl),
+            return InkWell(
+              onTap: onTap,
+              child: AppContainer(
+                height: _avatarHeight,
+                width: _avatarHeight,
+                margin: _leadingMargin,
+                boxShadow: _boxShadow,
+                borderColor: Colors.white,
+                child: imageUrl == null
+                    ? PhosphorIcon(PhosphorIcons.bold.user, color: kOnPrimary)
+                    : _buildImage(imageUrl),
+              ),
             );
           },
         ),

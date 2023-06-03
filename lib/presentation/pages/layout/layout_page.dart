@@ -23,7 +23,7 @@ class LayoutPage extends StatelessWidget {
         Widget child = const SizedBox();
         switch (tabsRouter.activeIndex) {
           case 0:
-            child = const HomeAppBar();
+            child = HomeAppBar(onTap: () => tabsRouter.setActiveIndex(3));
             break;
           default:
         }

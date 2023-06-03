@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/constants/constants.dart';
+import 'package:pureair_v2/presentation/widgets/app_container.dart';
 import 'package:pureair_v2/presentation/widgets/loading.dart';
 
 sealed class AppButton extends StatefulWidget {
@@ -34,24 +35,20 @@ class _AppButtonState extends State<AppButton> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return FilledButton.icon(
-      key: widget.key,
-      onPressed: widget.loading || widget.disabled ? null : widget.onPressed,
-      style: FilledButton.styleFrom(
-        fixedSize: Size(size.width, 51.0),
-        backgroundColor: widget.backgroundColor ?? colorScheme.primary,
-        foregroundColor: widget.foregroundColor ?? colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(
-          side: widget.disabled
-              ? BorderSide.none
-              : BorderSide(
-                  width: 2,
-                  color: theme.colorScheme.onBackground,
-                ),
+    return AppContainer(
+      disabled: widget.disabled,
+      borderColor: theme.colorScheme.onBackground,
+      child: FilledButton.icon(
+        key: widget.key,
+        onPressed: widget.loading || widget.disabled ? null : widget.onPressed,
+        style: FilledButton.styleFrom(
+          fixedSize: Size(size.width, 51.0),
+          backgroundColor: widget.backgroundColor ?? colorScheme.primary,
+          foregroundColor: widget.foregroundColor ?? colorScheme.onPrimary,
         ),
+        icon: widget.icon ?? 0.horizontalSpace,
+        label: widget.loading ? const Loading() : Text(widget.title),
       ),
-      icon: widget.icon ?? 0.horizontalSpace,
-      label: widget.loading ? const Loading() : Text(widget.title),
     );
   }
 }
