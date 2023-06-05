@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pureair_v2/config/router/app_router.gr.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/app_divider.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
@@ -18,7 +20,7 @@ class AirQualityCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return InkWell(
-      onTap: () {},
+      onTap: () => context.router.push(const DetailsRoute()),
       child: SizedBox(
         height: outerContainerHeight,
         width: double.infinity,
