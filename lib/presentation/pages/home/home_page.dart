@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             12.verticalSpace,
-            const _Top(),
+            const _TopSection(),
             20.verticalSpace,
             const AirQualityCard(),
             20.verticalSpace,
@@ -32,8 +32,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _Top extends StatelessWidget {
-  const _Top();
+class _TopSection extends StatelessWidget {
+  const _TopSection();
 
   @override
   Widget build(BuildContext context) {
