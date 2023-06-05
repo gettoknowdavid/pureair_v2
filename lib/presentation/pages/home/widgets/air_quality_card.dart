@@ -5,9 +5,8 @@ import 'package:pureair_v2/presentation/widgets/app_divider.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 class AirQualityCard extends StatelessWidget {
-  final void Function()? onTap;
   final bool showDetail;
-  const AirQualityCard({super.key, this.onTap, this.showDetail = false});
+  const AirQualityCard({super.key, this.showDetail = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class AirQualityCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return InkWell(
-      onTap: onTap,
+      onTap: () {},
       child: SizedBox(
         height: outerContainerHeight,
         width: double.infinity,
