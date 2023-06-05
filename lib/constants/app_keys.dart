@@ -16,4 +16,7 @@ class AppKeys {
   static const String registerButton = '_registerForm_continue_raisedButton';
   static const String forgotPasswordEmailInput =
       '_forgotPassword_emailInput_textField';
+
+  ///
+  static const String airQualityCard = '_air_quality_card';
 }

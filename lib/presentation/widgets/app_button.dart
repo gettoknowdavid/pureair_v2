@@ -12,6 +12,7 @@ sealed class AppButton extends StatefulWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Widget? icon;
+  final Size? fixedSize;
 
   const AppButton({
     super.key,
@@ -22,6 +23,7 @@ sealed class AppButton extends StatefulWidget {
     this.foregroundColor,
     required this.title,
     this.icon,
+    this.fixedSize,
   });
 
   @override
@@ -42,9 +44,10 @@ class _AppButtonState extends State<AppButton> {
         key: widget.key,
         onPressed: widget.loading || widget.disabled ? null : widget.onPressed,
         style: FilledButton.styleFrom(
-          fixedSize: Size(size.width, 51.0),
+          fixedSize: widget.fixedSize ?? Size(size.width, 51.0),
           backgroundColor: widget.backgroundColor ?? colorScheme.primary,
           foregroundColor: widget.foregroundColor ?? colorScheme.onPrimary,
+          padding: EdgeInsets.zero,
         ),
         icon: widget.icon ?? 0.horizontalSpace,
         label: widget.loading ? const Loading() : Text(widget.title),
@@ -101,6 +104,28 @@ class GoogleButton extends AppButton {
       child: PhosphorIcon(PhosphorIcons.bold.googleLogo, size: 18),
     );
   }
+
+  @override
+  Color? get backgroundColor => kTertiary;
+}
+
+class AddButton extends AppButton {
+  const AddButton({
+    super.key,
+    super.title = 'Add',
+    super.disabled,
+    super.loading,
+    super.onPressed,
+  });
+
+  @override
+  String get title => 'Add';
+
+  @override
+  Size? get fixedSize => const Size(70, 28);
+
+  @override
+  Widget? get icon => PhosphorIcon(PhosphorIcons.bold.plus, size: 14);
 
   @override
   Color? get backgroundColor => kTertiary;

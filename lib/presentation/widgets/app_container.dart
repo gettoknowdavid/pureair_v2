@@ -1,45 +1,52 @@
 import 'package:flutter/material.dart';
 
-class AppContainer extends StatelessWidget {
-  final Widget child;
-  final Color borderColor;
+class AppContainer extends Container {
+  final Color? borderColor;
   final Color? backgroundColor;
   final double thickness;
   final double? height;
   final double? width;
-  final EdgeInsets? margin;
-  final EdgeInsets? padding;
   final List<BoxShadow>? boxShadow;
   final bool disabled;
+  final Duration duration;
 
-  const AppContainer({
+  AppContainer({
     super.key,
-    required this.child,
-    this.borderColor = Colors.black,
+    super.child,
+    this.duration = const Duration(milliseconds: 350),
+    this.borderColor,
     this.backgroundColor,
     this.thickness = 2.0,
     this.width,
     this.height,
-    this.margin,
-    this.padding,
+    super.margin,
+    super.padding,
     this.boxShadow,
+    super.alignment,
     this.disabled = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return AnimatedContainer(
+      duration: duration,
+      curve: Curves.fastOutSlowIn,
       margin: margin,
       decoration: BoxDecoration(boxShadow: boxShadow),
       child: CustomPaint(
         isComplex: true,
         foregroundPainter: _BorderPainter(
-          color:disabled?Colors.transparent: borderColor,
+          color: disabled
+              ? Colors.transparent
+              : borderColor ?? colorScheme.onBackground,
           thickness: thickness,
         ),
         child: Container(
           height: height,
           width: width,
+          alignment: alignment,
           color: backgroundColor,
           padding: padding,
           child: child,

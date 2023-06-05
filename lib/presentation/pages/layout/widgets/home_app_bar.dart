@@ -16,7 +16,7 @@ const _boxShadow = [
   )
 ];
 const _iconHeight = kToolbarHeight * 0.5;
-const _leadingMargin = EdgeInsets.only(left: 14);
+const _leadingMargin = EdgeInsets.only(left: 16);
 
 class HomeAppBar extends StatelessWidget {
   final void Function()? onTap;

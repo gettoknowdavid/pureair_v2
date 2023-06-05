@@ -46,8 +46,8 @@ class AppBottomNavigationBar extends StatelessWidget {
 
     return Container(
       width: size.width,
-      margin: kAllPadding16,
-      padding: kHorizontalPadding16,
+      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      padding: kHorizontalPadding18,
       constraints: _constraints,
       decoration: BoxDecoration(color: colorScheme.primary, border: kBorder2),
       child: IconTheme(
