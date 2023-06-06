@@ -1,3 +1,4 @@
+export 'details/details_page.dart';
 export 'forgot_password/forgot_password_page.dart';
 export 'layout/layout_page.dart';
 export 'loading_page.dart';

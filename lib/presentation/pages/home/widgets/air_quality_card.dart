@@ -1,26 +1,25 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:pureair_v2/config/router/app_router.gr.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/app_divider.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 class AirQualityCard extends StatelessWidget {
+  final void Function()? onTap;
   final bool showDetail;
-  const AirQualityCard({super.key, this.showDetail = false});
+  const AirQualityCard({super.key, this.onTap, this.showDetail = false});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final heightPercentage = showDetail ? 0.371 : 0.25;
+    final heightPercentage = showDetail ? 0.372 : 0.25;
     final outerContainerHeight = size.height * heightPercentage;
     final smallContainerHeight = (size.height * 0.25) * 0.3;
 
     final colorScheme = Theme.of(context).colorScheme;
 
     return InkWell(
-      onTap: () => context.router.push(const DetailsRoute()),
+      onTap: onTap,
       child: SizedBox(
         height: outerContainerHeight,
         width: double.infinity,
@@ -28,25 +27,23 @@ class AirQualityCard extends StatelessWidget {
           children: [
             if (!showDetail)
               _buildBackContainer(smallContainerHeight, colorScheme.background),
-            Hero(
-              tag: AppKeys.airQualityCard,
-              child: AppContainer(
-                height: outerContainerHeight,
-                margin: showDetail ? EdgeInsets.zero : const EdgeInsets.all(8),
-                backgroundColor: colorScheme.background,
-                child: Column(
-                  children: [
-                    16.verticalSpace,
-                    _TopSection(height: smallContainerHeight),
-                    const AppDivider(height: 40, indent: 16, endIndent: 16),
-                    const _BottomSection(),
-                    if (showDetail) ...[
-                      20.verticalSpace,
-                      const AppDivider(indent: 16, endIndent: 16),
-                      const Expanded(child: _InfoSection()),
-                    ],
+            AppContainer(
+              height: outerContainerHeight,
+              margin: showDetail ? EdgeInsets.zero : const EdgeInsets.all(8),
+              backgroundColor: colorScheme.background,
+              child: ListView(
+                primary: false,
+                children: [
+                  18.verticalSpace,
+                  _TopSection(height: smallContainerHeight),
+                  const AppDivider(height: 40, indent: 16, endIndent: 16),
+                  const _BottomSection(),
+                  if (showDetail) ...[
+                    20.verticalSpace,
+                    const AppDivider(indent: 16, endIndent: 16),
+                    const _InfoSection(),
                   ],
-                ),
+                ],
               ),
             ),
           ],
@@ -196,8 +193,11 @@ class _TopSection extends StatelessWidget {
                 style: textTheme.bodyLarge?.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
+                  height: 1,
                 ),
               ),
+              Text('Nigeria', style: textTheme.bodySmall),
+              2.verticalSpace,
               Text(
                 "Today's air quality is good.",
                 style: textTheme.bodyMedium,

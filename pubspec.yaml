@@ -64,6 +64,8 @@ dependencies:
   phosphor_flutter: ^2.0.0
   shimmer_animation: ^2.1.0+1
   cached_network_image: ^3.2.3
+  table_calendar: ^3.0.9
+  fl_chart: ^0.62.0
 
 dependency_overrides:
   graphs: 2.2.0

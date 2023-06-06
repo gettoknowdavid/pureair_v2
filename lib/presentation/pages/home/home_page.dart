@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
@@ -21,7 +22,14 @@ class HomePage extends StatelessWidget {
             12.verticalSpace,
             const _TopSection(),
             20.verticalSpace,
-            const AirQualityCard(),
+            Hero(
+              tag: AppKeys.airQualityCard,
+              child: Material(
+                child: AirQualityCard(
+                  onTap: () => context.router.push(const DetailsRoute()),
+                ),
+              ),
+            ),
             20.verticalSpace,
             const AirQualityCard(),
             20.verticalSpace,
