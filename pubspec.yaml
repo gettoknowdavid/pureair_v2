@@ -40,6 +40,7 @@ dependencies:
   equatable: ^2.0.5
 
   intl: ^0.18.1
+  envied: ^0.3.0+3
 
   cloud_firestore: ^4.7.1
   cloud_firestore_odm: ^1.0.0-dev.59
@@ -85,6 +86,7 @@ dev_dependencies:
   cloud_firestore_odm_generator: ^1.0.0-dev.59
   injectable_generator: ^2.1.5
   auto_route_generator: ^7.1.1
+  envied_generator: ^0.3.0+3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
