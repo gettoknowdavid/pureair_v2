@@ -6,7 +6,7 @@ Dio dioClient() {
   final dio = Dio()
     ..options = BaseOptions(
       baseUrl: Env.iqAirBaseUrl,
-      queryParameters: {'token': Env.iqAirApi},
+      queryParameters: {'key': Env.iqAirApi},
     );
 
   dio.interceptors.addAll([
