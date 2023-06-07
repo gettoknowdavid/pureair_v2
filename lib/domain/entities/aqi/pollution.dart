@@ -8,9 +8,9 @@ part 'pollution.freezed.dart';
 class Pollution with _$Pollution {
   const factory Pollution({
     DateTime? ts,
-    int? aqius,
+    num? aqius,
     String? mainus,
-    int? aqicn,
+    num? aqicn,
     String? maincn,
     P2? p2,
   }) = _Pollution;

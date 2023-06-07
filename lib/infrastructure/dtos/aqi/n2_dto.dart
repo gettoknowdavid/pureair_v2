@@ -7,9 +7,9 @@ part 'n2_dto.g.dart';
 @JsonSerializable(createFactory: false, explicitToJson: true)
 class N2Dto with _$N2Dto {
   factory N2Dto({
-    double? conc,
-    int? aqius,
-    int? aqicn,
+    num? conc,
+    num? aqius,
+    num? aqicn,
   }) = _N2Dto;
 
   factory N2Dto.fromJson(Map<String, dynamic> json) => _$N2DtoFromJson(json);

@@ -13,9 +13,9 @@ Map<String, dynamic> _$N2DtoToJson(N2Dto instance) => <String, dynamic>{
     };
 
 _$_N2Dto _$$_N2DtoFromJson(Map<String, dynamic> json) => _$_N2Dto(
-      conc: (json['conc'] as num?)?.toDouble(),
-      aqius: json['aqius'] as int?,
-      aqicn: json['aqicn'] as int?,
+      conc: json['conc'] as num?,
+      aqius: json['aqius'] as num?,
+      aqicn: json['aqicn'] as num?,
     );
 
 Map<String, dynamic> _$$_N2DtoToJson(_$_N2Dto instance) => <String, dynamic>{

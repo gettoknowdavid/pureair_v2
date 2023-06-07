@@ -23,14 +23,14 @@ Map<String, dynamic> _$ForecastDtoToJson(ForecastDto instance) =>
 _$_ForecastDto _$$_ForecastDtoFromJson(Map<String, dynamic> json) =>
     _$_ForecastDto(
       ts: json['ts'] == null ? null : DateTime.parse(json['ts'] as String),
-      aqius: json['aqius'] as int?,
-      aqicn: json['aqicn'] as int?,
-      tp: json['tp'] as int?,
-      tpMin: json['tpMin'] as int?,
-      pr: json['pr'] as int?,
-      hu: json['hu'] as int?,
-      ws: json['ws'] as int?,
-      wd: json['wd'] as int?,
+      aqius: json['aqius'] as num?,
+      aqicn: json['aqicn'] as num?,
+      tp: json['tp'] as num?,
+      tpMin: json['tpMin'] as num?,
+      pr: json['pr'] as num?,
+      hu: json['hu'] as num?,
+      ws: json['ws'] as num?,
+      wd: json['wd'] as num?,
       ic: json['ic'] as String?,
     );
 

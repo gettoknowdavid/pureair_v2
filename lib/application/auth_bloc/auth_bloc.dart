@@ -9,8 +9,6 @@ part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-enum AuthenticationStatus { authenticated, unauthenticated, unverified }
-
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthFacade _authFacade;

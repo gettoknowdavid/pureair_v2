@@ -6,14 +6,14 @@ part 'forecast.freezed.dart';
 class Forecast with _$Forecast {
   const factory Forecast({
     DateTime? ts,
-    int? aqius,
-    int? aqicn,
-    int? tp,
-    int? tpMin,
-    int? pr,
-    int? hu,
-    int? ws,
-    int? wd,
+    num? aqius,
+    num? aqicn,
+    num? tp,
+    num? tpMin,
+    num? pr,
+    num? hu,
+    num? ws,
+    num? wd,
     String? ic,
   }) = _Forecast;
 }

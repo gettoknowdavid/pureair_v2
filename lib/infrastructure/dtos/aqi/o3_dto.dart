@@ -7,9 +7,9 @@ part 'o3_dto.g.dart';
 @JsonSerializable(createFactory: false, explicitToJson: true)
 class O3Dto with _$O3Dto {
   factory O3Dto({
-    double? conc,
-    int? aqius,
-    int? aqicn,
+    num? conc,
+    num? aqius,
+    num? aqicn,
   }) = _O3Dto;
 
   factory O3Dto.fromJson(Map<String, dynamic> json) => _$O3DtoFromJson(json);

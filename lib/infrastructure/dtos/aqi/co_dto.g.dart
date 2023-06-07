@@ -13,9 +13,9 @@ Map<String, dynamic> _$CODtoToJson(CODto instance) => <String, dynamic>{
     };
 
 _$_CODto _$$_CODtoFromJson(Map<String, dynamic> json) => _$_CODto(
-      conc: (json['conc'] as num?)?.toDouble(),
-      aqius: json['aqius'] as int?,
-      aqicn: json['aqicn'] as int?,
+      conc: json['conc'] as num?,
+      aqius: json['aqius'] as num?,
+      aqicn: json['aqicn'] as num?,
     );
 
 Map<String, dynamic> _$$_CODtoToJson(_$_CODto instance) => <String, dynamic>{

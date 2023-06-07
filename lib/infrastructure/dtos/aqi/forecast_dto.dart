@@ -8,14 +8,14 @@ part 'forecast_dto.g.dart';
 class ForecastDto with _$ForecastDto {
   factory ForecastDto({
     DateTime? ts,
-    int? aqius,
-    int? aqicn,
-    int? tp,
-    int? tpMin,
-    int? pr,
-    int? hu,
-    int? ws,
-    int? wd,
+    num? aqius,
+    num? aqicn,
+    num? tp,
+    num? tpMin,
+    num? pr,
+    num? hu,
+    num? ws,
+    num? wd,
     String? ic,
   }) = _ForecastDto;
 

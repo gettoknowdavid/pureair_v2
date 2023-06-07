@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/config/router/auth_guard.dart';
 
 import 'app_router.gr.dart';
 
+@injectable
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
 class AppRouter extends $AppRouter {
   @override

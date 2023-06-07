@@ -20,11 +20,11 @@ Map<String, dynamic> _$WeatherDtoToJson(WeatherDto instance) =>
 _$_WeatherDto _$$_WeatherDtoFromJson(Map<String, dynamic> json) =>
     _$_WeatherDto(
       ts: json['ts'] == null ? null : DateTime.parse(json['ts'] as String),
-      tp: json['tp'] as int?,
-      pr: json['pr'] as int?,
-      hu: json['hu'] as int?,
-      ws: json['ws'] as int?,
-      wd: json['wd'] as int?,
+      tp: json['tp'] as num?,
+      pr: json['pr'] as num?,
+      hu: json['hu'] as num?,
+      ws: json['ws'] as num?,
+      wd: json['wd'] as num?,
       ic: json['ic'] as String?,
     );
 

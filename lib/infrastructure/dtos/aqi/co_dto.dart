@@ -7,9 +7,9 @@ part 'co_dto.g.dart';
 @JsonSerializable(createFactory: false, explicitToJson: true)
 class CODto with _$CODto {
   factory CODto({
-    double? conc,
-    int? aqius,
-    int? aqicn,
+    num? conc,
+    num? aqius,
+    num? aqicn,
   }) = _CODto;
 
   factory CODto.fromJson(Map<String, dynamic> json) => _$CODtoFromJson(json);

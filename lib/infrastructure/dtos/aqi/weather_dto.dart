@@ -8,11 +8,11 @@ part 'weather_dto.g.dart';
 class WeatherDto with _$WeatherDto {
   factory WeatherDto({
     DateTime? ts,
-    int? tp,
-    int? pr,
-    int? hu,
-    int? ws,
-    int? wd,
+    num? tp,
+    num? pr,
+    num? hu,
+    num? ws,
+    num? wd,
     String? ic,
   }) = _WeatherDto;
 

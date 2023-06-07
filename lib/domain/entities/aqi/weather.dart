@@ -6,11 +6,11 @@ part 'weather.freezed.dart';
 class Weather with _$Weather {
   const factory Weather({
     DateTime? ts,
-    int? tp,
-    int? pr,
-    int? hu,
-    int? ws,
-    int? wd,
+    num? tp,
+    num? pr,
+    num? hu,
+    num? ws,
+    num? wd,
     String? ic,
   }) = _Weather;
 }

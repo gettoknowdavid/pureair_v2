@@ -5,8 +5,8 @@ part 'p1.freezed.dart';
 @freezed
 class P1 with _$P1 {
   const factory P1({
-    double? conc,
-    int? aqius,
-    int? aqicn,
+    num? conc,
+    num? aqius,
+    num? aqicn,
   }) = _P1;
 }

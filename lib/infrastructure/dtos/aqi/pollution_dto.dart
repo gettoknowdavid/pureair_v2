@@ -10,9 +10,9 @@ part 'pollution_dto.g.dart';
 class PollutionDto with _$PollutionDto {
   factory PollutionDto({
     DateTime? ts,
-    int? aqius,
+    num? aqius,
     String? mainus,
-    int? aqicn,
+    num? aqicn,
     String? maincn,
     P2Dto? p2,
   }) = _PollutionDto;
