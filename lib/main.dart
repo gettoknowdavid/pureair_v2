@@ -22,6 +22,7 @@ Future<void> main() async {
         BlocProvider(create: (ctx) => di<RegisterCubit>(), lazy: true),
         BlocProvider(create: (ctx) => di<ForgotPasswordCubit>(), lazy: true),
         BlocProvider(create: (ctx) => di<PasswordCubit>(), lazy: true),
+        BlocProvider(create: (ctx) => di<AirQualityBloc>(), lazy: true),
         BlocProvider(create: (ctx) => di<AuthBloc>()),
       ],
       child: const PureAirApp(),

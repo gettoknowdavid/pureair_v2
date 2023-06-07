@@ -15,26 +15,27 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i14;
 
-import '../application/auth_bloc/auth_bloc.dart' as _i21;
+import '../application/air_quality_bloc/air_quality_bloc.dart' as _i16;
+import '../application/auth_bloc/auth_bloc.dart' as _i22;
 import '../application/forgot_password_cubit/forgot_password_cubit.dart'
-    as _i22;
-import '../application/login_cubit/login_cubit.dart' as _i19;
+    as _i23;
+import '../application/login_cubit/login_cubit.dart' as _i20;
 import '../application/password/password_cubit.dart' as _i12;
-import '../application/register_cubit/register_cubit.dart' as _i20;
+import '../application/register_cubit/register_cubit.dart' as _i21;
 import '../config/router/app_router.dart' as _i4;
 import '../domain/domain.dart' as _i8;
 import '../infrastructure/air_quality_facade.dart' as _i9;
-import '../infrastructure/auth_facade.dart' as _i18;
+import '../infrastructure/auth_facade.dart' as _i19;
 import '../infrastructure/datasources/aqi/air_quality_local_datasource.dart'
-    as _i16;
-import '../infrastructure/datasources/auth_local_datasource.dart' as _i17;
+    as _i17;
+import '../infrastructure/datasources/auth_local_datasource.dart' as _i18;
 import '../infrastructure/datasources/datasources.dart' as _i10;
 import '../infrastructure/infrastructure.dart' as _i3;
 import '../services/firebase_auth_service.dart' as _i6;
 import '../services/mail_app_service.dart' as _i11;
 import '../services/secure_storage_service.dart' as _i13;
 import '../services/services.dart' as _i15;
-import 'register_module.dart' as _i23;
+import 'register_module.dart' as _i24;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -70,19 +71,21 @@ extension GetItInjectableX on _i1.GetIt {
       () => registerModule.sharedPrefService,
       preResolve: true,
     );
-    gh.factory<_i16.AirQualityLocalDatasource>(() =>
-        _i16.AirQualityLocalDatasource(gh<_i15.SharedPreferencesService>()));
-    gh.lazySingleton<_i17.AuthLocalDatasource>(
-        () => _i17.AuthLocalDatasource(gh<_i15.SecureStorageService>()));
-    gh.factory<_i8.IAuthFacade>(() => _i18.AuthFacade(
+    gh.factory<_i16.AirQualityBloc>(
+        () => _i16.AirQualityBloc(gh<_i8.IAirQualityFacade>()));
+    gh.factory<_i17.AirQualityLocalDatasource>(() =>
+        _i17.AirQualityLocalDatasource(gh<_i15.SharedPreferencesService>()));
+    gh.lazySingleton<_i18.AuthLocalDatasource>(
+        () => _i18.AuthLocalDatasource(gh<_i15.SecureStorageService>()));
+    gh.factory<_i8.IAuthFacade>(() => _i19.AuthFacade(
           gh<_i15.FirebaseAuthService>(),
           gh<_i10.AuthLocalDatasource>(),
         ));
-    gh.factory<_i19.LoginCubit>(() => _i19.LoginCubit(gh<_i8.IAuthFacade>()));
-    gh.factory<_i20.RegisterCubit>(
-        () => _i20.RegisterCubit(gh<_i8.IAuthFacade>()));
-    gh.factory<_i21.AuthBloc>(() => _i21.AuthBloc(gh<_i8.IAuthFacade>()));
-    gh.factory<_i22.ForgotPasswordCubit>(() => _i22.ForgotPasswordCubit(
+    gh.factory<_i20.LoginCubit>(() => _i20.LoginCubit(gh<_i8.IAuthFacade>()));
+    gh.factory<_i21.RegisterCubit>(
+        () => _i21.RegisterCubit(gh<_i8.IAuthFacade>()));
+    gh.factory<_i22.AuthBloc>(() => _i22.AuthBloc(gh<_i8.IAuthFacade>()));
+    gh.factory<_i23.ForgotPasswordCubit>(() => _i23.ForgotPasswordCubit(
           gh<_i8.IAuthFacade>(),
           gh<_i15.MailAppService>(),
         ));
@@ -90,4 +93,4 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i23.RegisterModule {}
+class _$RegisterModule extends _i24.RegisterModule {}
