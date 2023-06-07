@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../infrastructure.dart';
@@ -6,9 +7,11 @@ import '../../infrastructure.dart';
 part 'air_quality_remote_datasource.g.dart';
 
 /// Remote data source for retrieving air quality information from a REST API.
+
 @RestApi()
 abstract class AirQualityRemoteDatasource {
   /// Constructs an instance of [AirQualityRemoteDatasource].
+  @factoryMethod
   factory AirQualityRemoteDatasource(Dio dio, {String baseUrl}) =
       _AirQualityRemoteDatasource;
 
@@ -43,7 +46,7 @@ abstract class AirQualityRemoteDatasource {
   /// `state`: The name of the state.
   /// `country`: The name of the country.
   @GET('/v2/cities/')
-  Future<AirQualityResponse<List<StateDto>>> getSupportedCities({
+  Future<AirQualityResponse<List<CityDto>>> getSupportedCities({
     @Query('state') required String state,
     @Query('country') required String country,
   });

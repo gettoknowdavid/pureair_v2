@@ -14,7 +14,7 @@ abstract class IAirQualityFacade {
   /// `state`: The state's English name, can be found using the respective listing endpoint.
   ///
   /// `country`: The country's English name, can be found using the respective listing endpoint.
-  Future<Either<AqiError, List<State>>> getByCity({
+  Future<Either<AqiError, AirQuality>> getByCity({
     required String city,
     required String state,
     required String country,
@@ -50,7 +50,7 @@ abstract class IAirQualityFacade {
   /// `state`: The state's English name, can be found using the respective listing endpoint.
   ///
   /// `country`: The country's English name, can be found using the respective listing endpoint.
-  Future<Either<AqiError, List<City>>> getSupportedCities({
+  Future<Either<AqiError, List<City?>?>> getSupportedCities({
     required String state,
     required String country,
   });
@@ -61,7 +61,7 @@ abstract class IAirQualityFacade {
   /// Countries with no active stations will not be returned.
   /// Each [Country] object contains its English name `country` or `name`
   /// (requested by other endpoints)
-  Future<Either<AqiError, List<Country>>> getSupportedCountries();
+  Future<Either<AqiError, List<Country?>?>> getSupportedCountries();
 
   /// Returns an array of all supported states, inside a specified country
   /// if successful, and an error class [AqiError] containing the error message.
@@ -73,5 +73,5 @@ abstract class IAirQualityFacade {
   /// Accepts one parameter:
   ///
   /// `country`: The country's English name, which can be found using the respective listing endpoint.
-  Future<Either<AqiError, List<State>>> getSupportedStates(String country);
+  Future<Either<AqiError, List<State?>?>> getSupportedStates(String country);
 }

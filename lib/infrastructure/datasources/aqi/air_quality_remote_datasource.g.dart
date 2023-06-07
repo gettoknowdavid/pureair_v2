@@ -111,7 +111,7 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
   }
 
   @override
-  Future<AirQualityResponse<List<StateDto>>> getSupportedCities({
+  Future<AirQualityResponse<List<CityDto>>> getSupportedCities({
     required String state,
     required String country,
   }) async {
@@ -123,7 +123,7 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AirQualityResponse<List<StateDto>>>(Options(
+        _setStreamType<AirQualityResponse<List<CityDto>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -135,12 +135,11 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AirQualityResponse<List<StateDto>>.fromJson(
+    final value = AirQualityResponse<List<CityDto>>.fromJson(
       _result.data!,
       (json) => json is List<dynamic>
           ? json
-              .map<StateDto>(
-                  (i) => StateDto.fromJson(i as Map<String, dynamic>))
+              .map<CityDto>((i) => CityDto.fromJson(i as Map<String, dynamic>))
               .toList()
           : List.empty(),
     );
