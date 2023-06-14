@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/material.dart' as _i13;
+import 'package:pureair_v2/domain/domain.dart' as _i14;
 import 'package:pureair_v2/presentation/pages/details/details_page.dart'
     deferred as _i1;
 import 'package:pureair_v2/presentation/pages/explore/explore_page.dart' as _i2;
@@ -34,11 +35,15 @@ abstract class $AppRouter extends _i12.RootStackRouter {
   @override
   final Map<String, _i12.PageFactory> pagesMap = {
     DetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<DetailsRouteArgs>();
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i12.DeferredWidget(
           _i1.loadLibrary,
-          () => _i1.DetailsPage(),
+          () => _i1.DetailsPage(
+            key: args.key,
+            airQuality: args.airQuality,
+          ),
         ),
       );
     },
@@ -127,16 +132,40 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 
 /// generated route for
 /// [_i1.DetailsPage]
-class DetailsRoute extends _i12.PageRouteInfo<void> {
-  const DetailsRoute({List<_i12.PageRouteInfo>? children})
-      : super(
+class DetailsRoute extends _i12.PageRouteInfo<DetailsRouteArgs> {
+  DetailsRoute({
+    _i13.Key? key,
+    required _i14.AirQuality airQuality,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
           DetailsRoute.name,
+          args: DetailsRouteArgs(
+            key: key,
+            airQuality: airQuality,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'DetailsRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i12.PageInfo<DetailsRouteArgs> page =
+      _i12.PageInfo<DetailsRouteArgs>(name);
+}
+
+class DetailsRouteArgs {
+  const DetailsRouteArgs({
+    this.key,
+    required this.airQuality,
+  });
+
+  final _i13.Key? key;
+
+  final _i14.AirQuality airQuality;
+
+  @override
+  String toString() {
+    return 'DetailsRouteArgs{key: $key, airQuality: $airQuality}';
+  }
 }
 
 /// generated route for

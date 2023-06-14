@@ -5,8 +5,8 @@ import '../env/env.dart';
 Dio dioClient() {
   final dio = Dio()
     ..options = BaseOptions(
-      baseUrl: Env.iqAirBaseUrl,
-      queryParameters: {'key': Env.iqAirApi},
+      baseUrl: Env.openWeatherBaseUrl,
+      queryParameters: {'appid': Env.openWeatherApiKey},
     );
 
   dio.interceptors.addAll([

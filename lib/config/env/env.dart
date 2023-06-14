@@ -4,9 +4,9 @@ part 'env.g.dart';
 
 @Envied(obfuscate: true)
 abstract class Env {
-  @EnviedField(varName: 'IQ_AIR_API')
-  static final String iqAirApi = _Env.iqAirApi;
- 
-  @EnviedField(varName: 'IQ_AIR_BASE_URL')
-  static final String iqAirBaseUrl = _Env.iqAirBaseUrl;
+  @EnviedField(varName: 'OPEN_WEATHER_API_KEY')
+  static final String openWeatherApiKey = _Env.openWeatherApiKey;
+
+  @EnviedField(varName: 'OPEN_WEATHER_BASE_URL')
+  static final String openWeatherBaseUrl = _Env.openWeatherBaseUrl;
 }

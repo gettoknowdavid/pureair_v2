@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:pureair_v2/constants/constants.dart';
+import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/presentation/pages/home/widgets/air_quality_card.dart';
-import 'package:pureair_v2/presentation/widgets/app_divider.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -11,10 +11,13 @@ import 'widgets/details_section_title.dart';
 
 @RoutePage(deferredLoading: true)
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key});
+  final AirQuality airQuality;
+  const DetailsPage({super.key, required this.airQuality});
 
   @override
   Widget build(BuildContext context) {
+    final coordinates = airQuality.coordinates;
+
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButton(),
@@ -26,9 +29,14 @@ class DetailsPage extends StatelessWidget {
         child: Column(
           children: [
             10.verticalSpace,
-            const Hero(
-              tag: AppKeys.airQualityCard,
-              child: Material(child: AirQualityCard(showDetail: true)),
+            Hero(
+              tag: "${coordinates.lat}-${coordinates.lon}",
+              child: Material(
+                child: AirQualityCard(
+                  showDetail: true,
+                  airQuality: airQuality,
+                ),
+              ),
             ),
             20.verticalSpace,
             const _UpcomingDaysSection(),
@@ -61,8 +69,8 @@ class _UpcomingDaysSection extends StatelessWidget {
           const AppDivider(height: 50, endIndent: 18, indent: 18),
           TableCalendar(
             focusedDay: DateTime.now(),
-            firstDay: DateTime.utc(2023, 06, 04),
-            lastDay: DateTime.utc(2023, 06, 10),
+            firstDay: DateTime.now(),
+            lastDay: DateTime.utc(2025, 06, 10),
             calendarFormat: CalendarFormat.week,
             headerVisible: false,
             rowHeight: 35,

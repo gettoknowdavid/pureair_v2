@@ -19,70 +19,10 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
   String? baseUrl;
 
   @override
-  Future<AirQualityResponse<AirQualityDto>> getByCity({
-    required String city,
-    required String state,
-    required String country,
-  }) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'city': city,
-      r'state': state,
-      r'country': country,
-    };
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AirQualityResponse<AirQualityDto>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/v2/city',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AirQualityResponse<AirQualityDto>.fromJson(
-      _result.data!,
-      (json) => AirQualityDto.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
-  Future<AirQualityResponse<AirQualityDto>> getByIPAddress() async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AirQualityResponse<AirQualityDto>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/v2/nearest_city',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AirQualityResponse<AirQualityDto>.fromJson(
-      _result.data!,
-      (json) => AirQualityDto.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
-  Future<AirQualityResponse<AirQualityDto>> getByLatLon({
-    required String lat,
-    required String lon,
-  }) async {
+  Future<AirQualityDto> getCurrent(
+    double lat,
+    double lon,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'lat': lat,
@@ -90,122 +30,82 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
     };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AirQualityResponse<AirQualityDto>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AirQualityDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/v2/nearest_city',
+              '/data/2.5/air_pollution',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AirQualityResponse<AirQualityDto>.fromJson(
-      _result.data!,
-      (json) => AirQualityDto.fromJson(json as Map<String, dynamic>),
-    );
+    final value = AirQualityDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<AirQualityResponse<List<CityDto>>> getSupportedCities({
-    required String state,
-    required String country,
-  }) async {
+  Future<AirQualityDto> getForecast(
+    double lat,
+    double lon,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'state': state,
-      r'country': country,
+      r'lat': lat,
+      r'lon': lon,
     };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AirQualityResponse<List<CityDto>>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AirQualityDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/v2/cities/',
+              '/data/2.5/air_pollution/forecast',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AirQualityResponse<List<CityDto>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<CityDto>((i) => CityDto.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
+    final value = AirQualityDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<AirQualityResponse<List<CountryDto>>> getSupportedCountries() async {
+  Future<AirQualityDto> getHistory({
+    required double lat,
+    required double lon,
+    required int start,
+    required int end,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'lat': lat,
+      r'lon': lon,
+      r'start': start,
+      r'end': end,
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AirQualityResponse<List<CountryDto>>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AirQualityDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/v2/countries',
+              '/data/2.5/air_pollution/history',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AirQualityResponse<List<CountryDto>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<CountryDto>(
-                  (i) => CountryDto.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
-    return value;
-  }
-
-  @override
-  Future<AirQualityResponse<List<StateDto>>> getSupportedStates(
-      String country) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'country': country};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AirQualityResponse<List<StateDto>>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/v2/states/',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AirQualityResponse<List<StateDto>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<StateDto>(
-                  (i) => StateDto.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
+    final value = AirQualityDto.fromJson(_result.data!);
     return value;
   }
 

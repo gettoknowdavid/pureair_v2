@@ -1,96 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
-import 'package:pureair_v2/presentation/widgets/app_divider.dart';
+import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
+import 'weather_widget.dart';
+
 class AirQualityCard extends StatelessWidget {
+  final AirQuality airQuality;
   final void Function()? onTap;
   final bool showDetail;
-  const AirQualityCard({super.key, this.onTap, this.showDetail = false});
+
+  const AirQualityCard({
+    super.key,
+    required this.airQuality,
+    this.onTap,
+    this.showDetail = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final heightPercentage = showDetail ? 0.372 : 0.25;
-    final outerContainerHeight = size.height * heightPercentage;
+
     final smallContainerHeight = (size.height * 0.25) * 0.3;
 
     final colorScheme = Theme.of(context).colorScheme;
 
     return InkWell(
       onTap: onTap,
-      child: SizedBox(
-        height: outerContainerHeight,
-        width: double.infinity,
-        child: Stack(
-          children: [
-            if (!showDetail)
-              _buildBackContainer(smallContainerHeight, colorScheme.background),
-            AppContainer(
-              height: outerContainerHeight,
-              margin: showDetail ? EdgeInsets.zero : const EdgeInsets.all(8),
-              backgroundColor: colorScheme.background,
-              child: ListView(
-                primary: false,
-                children: [
-                  18.verticalSpace,
-                  _TopSection(height: smallContainerHeight),
-                  const AppDivider(height: 40, indent: 16, endIndent: 16),
-                  const _BottomSection(),
-                  if (showDetail) ...[
-                    20.verticalSpace,
-                    const AppDivider(indent: 16, endIndent: 16),
-                    const _InfoSection(),
-                  ],
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Align _buildBackContainer(double height, Color backgroundColor) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: AppContainer(height: height, backgroundColor: backgroundColor),
-    );
-  }
-}
-
-class WeatherWidget extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const WeatherWidget({super.key, required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minWidth: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Icon(icon),
-          10.verticalSpace,
-          Text(
-            label,
-            style: textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
-          )
+          if (!showDetail)
+            AppContainer(
+              height: smallContainerHeight,
+              backgroundColor: colorScheme.background,
+            ),
+          AppContainer(
+            margin: showDetail ? EdgeInsets.zero : const EdgeInsets.all(8),
+            backgroundColor: colorScheme.background,
+            child: Column(
+              children: [
+                18.verticalSpace,
+                _TopSection(
+                  airQuality: airQuality,
+                  height: smallContainerHeight,
+                ),
+                const AppDivider(height: 40, indent: 16, endIndent: 16),
+                _BottomSection(airQuality: airQuality),
+                20.verticalSpace,
+                if (showDetail) _buildInfoSection(),
+              ],
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildInfoSection() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const AppDivider(indent: 16, endIndent: 16),
+        _InfoSection(airQuality: airQuality),
+      ],
     );
   }
 }
 
 class _BottomSection extends StatelessWidget {
-  const _BottomSection();
+  final AirQuality airQuality;
+  const _BottomSection({required this.airQuality});
 
   @override
   Widget build(BuildContext context) {
+    const weather = '20';
+
     return Padding(
       padding: kHorizontalPadding18,
       child: Row(
@@ -98,19 +85,21 @@ class _BottomSection extends StatelessWidget {
         children: [
           WeatherWidget(
             icon: PhosphorIcons.regular.thermometerSimple,
-            label: "24°C",
+            label: "$weather°C",
           ),
           WeatherWidget(
             icon: PhosphorIcons.regular.drop,
-            label: "57%",
+            label: "$weather%",
           ),
           WeatherWidget(
-            icon: PhosphorIcons.regular.sun,
-            label: "Light",
+            icon: isDayLight
+                ? PhosphorIcons.regular.sun
+                : PhosphorIcons.regular.moon,
+            label: isDayLight ? "Light" : "Dark",
           ),
           WeatherWidget(
             icon: PhosphorIcons.regular.wind,
-            label: "13km/h",
+            label: "$weather/s",
           ),
         ],
       ),
@@ -119,14 +108,20 @@ class _BottomSection extends StatelessWidget {
 }
 
 class _InfoSection extends StatelessWidget {
-  const _InfoSection();
+  final AirQuality airQuality;
+  const _InfoSection({required this.airQuality});
 
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme.labelLarge;
+
+    final aqi = airQuality.data[0]!.main!.aqi!;
+    final color = getAirQualityColor(aqi);
+    final details = getDetailedHealthMessage(aqi);
+
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 25, 18, 18),
-      color: const Color(0xffe0f5f5),
+      color: color.withOpacity(0.2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -140,15 +135,12 @@ class _InfoSection extends StatelessWidget {
             children: [
               PhosphorIcon(
                 PhosphorIcons.fill.shieldWarning,
-                color: Colors.green,
+                color: airQualityColor[aqi],
                 size: 20,
               ),
               10.horizontalSpace,
               Expanded(
-                child: Text(
-                  "Don't forget to always wear a face mask when doing activities outside.",
-                  style: style?.copyWith(fontSize: 13),
-                ),
+                child: Text(details, style: style?.copyWith(fontSize: 13)),
               ),
             ],
           ),
@@ -159,12 +151,17 @@ class _InfoSection extends StatelessWidget {
 }
 
 class _TopSection extends StatelessWidget {
+  final AirQuality airQuality;
   final double height;
-  const _TopSection({required this.height});
+  const _TopSection({required this.airQuality, required this.height});
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final aqi = airQuality.data[0]!.main!.aqi!;
+    final color = getAirQualityColor(aqi);
+    final textColor = getTextColor(color);
+    final healthMessage = getHealthMessage(aqi);
 
     return Padding(
       padding: kHorizontalPadding18,
@@ -174,35 +171,41 @@ class _TopSection extends StatelessWidget {
           AppContainer(
             height: height,
             width: height,
-            backgroundColor: Colors.green,
+            backgroundColor: color,
             alignment: Alignment.center,
             child: Text(
-              '500',
+              '$aqi',
               style: textTheme.titleLarge?.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: textColor,
               ),
             ),
           ),
           16.horizontalSpace,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Port Harcourt',
-                style: textTheme.bodyLarge?.copyWith(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  height: 1,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'City',
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    height: 1,
+                  ),
                 ),
-              ),
-              Text('Nigeria', style: textTheme.bodySmall),
-              2.verticalSpace,
-              Text(
-                "Today's air quality is good.",
-                style: textTheme.bodyMedium,
-              ),
-            ],
+                Text(
+                  'State, Country',
+                  style: textTheme.bodySmall,
+                ),
+                4.verticalSpace,
+                Text(
+                  healthMessage ?? '',
+                  style: textTheme.bodyMedium?.copyWith(height: 1.1),
+                ),
+              ],
+            ),
           ),
         ],
       ),

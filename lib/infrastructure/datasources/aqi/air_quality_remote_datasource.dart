@@ -15,51 +15,35 @@ abstract class AirQualityRemoteDatasource {
   factory AirQualityRemoteDatasource(Dio dio, {String baseUrl}) =
       _AirQualityRemoteDatasource;
 
-  /// Retrieves air quality information by city.
-  ///
-  /// `city`: The name of the city.
-  /// `state`: The name of the state.
-  /// `country`: The name of the country.
-  @GET('/v2/city')
-  Future<AirQualityResponse<AirQualityDto>> getByCity({
-    @Query('city') required String city,
-    @Query('state') required String state,
-    @Query('country') required String country,
-  });
-
-  /// Retrieves air quality information by IP address.
-  @GET('/v2/nearest_city')
-  Future<AirQualityResponse<AirQualityDto>> getByIPAddress();
-
-  /// Retrieves air quality information by latitude and longitude.
+  /// Retrieves the current air quality information by latitude and longitude.
   ///
   /// `lat`: The latitude.
   /// `lon`: The longitude.
-  @GET('/v2/nearest_city')
-  Future<AirQualityResponse<AirQualityDto>> getByLatLon({
-    @Query('lat') required String lat,
-    @Query('lon') required String lon,
-  });
-
-  /// Retrieves the list of cities supported by the API within a specific state and country.
-  ///
-  /// `state`: The name of the state.
-  /// `country`: The name of the country.
-  @GET('/v2/cities/')
-  Future<AirQualityResponse<List<CityDto>>> getSupportedCities({
-    @Query('state') required String state,
-    @Query('country') required String country,
-  });
-
-  /// Retrieves the list of countries supported by the API.
-  @GET('/v2/countries')
-  Future<AirQualityResponse<List<CountryDto>>> getSupportedCountries();
-
-  /// Retrieves the list of states supported by the API within a specific country.
-  ///
-  /// `country`: The name of the country.
-  @GET('/v2/states/')
-  Future<AirQualityResponse<List<StateDto>>> getSupportedStates(
-    @Query('country') String country,
+  @GET('/data/2.5/air_pollution')
+  Future<AirQualityDto> getCurrent(
+    @Query('lat') double lat,
+    @Query('lon') double lon,
   );
+
+  /// Retrieves the forecast air quality information by latitude and longitude.
+  ///
+  /// `lat`: The latitude.
+  /// `lon`: The longitude.
+  @GET('/data/2.5/air_pollution/forecast')
+  Future<AirQualityDto> getForecast(
+    @Query('lat') double lat,
+    @Query('lon') double lon,
+  );
+
+  /// Retrieves the historical air quality information by latitude and longitude.
+  ///
+  /// `lat`: The latitude.
+  /// `lon`: The longitude.
+  @GET('/data/2.5/air_pollution/history')
+  Future<AirQualityDto> getHistory({
+    @Query('lat') required double lat,
+    @Query('lon') required double lon,
+    @Query('start') required int start,
+    @Query('end') required int end,
+  });
 }

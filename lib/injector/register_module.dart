@@ -13,7 +13,7 @@ abstract class RegisterModule {
 
   @lazySingleton
   AirQualityRemoteDatasource get authRemote {
-    return AirQualityRemoteDatasource(_dio, baseUrl: Env.iqAirBaseUrl);
+    return AirQualityRemoteDatasource(_dio, baseUrl: Env.openWeatherBaseUrl);
   }
 
   @lazySingleton

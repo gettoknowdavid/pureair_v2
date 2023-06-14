@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppDivider extends StatelessWidget {
-  final Color color;
+  final Color? color;
   final double thickness;
   final double dashLength;
   final double dashSpacing;
@@ -14,7 +14,7 @@ class AppDivider extends StatelessWidget {
     Key? key,
     this.height,
     this.width,
-    this.color = Colors.black,
+    this.color,
     this.thickness = 1.5,
     this.dashLength = 3.0,
     this.dashSpacing = 5.0,
@@ -24,11 +24,13 @@ class AppDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: EdgeInsets.only(left: indent, right: endIndent),
       child: CustomPaint(
         painter: _AppDividerPainter(
-          color: color,
+          color: color ?? (isDark ? Colors.white : Colors.black),
           thickness: thickness,
           dashLength: dashLength,
           dashSpacing: dashSpacing,

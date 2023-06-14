@@ -6,7 +6,7 @@ import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
-import 'widgets/air_quality_card.dart';
+import 'widgets/air_quality_list.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -22,16 +22,7 @@ class HomePage extends StatelessWidget {
             12.verticalSpace,
             const _TopSection(),
             20.verticalSpace,
-            Hero(
-              tag: AppKeys.airQualityCard,
-              child: Material(
-                child: AirQualityCard(
-                  onTap: () => context.router.push(const DetailsRoute()),
-                ),
-              ),
-            ),
-            20.verticalSpace,
-            const AirQualityCard(),
+            const AirQualityList(),
             20.verticalSpace,
           ],
         ),
@@ -46,6 +37,8 @@ class _TopSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final today = getFormattedDate();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -58,7 +51,7 @@ class _TopSection extends StatelessWidget {
                 authenticated: (value) => value.user.name?.get(),
               ),
               builder: (context, state) => Text(
-                'Hello David',
+                state ?? 'Hello there!',
                 style: textTheme.titleLarge?.copyWith(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -73,7 +66,7 @@ class _TopSection extends StatelessWidget {
         ),
         4.verticalSpace,
         Text(
-          '23 November 2022',
+          today,
           style: textTheme.labelSmall?.copyWith(
             fontWeight: FontWeight.bold,
           ),

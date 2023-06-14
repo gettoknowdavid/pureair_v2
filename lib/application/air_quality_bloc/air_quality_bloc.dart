@@ -12,19 +12,20 @@ part 'air_quality_state.dart';
 class AirQualityBloc extends Bloc<AirQualityEvent, AirQualityState> {
   final IAirQualityFacade _facade;
   AirQualityBloc(this._facade) : super(AirQualityState.initial()) {
-    on<_IPAddressAQIRequested>(_ipAddressAQIRequested);
+    on<_Initialized>(_initialized);
   }
 
-  _ipAddressAQIRequested(
-    _IPAddressAQIRequested event,
-    Emitter<AirQualityState> emit,
-  ) async {
-    Either<AqiError, AirQuality> r;
+  _initialized(_Initialized event, Emitter<AirQualityState> emit) async {
+    final currentAQIResult = await _facade.getCurrent(4.8472, 6.9746);
 
-    emit(state.copyWith(loading: true, ipAddressAQIOption: none()));
+    emit(state.copyWith(loading: true, currentAQIOption: none()));
 
-    r = await _facade.getByIPAddress();
-
-    emit(state.copyWith(loading: false, ipAddressAQIOption: some(r)));
+    emit(
+      state.copyWith(
+        loading: false,
+        airQualityList: [currentAQIResult.getOrElse(() => AirQuality.empty())],
+        currentAQIOption: some(currentAQIResult),
+      ),
+    );
   }
 }

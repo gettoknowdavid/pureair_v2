@@ -1,12 +1,6 @@
-export 'air_quality_mapper.dart';
-export 'city_mapper.dart';
-export 'country_mapper.dart';
-export 'current_mapper.dart';
-export 'forecast_mapper.dart';
-export 'history_mapper.dart';
-export 'location_mapper.dart';
-export 'p2_mapper.dart';
-export 'pollution_mapper.dart';
-export 'state_mapper.dart';
+export 'air_quality/air_quality_data_mapper.dart';
+export 'air_quality/air_quality_mapper.dart';
+export 'air_quality/coordinates_mapper.dart';
+export 'air_quality/main_mapper.dart';
+export 'air_quality/pollutants_mapper.dart';
 export 'user_mapper.dart';
-export 'weather_mapper.dart';
