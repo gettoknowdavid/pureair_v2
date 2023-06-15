@@ -13,6 +13,8 @@ class WeatherMapper {
       lon: entity.lon,
       timezone: entity.timezone,
       timezoneOffset: entity.timezoneOffset,
+      cod: entity.cod,
+      message: entity.message,
       current: WeatherDataDto(
         dateTime: entity.current?.dateTime,
         sunrise: entity.current?.sunrise,
@@ -86,6 +88,16 @@ class WeatherMapper {
           ).toList(),
         );
       }).toList(),
+      alerts: entity.alerts?.map((e) {
+        return WeatherAlertDto(
+          description: e?.description,
+          end: e?.end,
+          event: e?.event,
+          senderName: e?.senderName,
+          start: e?.start,
+          tags: e?.tags,
+        );
+      }).toList(),
     );
   }
 
@@ -99,6 +111,8 @@ class WeatherMapper {
       lon: dto.lon,
       timezone: dto.timezone,
       timezoneOffset: dto.timezoneOffset,
+      cod: dto.cod,
+      message: dto.message,
       current: WeatherData(
         dateTime: dto.current?.dateTime,
         sunrise: dto.current?.sunrise,
@@ -170,6 +184,16 @@ class WeatherMapper {
               );
             },
           ).toList(),
+        );
+      }).toList(),
+      alerts: dto.alerts?.map((e) {
+        return WeatherAlert(
+          description: e?.description,
+          end: e?.end,
+          event: e?.event,
+          senderName: e?.senderName,
+          start: e?.start,
+          tags: e?.tags,
         );
       }).toList(),
     );

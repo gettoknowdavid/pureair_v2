@@ -2,6 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'weather_alert_dto.dart';
 import 'weather_data_dto.dart';
 import 'weather_forecast_dto.dart';
 
@@ -18,6 +19,9 @@ class WeatherDto with _$WeatherDto {
     @JsonKey(name: 'timezone_offset') int? timezoneOffset,
     WeatherDataDto? current,
     List<WeatherForecastDto?>? daily,
+    int? cod,
+    String? message,
+    List<WeatherAlertDto?>? alerts,
   }) = _WeatherDto;
 
   factory WeatherDto.fromJson(Map<String, dynamic> json) =>

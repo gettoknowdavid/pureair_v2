@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'rain.dart';
+import 'snow.dart';
 import 'weather_info.dart';
 
 part 'weather_data.freezed.dart';
@@ -25,5 +26,6 @@ class WeatherData with _$WeatherData {
     List<WeatherInfo>? weatherInfo,
     double? pop,
     Rain? rain,
+    Snow? snow,
   }) = _WeatherData;
 }

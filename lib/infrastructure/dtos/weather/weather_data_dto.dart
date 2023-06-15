@@ -3,6 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'rain_dto.dart';
+import 'snow_dto.dart';
 import 'weather_info_dto.dart';
 
 part 'weather_data_dto.freezed.dart';
@@ -29,6 +30,7 @@ class WeatherDataDto with _$WeatherDataDto {
     @JsonKey(name: 'weather') List<WeatherInfoDto>? weatherInfo,
     double? pop,
     RainDto? rain,
+    SnowDto? snow,
   }) = _WeatherDataDto;
 
   factory WeatherDataDto.fromJson(Map<String, dynamic> json) =>
