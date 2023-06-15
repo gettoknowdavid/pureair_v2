@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pureair_v2/domain/errors/weather_error.dart';
 
 import '../domain/domain.dart';
 import 'datasources/datasources.dart';

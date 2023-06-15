@@ -4,8 +4,11 @@ part 'temp_dto.freezed.dart';
 part 'temp_dto.g.dart';
 
 @freezed
-@JsonSerializable(createFactory: false, explicitToJson: true)
-class TempDto with _$TempDto {
+@JsonSerializable(
+  createFactory: false,
+  explicitToJson: true,
+  includeIfNull: false,
+)class TempDto with _$TempDto {
   factory TempDto({
     double? day,
     double? min,

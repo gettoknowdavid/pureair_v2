@@ -6,8 +6,11 @@ part 'weather_alert_dto.freezed.dart';
 part 'weather_alert_dto.g.dart';
 
 @freezed
-@JsonSerializable(createFactory: false, explicitToJson: true)
-class WeatherAlertDto with _$WeatherAlertDto {
+@JsonSerializable(
+  createFactory: false,
+  explicitToJson: true,
+  includeIfNull: false,
+)class WeatherAlertDto with _$WeatherAlertDto {
   factory WeatherAlertDto({
     @JsonKey(name: 'sender_name') String? senderName,
     String? event,

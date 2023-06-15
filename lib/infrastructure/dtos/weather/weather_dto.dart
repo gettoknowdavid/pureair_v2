@@ -10,8 +10,11 @@ part 'weather_dto.freezed.dart';
 part 'weather_dto.g.dart';
 
 @freezed
-@JsonSerializable(createFactory: false, explicitToJson: true)
-class WeatherDto with _$WeatherDto {
+@JsonSerializable(
+  createFactory: false,
+  explicitToJson: true,
+  includeIfNull: false,
+)class WeatherDto with _$WeatherDto {
   factory WeatherDto({
     double? lat,
     double? lon,

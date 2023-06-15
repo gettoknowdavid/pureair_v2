@@ -4,7 +4,11 @@ part 'feels_like_dto.freezed.dart';
 part 'feels_like_dto.g.dart';
 
 @freezed
-@JsonSerializable(createFactory: false, explicitToJson: true)
+@JsonSerializable(
+  createFactory: false,
+  explicitToJson: true,
+  includeIfNull: false,
+)
 class FeelsLikeDto with _$FeelsLikeDto {
   factory FeelsLikeDto({
     double? day,

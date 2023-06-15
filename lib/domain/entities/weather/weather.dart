@@ -19,4 +19,8 @@ class Weather with _$Weather {
     String? message,
     List<WeatherAlert?>? alerts,
   }) = _Weather;
+
+  factory Weather.empty() {
+    return const Weather();
+  }
 }

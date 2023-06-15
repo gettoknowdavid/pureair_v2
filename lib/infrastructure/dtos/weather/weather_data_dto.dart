@@ -10,8 +10,11 @@ part 'weather_data_dto.freezed.dart';
 part 'weather_data_dto.g.dart';
 
 @freezed
-@JsonSerializable(createFactory: false, explicitToJson: true)
-class WeatherDataDto with _$WeatherDataDto {
+@JsonSerializable(
+  createFactory: false,
+  explicitToJson: true,
+  includeIfNull: false,
+)class WeatherDataDto with _$WeatherDataDto {
   factory WeatherDataDto({
     @JsonKey(name: 'dt') int? dateTime,
     int? sunrise,
