@@ -71,6 +71,8 @@ extension GetItInjectableX on _i1.GetIt {
       () => registerModule.sharedPrefService,
       preResolve: true,
     );
+    gh.lazySingleton<_i3.WeatherRemoteDatasource>(
+        () => registerModule.weatherRemote);
     gh.factory<_i16.AirQualityBloc>(
         () => _i16.AirQualityBloc(gh<_i8.IAirQualityFacade>()));
     gh.factory<_i17.AirQualityLocalDatasource>(() =>

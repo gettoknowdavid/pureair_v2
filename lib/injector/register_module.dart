@@ -33,4 +33,9 @@ abstract class RegisterModule {
   Future<SharedPreferencesService> get sharedPrefService {
     return SharedPreferencesService.getInstance();
   }
+
+  @lazySingleton
+  WeatherRemoteDatasource get weatherRemote {
+    return WeatherRemoteDatasource(_dio, baseUrl: Env.openWeatherBaseUrl);
+  }
 }
