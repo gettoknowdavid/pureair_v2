@@ -15,7 +15,7 @@ abstract class WeatherRemoteDatasource {
   factory WeatherRemoteDatasource(Dio dio, {String baseUrl}) =
       _WeatherRemoteDatasource;
 
-  /// Retrieves the current air quality information by latitude and longitude.
+  /// Retrieves the current weather information by latitude and longitude.
   ///
   /// `lat`: The latitude.
   ///

@@ -16,12 +16,12 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i14;
 
 import '../application/air_quality_bloc/air_quality_bloc.dart' as _i16;
-import '../application/auth_bloc/auth_bloc.dart' as _i22;
+import '../application/auth_bloc/auth_bloc.dart' as _i23;
 import '../application/forgot_password_cubit/forgot_password_cubit.dart'
-    as _i23;
-import '../application/login_cubit/login_cubit.dart' as _i20;
+    as _i24;
+import '../application/login_cubit/login_cubit.dart' as _i21;
 import '../application/password/password_cubit.dart' as _i12;
-import '../application/register_cubit/register_cubit.dart' as _i21;
+import '../application/register_cubit/register_cubit.dart' as _i22;
 import '../config/router/app_router.dart' as _i4;
 import '../domain/domain.dart' as _i8;
 import '../infrastructure/air_quality_facade.dart' as _i9;
@@ -31,11 +31,12 @@ import '../infrastructure/datasources/aqi/air_quality_local_datasource.dart'
 import '../infrastructure/datasources/auth_local_datasource.dart' as _i18;
 import '../infrastructure/datasources/datasources.dart' as _i10;
 import '../infrastructure/infrastructure.dart' as _i3;
+import '../infrastructure/weather_facade.dart' as _i20;
 import '../services/firebase_auth_service.dart' as _i6;
 import '../services/mail_app_service.dart' as _i11;
 import '../services/secure_storage_service.dart' as _i13;
 import '../services/services.dart' as _i15;
-import 'register_module.dart' as _i24;
+import 'register_module.dart' as _i25;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -83,11 +84,13 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i15.FirebaseAuthService>(),
           gh<_i10.AuthLocalDatasource>(),
         ));
-    gh.factory<_i20.LoginCubit>(() => _i20.LoginCubit(gh<_i8.IAuthFacade>()));
-    gh.factory<_i21.RegisterCubit>(
-        () => _i21.RegisterCubit(gh<_i8.IAuthFacade>()));
-    gh.factory<_i22.AuthBloc>(() => _i22.AuthBloc(gh<_i8.IAuthFacade>()));
-    gh.factory<_i23.ForgotPasswordCubit>(() => _i23.ForgotPasswordCubit(
+    gh.factory<_i8.IWeatherFacade>(
+        () => _i20.WeatherFacade(gh<_i10.WeatherRemoteDatasource>()));
+    gh.factory<_i21.LoginCubit>(() => _i21.LoginCubit(gh<_i8.IAuthFacade>()));
+    gh.factory<_i22.RegisterCubit>(
+        () => _i22.RegisterCubit(gh<_i8.IAuthFacade>()));
+    gh.factory<_i23.AuthBloc>(() => _i23.AuthBloc(gh<_i8.IAuthFacade>()));
+    gh.factory<_i24.ForgotPasswordCubit>(() => _i24.ForgotPasswordCubit(
           gh<_i8.IAuthFacade>(),
           gh<_i15.MailAppService>(),
         ));
@@ -95,4 +98,4 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i24.RegisterModule {}
+class _$RegisterModule extends _i25.RegisterModule {}
