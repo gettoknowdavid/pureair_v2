@@ -22,7 +22,7 @@ class WeatherData with _$WeatherData {
     double? windSpeed,
     int? windDeg,
     double? windGust,
-    List<WeatherInfo>? weather,
+    List<WeatherInfo>? weatherInfo,
     double? pop,
     Rain? rain,
   }) = _WeatherData;
