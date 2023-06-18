@@ -6,6 +6,8 @@ part 'time.freezed.dart';
 class Time with _$Time {
   const factory Time({
     DateTime? s,
+    DateTime? sTime,
+    int? vTime,
     String? tz,
     int? v,
     DateTime? iso,

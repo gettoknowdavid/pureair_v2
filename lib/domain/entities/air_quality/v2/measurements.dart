@@ -13,13 +13,9 @@ class Measurements with _$Measurements {
     Parameter? pm10,
     Parameter? pm25,
     Parameter? so2,
-    /// p
     Parameter? pressure,
-    /// t
     Parameter? temperature,
-    /// w
     Parameter? wind,
-    /// h
     Parameter? humidity,
   }) = _Measurements;
 }
