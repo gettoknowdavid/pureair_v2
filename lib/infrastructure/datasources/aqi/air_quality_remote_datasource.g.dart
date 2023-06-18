@@ -29,7 +29,7 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
       r'lon': lon,
     };
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<AirQualityDto>(Options(
       method: 'GET',
@@ -58,7 +58,7 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
       r'lon': lon,
     };
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<AirQualityDto>(Options(
       method: 'GET',
@@ -91,7 +91,7 @@ class _AirQualityRemoteDatasource implements AirQualityRemoteDatasource {
       r'end': end,
     };
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<AirQualityDto>(Options(
       method: 'GET',
