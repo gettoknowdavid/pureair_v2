@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'parameter_dto.freezed.dart';
@@ -7,7 +9,7 @@ part 'parameter_dto.g.dart';
 @JsonSerializable(explicitToJson: true, createFactory: false)
 class ParameterDto with _$ParameterDto {
   factory ParameterDto({
-    required double value,
+    @JsonKey(name: "v") required double value,
   }) = _ParameterDto;
 
   factory ParameterDto.fromJson(Map<String, dynamic> json) =>
