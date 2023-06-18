@@ -2,18 +2,33 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'air_quality_data_dto.dart';
-import 'coordinates_dto.dart';
+import 'attribution_dto.dart';
+import 'city_dto.dart';
+import 'debug_dto.dart';
+import 'forecast_dto.dart';
+import 'measurements_dto.dart';
+import 'time_dto.dart';
 
 part 'air_quality_dto.freezed.dart';
 part 'air_quality_dto.g.dart';
 
 @freezed
-@JsonSerializable(createFactory: false, explicitToJson: true)
+@JsonSerializable(
+  explicitToJson: true,
+  createFactory: false,
+  includeIfNull: false,
+)
 class AirQualityDto with _$AirQualityDto {
   factory AirQualityDto({
-    @JsonKey(name: 'coord') required CoordinatesDto coordinates,
-    @JsonKey(name: 'list') required List<AirQualityDataDto?> data,
+    required int aqi,
+    required int idx,
+    required List<AttributionDto> attributions,
+    required CityDto city,
+    @JsonKey(name: "dominentpol") required String domPol,
+    @JsonKey(name: "iaqi") required MeasurementsDto measurements,
+    required TimeDto time,
+    required ForecastDto forecast,
+    required DebugDto debug,
   }) = _AirQualityDto;
 
   factory AirQualityDto.fromJson(Map<String, dynamic> json) =>

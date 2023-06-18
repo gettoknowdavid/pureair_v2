@@ -18,21 +18,15 @@ Future<void> main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (ctx) => di<LoginCubit>(), lazy: true),
-        BlocProvider(create: (ctx) => di<RegisterCubit>(), lazy: true),
-        BlocProvider(create: (ctx) => di<ForgotPasswordCubit>(), lazy: true),
-        BlocProvider(create: (ctx) => di<PasswordCubit>(), lazy: true),
-        BlocProvider(
-          create: (ctx) =>
-              di<AirQualityBloc>()..add(const AirQualityEvent.initialized()),
-          lazy: true,
-        ),
-        BlocProvider(
-          create: (ctx) => di<WeatherCubit>()..initialized(),
-          lazy: true,
-        ),
-        BlocProvider(create: (ctx) => di<LocationCubit>()..getUserLocation()),
+        BlocProvider(create: (ctx) => di<LoginCubit>()),
+        BlocProvider(create: (ctx) => di<RegisterCubit>()),
+        BlocProvider(create: (ctx) => di<ForgotPasswordCubit>()),
+        BlocProvider(create: (ctx) => di<PasswordCubit>()),
         BlocProvider(create: (ctx) => di<AuthBloc>()),
+        BlocProvider(
+          create: (ctx) => di<AirQualityCubit>()..initialized(),
+          lazy: true,
+        ),
       ],
       child: const PureAirApp(),
     ),

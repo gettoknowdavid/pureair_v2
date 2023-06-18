@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/air_quality_bloc/air_quality_bloc.dart';
+import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/app_sizes.dart';
 import 'package:pureair_v2/presentation/pages/home/widgets/air_quality_card.dart';
 import 'package:pureair_v2/presentation/pages/loader.dart';
@@ -10,20 +10,20 @@ class AirQualityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<AirQualityBloc>();
-    return BlocBuilder<AirQualityBloc, AirQualityState>(
+    final bloc = context.watch<AirQualityCubit>();
+    return BlocBuilder<AirQualityCubit, AirQualityState>(
       bloc: bloc,
-      buildWhen: (p, c) => p.airQualityList != c.airQualityList,
+      buildWhen: (p, c) => p.cities != c.cities,
       builder: (context, state) {
-        if (bloc.state.currentAQIOption.isNone() && bloc.state.loading) {
+        if (bloc.state.cities.isEmpty && bloc.state.loading) {
           return const Loader();
         }
 
-        if (bloc.state.airQualityList.isEmpty) {
+        if (bloc.state.cities.isEmpty) {
           return const SizedBox();
         }
 
-        final length = bloc.state.airQualityList.length;
+        final length = bloc.state.cities.length;
 
         return ListView.separated(
           shrinkWrap: true,
@@ -31,7 +31,7 @@ class AirQualityList extends StatelessWidget {
           itemCount: length,
           separatorBuilder: (context, index) => 20.verticalSpace,
           itemBuilder: (context, index) {
-            final airQuality = bloc.state.airQualityList[index]!;
+            final airQuality = bloc.state.cities[index]!;
             return AirQualityCard(airQuality: airQuality);
           },
         );

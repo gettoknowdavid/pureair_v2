@@ -5,8 +5,8 @@ import '../env/env.dart';
 Dio dioClient() {
   final dio = Dio()
     ..options = BaseOptions(
-      baseUrl: Env.openWeatherBaseUrl,
-      queryParameters: {'appid': Env.openWeatherApiKey},
+      baseUrl: Env.waqiBaseUrl,
+      queryParameters: {'token': Env.waqiApiToken},
     );
 
   dio.interceptors.addAll([

@@ -1,1 +1,1 @@
-export 'air_quality_response.dart';
+export 'aq_response.dart';
