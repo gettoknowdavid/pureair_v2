@@ -51,4 +51,19 @@ class WeatherFacade implements IWeatherFacade {
       return left(WeatherError.message(e.message));
     }
   }
+
+  @override
+  Future<Either<WeatherError, Weather>> getWeather({
+    required double lat,
+    required double lon,
+    String? units,
+  }) async {
+    try {
+      final result = await _remoteDatasource.getWeather(lat: lat, lon: lon);
+      final weather = _mapper.toDomain(result);
+      return right(weather!);
+    } on DioError catch (e) {
+      return left(WeatherError.message(e.message));
+    }
+  }
 }

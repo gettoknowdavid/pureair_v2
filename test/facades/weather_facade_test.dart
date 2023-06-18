@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pureair_v2/domain/domain.dart';
-import 'package:pureair_v2/domain/errors/weather_error.dart';
 import 'package:pureair_v2/infrastructure/infrastructure.dart';
 import 'package:pureair_v2/infrastructure/weather_facade.dart';
 

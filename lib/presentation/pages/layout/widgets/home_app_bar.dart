@@ -7,7 +7,7 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
-const _avatarHeight = kToolbarHeight * 0.7;
+const _avatarHeight = kToolbarHeight * 0.65;
 const _boxShadow = [
   BoxShadow(
     color: Colors.black12,
@@ -16,7 +16,7 @@ const _boxShadow = [
   )
 ];
 const _iconHeight = kToolbarHeight * 0.5;
-const _leadingMargin = EdgeInsets.only(left: 16);
+const _leadingMargin = EdgeInsets.only(left: 19);
 
 class HomeAppBar extends StatelessWidget {
   final void Function()? onTap;

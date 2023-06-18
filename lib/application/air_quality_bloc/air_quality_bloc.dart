@@ -16,9 +16,9 @@ class AirQualityBloc extends Bloc<AirQualityEvent, AirQualityState> {
   }
 
   _initialized(_Initialized event, Emitter<AirQualityState> emit) async {
-    final currentAQIResult = await _facade.getCurrent(4.8472, 6.9746);
-
     emit(state.copyWith(loading: true, currentAQIOption: none()));
+
+    final currentAQIResult = await _facade.getCurrent(4.8472, 6.9746);
 
     emit(
       state.copyWith(

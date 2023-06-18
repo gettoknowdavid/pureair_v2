@@ -1,22 +1,26 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
-import 'weather_widget.dart';
+import '../../../widgets/weather_widget.dart';
 
 class AirQualityCard extends StatelessWidget {
   final AirQuality airQuality;
-  final void Function()? onTap;
   final bool showDetail;
+  final bool loading;
 
   const AirQualityCard({
     super.key,
     required this.airQuality,
-    this.onTap,
     this.showDetail = false,
+    this.loading = false,
   });
 
   @override
@@ -27,28 +31,36 @@ class AirQualityCard extends StatelessWidget {
 
     final colorScheme = Theme.of(context).colorScheme;
 
+    final lat = airQuality.coordinates.lat!;
+    final lon = airQuality.coordinates.lon!;
+
     return InkWell(
-      onTap: onTap,
+      onTap: showDetail
+          ? null
+          : () => context.router.push(DetailsRoute(airQuality: airQuality)),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           if (!showDetail)
             AppContainer(
+              loading: loading,
               height: smallContainerHeight,
               backgroundColor: colorScheme.background,
             ),
           AppContainer(
+            loading: loading,
             margin: showDetail ? EdgeInsets.zero : const EdgeInsets.all(8),
             backgroundColor: colorScheme.background,
             child: Column(
               children: [
                 18.verticalSpace,
                 _TopSection(
+                  loading: loading,
                   airQuality: airQuality,
                   height: smallContainerHeight,
                 ),
                 const AppDivider(height: 40, indent: 16, endIndent: 16),
-                _BottomSection(airQuality: airQuality),
+                _BottomSection(lat, lon),
                 20.verticalSpace,
                 if (showDetail) _buildInfoSection(),
               ],
@@ -71,38 +83,48 @@ class AirQualityCard extends StatelessWidget {
 }
 
 class _BottomSection extends StatelessWidget {
-  final AirQuality airQuality;
-  const _BottomSection({required this.airQuality});
+  final double lat;
+  final double lon;
+  const _BottomSection(this.lat, this.lon);
 
   @override
   Widget build(BuildContext context) {
-    const weather = '20';
-
-    return Padding(
-      padding: kHorizontalPadding18,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          WeatherWidget(
-            icon: PhosphorIcons.regular.thermometerSimple,
-            label: "$weather°C",
+    return FutureBuilder<Weather>(
+      future: context.read<WeatherCubit>().getWeather(lat: lat, lon: lon),
+      builder: (context, snapshot) {
+        final loading = !snapshot.hasData;
+        final weather = snapshot.data?.current;
+        return Padding(
+          padding: kHorizontalPadding18,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              WeatherWidget(
+                loading: loading,
+                icon: PhosphorIcons.regular.thermometerSimple,
+                label: weather?.temp == null ? '' : "${weather?.temp}°C",
+              ),
+              WeatherWidget(
+                loading: loading,
+                icon: PhosphorIcons.regular.drop,
+                label: "${weather?.pressure}%",
+              ),
+              WeatherWidget(
+                loading: loading,
+                icon: isDayLight
+                    ? PhosphorIcons.regular.sun
+                    : PhosphorIcons.regular.moon,
+                label: isDayLight ? "Light" : "Dark",
+              ),
+              WeatherWidget(
+                loading: loading,
+                icon: PhosphorIcons.regular.wind,
+                label: "${weather?.windSpeed}/s",
+              ),
+            ],
           ),
-          WeatherWidget(
-            icon: PhosphorIcons.regular.drop,
-            label: "$weather%",
-          ),
-          WeatherWidget(
-            icon: isDayLight
-                ? PhosphorIcons.regular.sun
-                : PhosphorIcons.regular.moon,
-            label: isDayLight ? "Light" : "Dark",
-          ),
-          WeatherWidget(
-            icon: PhosphorIcons.regular.wind,
-            label: "$weather/s",
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -153,7 +175,12 @@ class _InfoSection extends StatelessWidget {
 class _TopSection extends StatelessWidget {
   final AirQuality airQuality;
   final double height;
-  const _TopSection({required this.airQuality, required this.height});
+  final bool loading;
+  const _TopSection({
+    required this.airQuality,
+    required this.height,
+    this.loading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -163,12 +190,16 @@ class _TopSection extends StatelessWidget {
     final textColor = getTextColor(color);
     final healthMessage = getHealthMessage(aqi);
 
+    final lat = airQuality.coordinates.lat!;
+    final lon = airQuality.coordinates.lon!;
+
     return Padding(
       padding: kHorizontalPadding18,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           AppContainer(
+            loading: loading,
             height: height,
             width: height,
             backgroundColor: color,
@@ -184,27 +215,40 @@ class _TopSection extends StatelessWidget {
           ),
           16.horizontalSpace,
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'City',
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    height: 1,
-                  ),
-                ),
-                Text(
-                  'State, Country',
-                  style: textTheme.bodySmall,
-                ),
-                4.verticalSpace,
-                Text(
-                  healthMessage ?? '',
-                  style: textTheme.bodyMedium?.copyWith(height: 1.1),
-                ),
-              ],
+            child: FutureBuilder<Place>(
+              future: context.read<LocationCubit>().getLocation(lat, lon),
+              builder: (context, snapshot) {
+                final loading =
+                    snapshot.connectionState == ConnectionState.waiting;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Shimmer(
+                      enabled: loading,
+                      child: Text(
+                        snapshot.data?.city ?? '',
+                        style: textTheme.bodyLarge?.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                    Shimmer(
+                      enabled: loading,
+                      child: Text(
+                        '${snapshot.data?.state}, ${snapshot.data?.country}',
+                        style: textTheme.bodySmall,
+                      ),
+                    ),
+                    4.verticalSpace,
+                    Text(
+                      healthMessage ?? '',
+                      style: textTheme.bodyMedium?.copyWith(height: 1.1),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],

@@ -13,7 +13,7 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  configureDependencies();
+  await configureDependencies();
 
   runApp(
     MultiBlocProvider(
@@ -27,6 +27,11 @@ Future<void> main() async {
               di<AirQualityBloc>()..add(const AirQualityEvent.initialized()),
           lazy: true,
         ),
+        BlocProvider(
+          create: (ctx) => di<WeatherCubit>()..initialized(),
+          lazy: true,
+        ),
+        BlocProvider(create: (ctx) => di<LocationCubit>()..getUserLocation()),
         BlocProvider(create: (ctx) => di<AuthBloc>()),
       ],
       child: const PureAirApp(),

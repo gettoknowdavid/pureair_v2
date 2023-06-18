@@ -10,7 +10,7 @@ class AirQualityState with _$AirQualityState {
 
   factory AirQualityState.initial() {
     return AirQualityState(
-      loading: false,
+      loading: true,
       airQualityList: [],
       currentAQIOption: none(),
     );
