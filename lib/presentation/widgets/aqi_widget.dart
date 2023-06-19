@@ -1,8 +1,4 @@
-import 'dart:ui';
-import 'package:flutter/src/material/theme.dart';
-import 'package:flutter/src/painting/alignment.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/material.dart';
 import 'package:pureair_v2/config/helpers/air_quality_helper.dart';
 import 'package:pureair_v2/domain/entities/air_quality/air_quality.dart';
 import 'package:pureair_v2/presentation/widgets/app_container.dart';

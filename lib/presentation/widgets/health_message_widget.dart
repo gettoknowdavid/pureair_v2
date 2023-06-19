@@ -1,6 +1,4 @@
-import 'package:flutter/src/material/theme.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/material.dart';
 import 'package:pureair_v2/config/helpers/air_quality_helper.dart';
 
 class HealthMessageWidget extends StatelessWidget {

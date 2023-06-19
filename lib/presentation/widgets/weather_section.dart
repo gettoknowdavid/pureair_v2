@@ -1,7 +1,5 @@
-import 'package:flutter/src/rendering/flex.dart';
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:phosphor_flutter/src/phosphor_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/constants/app_sizes.dart';
 import 'package:pureair_v2/domain/entities/air_quality/measurements.dart';
 import 'package:pureair_v2/presentation/widgets/weather_widget.dart';

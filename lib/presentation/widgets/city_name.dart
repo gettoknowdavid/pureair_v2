@@ -1,8 +1,4 @@
-import 'dart:ui';
-import 'package:flutter/src/material/theme.dart';
-import 'package:flutter/src/painting/text_painter.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/material.dart';
 import 'package:pureair_v2/domain/entities/air_quality/city.dart';
 
 class CityName extends StatelessWidget {
@@ -13,7 +9,7 @@ class CityName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    
+
     return Text(
       city.name,
       maxLines: 2,

@@ -13,13 +13,13 @@ part 'daily_dto.g.dart';
 )
 class DailyDto with _$DailyDto {
   factory DailyDto({
-    List<ForecastDataDto>? o3,
-    List<ForecastDataDto>? no2,
-    List<ForecastDataDto>? so2,
-    List<ForecastDataDto>? co,
-    List<ForecastDataDto>? pm10,
-    List<ForecastDataDto>? pm25,
-    List<ForecastDataDto>? uvi,
+    List<ForecastDataDto?>? o3,
+    List<ForecastDataDto?>? no2,
+    List<ForecastDataDto?>? so2,
+    List<ForecastDataDto?>? co,
+    List<ForecastDataDto?>? pm10,
+    List<ForecastDataDto?>? pm25,
+    List<ForecastDataDto?>? uvi,
   }) = _DailyDto;
 
   factory DailyDto.fromJson(Map<String, dynamic> json) =>

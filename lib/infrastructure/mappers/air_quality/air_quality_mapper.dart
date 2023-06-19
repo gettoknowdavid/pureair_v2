@@ -33,27 +33,27 @@ class AirQualityMapper {
         daily: DailyDto(
           co: daily.co
               ?.map((e) => ForecastDataDto(
-                  avg: e.avg, day: e.day, max: e.max, min: e.min))
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          no2: daily.co
+          no2: daily.no2
               ?.map((e) => ForecastDataDto(
-                  avg: e.avg, day: e.day, max: e.max, min: e.min))
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          o3: daily.co
+          o3: daily.o3
               ?.map((e) => ForecastDataDto(
-                  avg: e.avg, day: e.day, max: e.max, min: e.min))
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          pm10: daily.co
+          pm10: daily.pm10
               ?.map((e) => ForecastDataDto(
-                  avg: e.avg, day: e.day, max: e.max, min: e.min))
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          pm25: daily.co
+          pm25: daily.pm25
               ?.map((e) => ForecastDataDto(
-                  avg: e.avg, day: e.day, max: e.max, min: e.min))
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          so2: daily.co
+          so2: daily.so2
               ?.map((e) => ForecastDataDto(
-                  avg: e.avg, day: e.day, max: e.max, min: e.min))
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
         ),
       ),
@@ -132,28 +132,28 @@ class AirQualityMapper {
       forecast: Forecast(
         daily: Daily(
           co: daily.co
-              ?.map((e) =>
-                  ForecastData(avg: e.avg, day: e.day, max: e.max, min: e.min))
+              ?.map((e) => ForecastData(
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          no2: daily.co
-              ?.map((e) =>
-                  ForecastData(avg: e.avg, day: e.day, max: e.max, min: e.min))
+          no2: daily.no2
+              ?.map((e) => ForecastData(
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          o3: daily.co
-              ?.map((e) =>
-                  ForecastData(avg: e.avg, day: e.day, max: e.max, min: e.min))
+          o3: daily.o3
+              ?.map((e) => ForecastData(
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          pm10: daily.co
-              ?.map((e) =>
-                  ForecastData(avg: e.avg, day: e.day, max: e.max, min: e.min))
+          pm10: daily.pm10
+              ?.map((e) => ForecastData(
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          pm25: daily.co
-              ?.map((e) =>
-                  ForecastData(avg: e.avg, day: e.day, max: e.max, min: e.min))
+          pm25: daily.pm25
+              ?.map((e) => ForecastData(
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
-          so2: daily.co
-              ?.map((e) =>
-                  ForecastData(avg: e.avg, day: e.day, max: e.max, min: e.min))
+          so2: daily.so2
+              ?.map((e) => ForecastData(
+                  avg: e?.avg, day: e?.day, max: e?.max, min: e?.min))
               .toList(),
         ),
       ),
