@@ -1,4 +1,5 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:pureair_v2/domain/domain.dart';
 
 const String kHealthMessageGood = "The air is good.";
 const String kHealthMessageHazardous = "The air is hazardous.";
@@ -108,4 +109,87 @@ Color getTextColor(Color color) {
       (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
 
   return lum > 0.5 ? const Color(0xff000000) : const Color(0xffffffff);
+}
+
+Color getColorForPM25([double? pm25]) {
+  if (pm25 == null) {
+    return Colors.transparent;
+  }
+
+  if (pm25 <= 15.4) {
+    return kColorGood;
+  } else if (pm25 <= 40.4) {
+    return kColorModerate;
+  } else if (pm25 <= 65.4) {
+    return kColorUnhealthySensitive;
+  } else if (pm25 <= 150.4) {
+    return kColorUnhealthy;
+  } else if (pm25 <= 250.4) {
+    return kColorVeryUnhealthy;
+  } else {
+    return kColorHazardous;
+  }
+}
+
+const _aqiColors = [
+  kColorGood,
+  kColorModerate,
+  kColorUnhealthySensitive,
+  kColorUnhealthy,
+  kColorVeryUnhealthy,
+  kColorHazardous,
+];
+
+List<ParameterInfo?> parameterColors = [
+  ParameterInfo(
+    parameter: "pm25",
+    thresholds: [15.4, 40.4, 65.4, 150.4, 250.4, 350.4],
+    // thresholds: [15.4, 40.4, 65.4, 150.4, 250.4, 350.4, 500.4],
+    colors: _aqiColors,
+  ),
+  ParameterInfo(
+    parameter: "pm10",
+    thresholds: [54.0, 154.0, 254.0, 354.0, 424.0],
+    // thresholds: [54.0, 154.0, 254.0, 354.0, 424.0, 504.0],
+    colors: _aqiColors,
+  ),
+  ParameterInfo(
+    parameter: "o3",
+    thresholds: [0.059, 0.075, 0.095, 0.115, 0.374],
+    // thresholds: [0.059, 0.075, 0.095, 0.115, 0.374, 0.374],
+    colors: _aqiColors,
+  ),
+  ParameterInfo(
+    parameter: "co",
+    thresholds: [4.4, 9.4, 12.4, 15.4, 30.4, 40.4],
+    // thresholds: [4.4, 9.4, 12.4, 15.4, 30.4, 40.4, 50.4],
+    colors: _aqiColors,
+  ),
+  ParameterInfo(
+    parameter: "so2",
+    thresholds: [0.034, 0.144, 0.224, 0.304, 0.604, 0.804],
+    // thresholds: [0.034, 0.144, 0.224, 0.304, 0.604, 0.804, 1.004],
+    colors: _aqiColors,
+  ),
+  ParameterInfo(
+    parameter: "no2",
+    thresholds: [1.24, 1.64, 2.04],
+    colors: _aqiColors,
+  ),
+];
+
+Color getColorForParameter(String parameter, [double? value]) {
+  final parameterColor = parameterColors.firstWhere(
+    (pc) => pc?.parameter == parameter,
+    orElse: () => null,
+  );
+
+  if (parameterColor != null && value != null) {
+    for (var i = 0; i < parameterColor.thresholds.length; i++) {
+      if (value <= parameterColor.thresholds[i]) {
+        return parameterColor.colors[i];
+      }
+    }
+  }
+  return Colors.black;
 }

@@ -18,7 +18,7 @@ class AppContainer extends StatefulWidget {
 
   const AppContainer({
     super.key,
-    this.borderColor = Colors.white,
+    this.borderColor,
     this.highlightColor = const Color.fromARGB(255, 94, 94, 94),
     this.backgroundColor,
     this.thickness = 2.0,

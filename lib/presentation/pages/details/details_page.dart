@@ -6,6 +6,7 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
+import 'pollutants_grid.dart';
 import 'widgets/details_chart_section.dart';
 import 'widgets/forecast_widget.dart';
 
@@ -48,6 +49,8 @@ class DetailsPage extends StatelessWidget {
                 ],
               ),
             ),
+            20.verticalSpace,
+            PollutantsGrid(measurements: airQuality.measurements),
             20.verticalSpace,
             ForecastWidget(forecast: airQuality.forecast),
             20.verticalSpace,
