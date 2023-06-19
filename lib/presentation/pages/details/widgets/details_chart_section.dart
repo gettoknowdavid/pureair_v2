@@ -1,130 +1,138 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
-import 'package:pureair_v2/presentation/widgets/app_container.dart';
+import 'package:pureair_v2/domain/domain.dart';
+import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
-BarTouchData _barTouchData = BarTouchData(
-  enabled: false,
-  touchTooltipData: BarTouchTooltipData(
-    tooltipBgColor: Colors.transparent,
-    tooltipPadding: EdgeInsets.zero,
-    tooltipMargin: 0,
-    getTooltipItem: (group, groupIndex, rod, rodIndex) {
-      return BarTooltipItem(
-        rod.toY.round().toString(),
-        const TextStyle(fontSize: 12),
-      );
-    },
-  ),
-);
+import 'details_section_title.dart';
 
-AxisTitles _bottomTitles = AxisTitles(
-  sideTitles: SideTitles(
-    showTitles: true,
-    getTitlesWidget: (double value, TitleMeta meta) {
-      String text;
-      switch (value) {
-        case 0.0:
-          text = '10:00';
-          break;
-        case 1.0:
-          text = '12:00';
-          break;
-        case 2.0:
-          text = 'Now';
-          break;
-        default:
-          text = '';
-          break;
-      }
-      return SideTitleWidget(
-        axisSide: meta.axisSide,
-        child: Text(
-          text,
-          style: TextStyle(
-            fontWeight: value == 2.0 ? FontWeight.bold : FontWeight.normal,
-            fontSize: 12,
-          ),
-        ),
-      );
-    },
-  ),
-);
-
-final _dataList = [
-  const _BarData(kTertiary, 50),
-  const _BarData(kSecondary, 80),
-  const _BarData(kPrimary, 30),
-];
+final format = DateFormat('YY-MM-DD');
+final today = format.format(DateTime.now());
 
 class DetailsChartSection extends StatelessWidget {
-  const DetailsChartSection({super.key});
+  final AirQuality airQuality;
+  const DetailsChartSection({super.key, required this.airQuality});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
+    final daily = airQuality.forecast.daily;
+    final o3 = daily.o3?.firstWhere((e) => format.format(e!.day!) == today);
+    final pm10 = daily.pm10?.firstWhere((e) => format.format(e!.day!) == today);
+    final pm25 = daily.pm25?.firstWhere((e) => format.format(e!.day!) == today);
+
+    final dictionary = {"o3": o3, "pm10": pm10, "pm25": pm25};
 
     return AppContainer(
-      padding: const EdgeInsets.fromLTRB(18, 40, 18, 18),
-      child: AspectRatio(
-        aspectRatio: 1.2,
-        child: BarChart(
-          BarChartData(
-            maxY: 500,
-            borderData: FlBorderData(show: false),
-            barTouchData: _barTouchData,
-            gridData: FlGridData(show: false),
-            alignment: BarChartAlignment.spaceAround,
-            titlesData: FlTitlesData(
-              show: true,
-              topTitles: AxisTitles(),
-              rightTitles: AxisTitles(),
-              bottomTitles: _bottomTitles,
-              leftTitles: AxisTitles(
-                drawBehindEverything: true,
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  getTitlesWidget: (value, meta) {
-                    return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      space: 0,
-                      child: Text(
-                        value.toInt().toString(),
-                        textAlign: TextAlign.center,
-                        style: textTheme.labelSmall?.copyWith(
-                          color: textTheme.labelSmall?.color?.withOpacity(0.6),
-                        ),
+      padding: const EdgeInsets.symmetric(vertical: kGlobalPadding),
+      child: Column(
+        children: [
+          DetailsSectionTitle(title: "Today's chart", subtitle: getDate()),
+          const AppDivider(height: 50, endIndent: 18, indent: 18),
+          AspectRatio(
+            aspectRatio: 1.2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kGlobalPadding),
+              child: BarChart(
+                BarChartData(
+                  maxY: 500,
+                  borderData: FlBorderData(show: false),
+                  barTouchData: BarTouchData(
+                    enabled: false,
+                    touchTooltipData: BarTouchTooltipData(
+                      tooltipBgColor: Colors.transparent,
+                      tooltipPadding: EdgeInsets.zero,
+                      tooltipMargin: 0,
+                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                        return BarTooltipItem(
+                          rod.toY.round().toString(),
+                          const TextStyle(fontSize: 12),
+                        );
+                      },
+                    ),
+                  ),
+                  gridData: FlGridData(show: false),
+                  alignment: BarChartAlignment.spaceAround,
+                  titlesData: FlTitlesData(
+                    show: true,
+                    topTitles: AxisTitles(),
+                    rightTitles: AxisTitles(),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (double value, TitleMeta meta) {
+                          String text;
+                          switch (value) {
+                            case 0.0:
+                              text = 'O3';
+                              break;
+                            case 1.0:
+                              text = 'PM10';
+                              break;
+                            case 2.0:
+                              text = 'PM25';
+                              break;
+                            default:
+                              text = '';
+                              break;
+                          }
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            child: Text(text),
+                          );
+                        },
                       ),
+                    ),
+                    leftTitles: AxisTitles(
+                      drawBehindEverything: true,
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            space: 0,
+                            child: Text(
+                              value.toInt().toString(),
+                              textAlign: TextAlign.center,
+                              style: textTheme.labelSmall?.copyWith(
+                                color: textTheme.labelSmall?.color
+                                    ?.withOpacity(0.6),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  barGroups: dictionary.entries.map((e) {
+                    return BarChartGroupData(
+                      x: e.value!.avg!,
+                      showingTooltipIndicators: [0],
+                      barRods: [
+                        BarChartRodData(
+                          toY: e.value!.avg!.toDouble(),
+                          color: getColorForParameter(e.key, e.value?.avg),
+                          width: 50,
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(
+                            width: 1.5,
+                            color: colorScheme.onBackground,
+                          ),
+                        )
+                      ],
                     );
-                  },
+                  }).toList(),
                 ),
               ),
             ),
-            barGroups: _dataList.asMap().entries.map((e) {
-              return BarChartGroupData(
-                x: e.key,
-                showingTooltipIndicators: [0],
-                barRods: [
-                  BarChartRodData(
-                    toY: e.value.value,
-                    color: e.value.color,
-                    width: 50,
-                    borderRadius: BorderRadius.zero,
-                    borderSide: const BorderSide(width: 1.5),
-                  )
-                ],
-              );
-            }).toList(),
           ),
-        ),
+        ],
       ),
     );
   }
-}
-
-class _BarData {
-  final Color color;
-  final double value;
-
-  const _BarData(this.color, this.value);
 }

@@ -178,7 +178,7 @@ List<ParameterInfo?> parameterColors = [
   ),
 ];
 
-Color getColorForParameter(String parameter, [double? value]) {
+Color getColorForParameter(String parameter, [num? value]) {
   final parameterColor = parameterColors.firstWhere(
     (pc) => pc?.parameter == parameter,
     orElse: () => null,
