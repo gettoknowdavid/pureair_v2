@@ -23,6 +23,7 @@ Future<void> main() async {
         BlocProvider(create: (ctx) => di<ForgotPasswordCubit>()),
         BlocProvider(create: (ctx) => di<PasswordCubit>()),
         BlocProvider(create: (ctx) => di<AuthBloc>()),
+        BlocProvider(create: (ctx) => di<SearchCubit>(), lazy: true),
         BlocProvider(
           create: (ctx) => di<AirQualityCubit>()..initialized(),
           lazy: true,

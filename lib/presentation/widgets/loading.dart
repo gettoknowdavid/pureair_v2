@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pureair_v2/presentation/pages/loader.dart';
 
 class Loading extends StatelessWidget {
   final double? height;
@@ -9,9 +10,9 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: height ?? 20.0,
-        width: width ?? 20.0,
-        child: const CircularProgressIndicator(),
+        height: height,
+        width: width,
+        child: const Loader(),
       ),
     );
   }

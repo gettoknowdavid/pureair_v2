@@ -25,4 +25,18 @@ class AirQualityCubit extends Cubit<AirQualityState> {
       option: some(result),
     ));
   }
+
+  Future<void> addCity(AirQuality city) async {
+    emit(state.copyWith(loading: true, option: none()));
+
+    final result = await _facade.getLocal();
+
+    final cities = [...state.cities, city];
+
+    emit(state.copyWith(
+      loading: false,
+      cities: cities,
+      option: some(result),
+    ));
+  }
 }

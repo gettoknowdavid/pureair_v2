@@ -9,6 +9,7 @@ class Loader extends StatelessWidget {
     return Lottie.asset(
       'assets/animations/lottie-loader.json',
       animate: true,
+      fit: BoxFit.fill,
     );
   }
 }

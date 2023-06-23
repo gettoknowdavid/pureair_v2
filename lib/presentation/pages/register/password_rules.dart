@@ -39,7 +39,7 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
     final textStyle = theme.textTheme.labelLarge;
     final isDarkTheme = theme.brightness == Brightness.dark;

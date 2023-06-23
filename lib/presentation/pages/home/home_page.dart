@@ -36,7 +36,10 @@ class _TopSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     final today = getDate();
 
     return Column(
@@ -60,7 +63,19 @@ class _TopSection extends StatelessWidget {
             ),
             LimitedBox(
               maxHeight: 30,
-              child: AddButton(title: 'Add', onPressed: () {}),
+              child: AddButton(
+                title: 'Add',
+                onPressed: () => showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  showDragHandle: true,
+                  backgroundColor: colorScheme.background,
+                  shape: BorderDirectional(
+                    top: BorderSide(color: colorScheme.onBackground, width: 2),
+                  ),
+                  builder: (context) => const AddCityBottomSheet(),
+                ),
+              ),
             ),
           ],
         ),

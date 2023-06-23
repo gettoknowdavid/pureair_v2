@@ -17,7 +17,7 @@ class AirQualityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
     final smallContainerHeight = (size.height * 0.25) * 0.3;
 
     final colorScheme = Theme.of(context).colorScheme;

@@ -35,7 +35,8 @@ abstract class $AppRouter extends _i12.RootStackRouter {
   @override
   final Map<String, _i12.PageFactory> pagesMap = {
     DetailsRoute.name: (routeData) {
-      final args = routeData.argsAs<DetailsRouteArgs>();
+      final args = routeData.argsAs<DetailsRouteArgs>(
+          orElse: () => const DetailsRouteArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i12.DeferredWidget(
@@ -43,6 +44,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
           () => _i1.DetailsPage(
             key: args.key,
             airQuality: args.airQuality,
+            geo: args.geo,
           ),
         ),
       );
@@ -135,13 +137,15 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 class DetailsRoute extends _i12.PageRouteInfo<DetailsRouteArgs> {
   DetailsRoute({
     _i13.Key? key,
-    required _i14.AirQuality airQuality,
+    _i14.AirQuality? airQuality,
+    List<double>? geo,
     List<_i12.PageRouteInfo>? children,
   }) : super(
           DetailsRoute.name,
           args: DetailsRouteArgs(
             key: key,
             airQuality: airQuality,
+            geo: geo,
           ),
           initialChildren: children,
         );
@@ -155,16 +159,19 @@ class DetailsRoute extends _i12.PageRouteInfo<DetailsRouteArgs> {
 class DetailsRouteArgs {
   const DetailsRouteArgs({
     this.key,
-    required this.airQuality,
+    this.airQuality,
+    this.geo,
   });
 
   final _i13.Key? key;
 
-  final _i14.AirQuality airQuality;
+  final _i14.AirQuality? airQuality;
+
+  final List<double>? geo;
 
   @override
   String toString() {
-    return 'DetailsRouteArgs{key: $key, airQuality: $airQuality}';
+    return 'DetailsRouteArgs{key: $key, airQuality: $airQuality, geo: $geo}';
   }
 }
 
