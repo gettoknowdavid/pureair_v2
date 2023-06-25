@@ -9,5 +9,4 @@ export 'map_data_dto.dart';
 export 'measurements_dto.dart';
 export 'parameter_dto.dart';
 export 'search_data_dto.dart';
-export 'station_dto.dart';
 export 'time_dto.dart';

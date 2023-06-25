@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'station.dart';
+import 'city.dart';
 
 part 'map_data.freezed.dart';
 
@@ -11,6 +11,6 @@ class MapData with _$MapData {
     required double lon,
     required int uid,
     required String aqi,
-    required Station station,
+    required City station,
   }) = _MapData;
 }

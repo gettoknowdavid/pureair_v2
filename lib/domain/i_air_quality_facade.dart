@@ -13,6 +13,16 @@ abstract class IAirQualityFacade {
   /// `lon`: The longitude
   Future<Either<AQError, AirQuality?>> getByGeo(double lat, double lon);
 
+  Future<void> addCity(City city);
+
+  Future<void> removeCity(City city);
+
+  Future<void> clearSavedCities();
+
+  Future<List<City?>> getCities();
+
+  Future<Either<AQError, List<AirQuality?>>> getAllCityData();
+
   /// Returns the air quality data for the city with the give city name.
   ///
   /// If successful, the request returns an [AirQuality] object and if

@@ -14,16 +14,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: kHorizontalPadding18,
-        child: Column(
+    return RefreshIndicator(
+      onRefresh: context.read<AirQualityCubit>().refresh,
+      color: Colors.transparent,
+      child: Scaffold(
+        body: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: kHorizontalPadding18,
           children: [
             12.verticalSpace,
             const _TopSection(),
             20.verticalSpace,
             const AirQualityList(),
-            20.verticalSpace,
+            40.verticalSpace,
+            TextButton(
+              onPressed: context.read<AirQualityCubit>().clearSavedCities,
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.error,
+              ),
+              child: const Text('Clear saved cities'),
+            ),
           ],
         ),
       ),

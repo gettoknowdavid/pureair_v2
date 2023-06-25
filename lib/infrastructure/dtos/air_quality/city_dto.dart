@@ -11,10 +11,12 @@ part 'city_dto.g.dart';
 )
 class CityDto with _$CityDto {
   factory CityDto({
-    required List<double> geo,
+     required List<double> geo,
     required String name,
     String? url,
     String? location,
+    String? country,
+    DateTime? time,
   }) = _CityDto;
 
   factory CityDto.fromJson(Map<String, dynamic> json) =>

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'station_dto.dart';
+import 'city_dto.dart';
 import 'time_dto.dart';
 
 part 'search_data_dto.freezed.dart';
@@ -13,7 +13,7 @@ class SearchDataDto with _$SearchDataDto {
     required int uid,
     required String aqi,
     required TimeDto time,
-    required StationDto station,
+    required CityDto station,
   }) = _SearchDataDto;
 
   factory SearchDataDto.fromJson(Map<String, dynamic> json) =>

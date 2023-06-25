@@ -9,5 +9,7 @@ class City with _$City {
     required String name,
     String? url,
     String? location,
+    String? country,
+    DateTime? time,
   }) = _City;
 }

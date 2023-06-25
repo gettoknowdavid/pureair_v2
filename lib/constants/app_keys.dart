@@ -21,5 +21,7 @@ class AppKeys {
   static const String airQualityCard = '_air_quality_card';
 
   static const String initKey = '_init_key_';
+
+  static const String cities = '_air_quality_cities_';
   AppKeys._();
 }

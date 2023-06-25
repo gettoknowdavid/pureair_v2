@@ -5,14 +5,14 @@ class AirQualityState with _$AirQualityState {
   const factory AirQualityState({
     required List<AirQuality?> cities,
     required bool loading,
-    required Option<Either<AQError, AirQuality?>> option,
+    required Option<Either<AQError, List<AirQuality?>>> citiesOption,
   }) = _AirQualityState;
 
   factory AirQualityState.initial() {
     return AirQualityState(
       cities: [],
       loading: false,
-      option: none(),
+      citiesOption: none(),
     );
   }
 }

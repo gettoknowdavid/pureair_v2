@@ -15,7 +15,7 @@ class SearchDataMapper {
         sTime: entity.time.sTime,
         vTime: entity.time.vTime,
       ),
-      station: StationDto(
+      station: CityDto(
         country: entity.station.country,
         geo: entity.station.geo,
         name: entity.station.name,
@@ -37,7 +37,7 @@ class SearchDataMapper {
         sTime: dto.time.sTime,
         vTime: dto.time.vTime,
       ),
-      station: Station(
+      station: City(
         country: dto.station.country,
         geo: dto.station.geo,
         name: dto.station.name,
