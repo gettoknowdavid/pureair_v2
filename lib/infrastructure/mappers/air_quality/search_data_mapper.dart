@@ -1,6 +1,7 @@
 import 'package:pureair_v2/domain/domain.dart';
 
 import '../../dtos/dtos.dart';
+import 'city_mapper.dart';
 
 class SearchDataMapper {
   SearchDataDto? fromDomain(SearchData? entity) {
@@ -15,12 +16,7 @@ class SearchDataMapper {
         sTime: entity.time.sTime,
         vTime: entity.time.vTime,
       ),
-      station: CityDto(
-        country: entity.station.country,
-        geo: entity.station.geo,
-        name: entity.station.name,
-        url: entity.station.url,
-      ),
+      station: CityMapper().fromDomain(entity.station)!,
       uid: entity.uid,
     );
   }
@@ -37,13 +33,7 @@ class SearchDataMapper {
         sTime: dto.time.sTime,
         vTime: dto.time.vTime,
       ),
-      station: City(
-        country: dto.station.country,
-        geo: dto.station.geo,
-        name: dto.station.name,
-        time: dto.station.time,
-        url: dto.station.url,
-      ),
+      station: CityMapper().toDomain(dto.station)!,
       uid: dto.uid,
     );
   }

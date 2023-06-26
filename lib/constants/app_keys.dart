@@ -23,5 +23,7 @@ class AppKeys {
   static const String initKey = '_init_key_';
 
   static const String cities = '_air_quality_cities_';
+
+  static const String db = '_db_name_for_pureair_v2';
   AppKeys._();
 }

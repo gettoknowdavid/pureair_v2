@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pureair_v2/config/client/client.dart';
 import 'package:pureair_v2/config/config.dart';
-import 'package:pureair_v2/infrastructure/datasources/air_quality/aq_remote_datasource.dart';
+import 'package:pureair_v2/infrastructure/infrastructure.dart';
 import 'package:pureair_v2/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +17,9 @@ abstract class RegisterModule {
 
   @lazySingleton
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+
+  @preResolve
+  Future<ObjectBoxService> get obj => ObjectBoxService.create();
 
   @preResolve
   Future<SharedPreferences> get pref => SharedPreferences.getInstance();

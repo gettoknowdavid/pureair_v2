@@ -47,7 +47,7 @@ class SearchResultCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    data.station.name!,
+                    data.station.name,
                     style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -57,10 +57,7 @@ class SearchResultCard extends StatelessWidget {
                 ],
               ),
             ),
-            InkWell(
-              onTap: () {},
-              child: PhosphorIcon(PhosphorIcons.regular.caretRight, size: 18),
-            ),
+            PhosphorIcon(PhosphorIcons.regular.caretRight, size: 18),
           ],
         ),
       ),

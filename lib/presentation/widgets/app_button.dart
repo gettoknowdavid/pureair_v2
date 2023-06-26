@@ -44,6 +44,25 @@ class DetailsAddButton extends AppButton {
   String get title => 'Add';
 }
 
+class DetailsRemoveButton extends AppButton {
+  const DetailsRemoveButton({
+    super.key,
+    super.title = 'Remove',
+    super.disabled,
+    super.loading,
+    super.onPressed,
+  });
+
+  @override
+  Color? get backgroundColor => kTertiary;
+
+  @override
+  Size? get fixedSize => const Size(60, 28);
+
+  @override
+  String get title => 'Add';
+}
+
 class GoogleButton extends AppButton {
   const GoogleButton({
     super.key,

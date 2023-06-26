@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
@@ -49,6 +52,22 @@ class AirQualityCard extends StatelessWidget {
               ],
             ),
           ),
+          if (airQuality.city.isLocal == false)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: InkWell(
+                onTap: () {
+                  context.read<AirQualityCubit>().removeCity(airQuality.city);
+                },
+                child: AppContainer(
+                  height: 30,
+                  width: 30,
+                  backgroundColor: Colors.red,
+                  child: Icon(PhosphorIcons.bold.trash, size: 20),
+                ),
+              ),
+            ),
         ],
       ),
     );

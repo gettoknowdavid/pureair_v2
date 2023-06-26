@@ -1,6 +1,7 @@
 import 'package:pureair_v2/domain/domain.dart';
 
 import '../../dtos/dtos.dart';
+import 'city_mapper.dart';
 
 class MapDataMapper {
   MapDataDto? fromDomain(MapData? entity) {
@@ -12,11 +13,7 @@ class MapDataMapper {
       aqi: entity.aqi,
       lat: entity.lat,
       lon: entity.lon,
-      station: CityDto(
-        name: entity.station.name,
-        time: entity.station.time,
-        geo: [entity.lat, entity.lon],
-      ),
+      station: CityMapper().fromDomain(entity.station)!,
       uid: entity.uid,
     );
   }
@@ -30,11 +27,7 @@ class MapDataMapper {
       aqi: dto.aqi,
       lat: dto.lat,
       lon: dto.lon,
-      station: City(
-        name: dto.station.name,
-        time: dto.station.time,
-        geo: [dto.lat, dto.lon],
-      ),
+      station: CityMapper().toDomain(dto.station)!,
       uid: dto.uid,
     );
   }

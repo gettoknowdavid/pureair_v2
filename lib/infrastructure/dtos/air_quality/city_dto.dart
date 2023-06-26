@@ -1,27 +1,25 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:objectbox/objectbox.dart';
 
 part 'city_dto.freezed.dart';
 part 'city_dto.g.dart';
 
-@freezed
-@JsonSerializable(
-  explicitToJson: true,
-  createFactory: false,
-  includeIfNull: false,
-)
+@Freezed(toJson: true, addImplicitFinal: false)
 class CityDto with _$CityDto {
+  @Entity(realClass: CityDto)
   factory CityDto({
-     required List<double> geo,
-    required String name,
-    String? url,
-    String? location,
-    String? country,
-    DateTime? time,
+    int? id,
+    @Unique() String? uid,
+    required final List<double> geo,
+    required final String name,
+    final String? url,
+    final String? location,
+    final String? country,
+    @Property(type: PropertyType.date) final DateTime? time,
+    @Property(type: PropertyType.date) final DateTime? addedTime,
+    final bool? isLocal,
   }) = _CityDto;
 
   factory CityDto.fromJson(Map<String, dynamic> json) =>
       _$CityDtoFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$CityDtoToJson(this);
 }

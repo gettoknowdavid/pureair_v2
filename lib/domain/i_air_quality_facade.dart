@@ -2,6 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:pureair_v2/domain/domain.dart';
 
 abstract class IAirQualityFacade {
+  /// Adds a [City] to the repository for saving
+  Future<void> addCity(City city);
+
+  /// Removes all saved cities of type [City] from the repository
+  void clearSavedCities();
+
+  /// Returns the [AirQuality] data of the list of [City] save in the
+  /// repository
+  Future<Either<AQError, List<AirQuality?>>> getAllCityData();
+
   /// Returns nearest city's current data from a given latitude and longitude.
   ///
   /// If successful, the request returns an [AirQuality] object and if
@@ -13,15 +23,8 @@ abstract class IAirQualityFacade {
   /// `lon`: The longitude
   Future<Either<AQError, AirQuality?>> getByGeo(double lat, double lon);
 
-  Future<void> addCity(City city);
-
-  Future<void> removeCity(City city);
-
-  Future<void> clearSavedCities();
-
+  /// Returns a list of [City] saved to the repository
   Future<List<City?>> getCities();
-
-  Future<Either<AQError, List<AirQuality?>>> getAllCityData();
 
   /// Returns the air quality data for the city with the give city name.
   ///
@@ -39,6 +42,9 @@ abstract class IAirQualityFacade {
   /// If successful, the request returns an [AirQuality] object and if
   /// unsuccessful, the request returns an [AQError].
   Future<Either<AQError, AirQuality?>> getLocal();
+
+  /// Removes a [City] from the repository for saving
+  Future<void> removeCity(City city);
 
   /// Returns an array of possible stations matching the keyword inputted
   /// for search by the user.

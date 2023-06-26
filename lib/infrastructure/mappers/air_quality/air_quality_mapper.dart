@@ -1,6 +1,7 @@
 import 'package:pureair_v2/domain/domain.dart';
 
 import '../../dtos/dtos.dart';
+import 'city_mapper.dart';
 
 class AirQualityMapper {
   AirQualityDto? fromDomain(AirQuality? entity) {
@@ -22,12 +23,7 @@ class AirQualityMapper {
       attributions: attributions
           .map((e) => AttributionDto(logo: e.logo, name: e.name, url: e.url))
           .toList(),
-      city: CityDto(
-        geo: city.geo.map((e) => e).toList(),
-        name: city.name,
-        location: city.location,
-        url: city.url,
-      ),
+      city: CityMapper().fromDomain(city)!,
       debug: DebugDto(sync: debug.sync),
       forecast: ForecastDto(
         daily: DailyDto(
@@ -122,12 +118,7 @@ class AirQualityMapper {
       attributions: attributions
           .map((e) => Attribution(logo: e.logo, name: e.name, url: e.url))
           .toList(),
-      city: City(
-        geo: city.geo.map((e) => e).toList(),
-        name: city.name,
-        location: city.location,
-        url: city.url,
-      ),
+      city: CityMapper().toDomain(city)!,
       debug: Debug(sync: debug.sync),
       forecast: Forecast(
         daily: Daily(

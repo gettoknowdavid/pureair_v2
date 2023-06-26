@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
+import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/infrastructure/infrastructure.dart';
@@ -22,18 +23,35 @@ class AirQualityFacade implements IAirQualityFacade {
 
   @override
   Future<void> addCity(City city) async {
-    final cities = await _local.loadCities();
+    final cities = _local.getCities();
 
     // Check if the object already exists in the list
-    bool isDuplicate = cities.any((object) =>
-        object?.geo[0] == city.geo[0] && object?.geo[1] == city.geo[1]);
+    bool isDuplicate = cities.any((object) => object?.uid == city.uid);
 
     // If the object is not a duplicate, add it to the list
     if (!isDuplicate) {
-      cities.add(_cityMapper.fromDomain(city));
+      _local.addCity(_cityMapper.fromDomain(city)!);
+    }
+  }
 
-      // Save the updated list back to SharedPreferences
-      await _local.saveCities(cities);
+  @override
+  void clearSavedCities() => _local.clearSavedCities();
+
+  @override
+  Future<Either<AQError, List<AirQuality?>>> getAllCityData() async {
+    final cities = _local.getCities();
+
+    final List<Future<AirQuality?>> futures = cities.map((e) async {
+      final result = await _remote.getByGeo(e!.geo[0], e.geo[1]);
+      final dto = result.data?.copyWith(city: e);
+      return _airQualityMapper.toDomain(dto);
+    }).toList();
+
+    try {
+      final List<AirQuality?> list = await Future.wait<AirQuality?>(futures);
+      return right(list);
+    } catch (e) {
+      return left(const AQError.message("Oops. Let's try again."));
     }
   }
 
@@ -50,21 +68,8 @@ class AirQualityFacade implements IAirQualityFacade {
   }
 
   @override
-  Future<Either<AQError, List<AirQuality?>>> getAllCityData() async {
-    final cities = await _local.loadCities();
-
-    final List<Future<AirQuality?>> futures = cities.map((e) async {
-      final result = await _remote.getByGeo(e!.geo[0], e.geo[1]);
-      final dto = result.data;
-      return _airQualityMapper.toDomain(dto);
-    }).toList();
-
-    try {
-      final List<AirQuality?> list = await Future.wait<AirQuality?>(futures);
-      return right(list);
-    } catch (e) {
-      return left(const AQError.message("Oops. Let's try again."));
-    }
+  Future<List<City?>> getCities() async {
+    return _local.getCities().map((e) => _cityMapper.toDomain(e)).toList();
   }
 
   @override
@@ -86,7 +91,9 @@ class AirQualityFacade implements IAirQualityFacade {
       final dto = result.data;
       final airQuality = _airQualityMapper.toDomain(dto);
 
-      await addCity(airQuality!.city);
+      final uid = generateUUIDFromGeo(airQuality!.city.geo);
+      final updatedCity = airQuality.city.copyWith(uid: uid, isLocal: true);
+      await addCity(updatedCity);
 
       return right(airQuality);
     } on DioError catch (e) {
@@ -101,9 +108,7 @@ class AirQualityFacade implements IAirQualityFacade {
 
   @override
   Future<void> removeCity(City city) async {
-    final cities = await _local.loadCities();
-    cities.removeWhere((element) => element?.geo == city.geo);
-    await _local.saveCities(cities);
+    return _local.removeCity(_cityMapper.fromDomain(city)!);
   }
 
   @override
@@ -129,13 +134,4 @@ class AirQualityFacade implements IAirQualityFacade {
       return left(AQError.message(e.message));
     }
   }
-
-  @override
-  Future<List<City?>> getCities() async {
-    final list = await _local.loadCities();
-    return list.map((e) => _cityMapper.toDomain(e)).toList();
-  }
-
-  @override
-  Future<void> clearSavedCities() => _local.clearSavedCities();
 }

@@ -9,10 +9,15 @@ class CityMapper {
     }
 
     return CityDto(
+      id: entity.id,
+      uid: entity.uid,
+      isLocal: entity.isLocal,
       geo: entity.geo.map((e) => e).toList(),
       name: entity.name,
       location: entity.location,
       url: entity.url,
+      addedTime: entity.addedTime,
+      time: entity.time,
     );
   }
 
@@ -22,10 +27,15 @@ class CityMapper {
     }
 
     return City(
+      id: dto.id,
+      uid: dto.uid,
+      isLocal: dto.isLocal,
       geo: dto.geo.map((e) => e).toList(),
       name: dto.name,
       location: dto.location,
       url: dto.url,
+      addedTime: dto.addedTime,
+      time: dto.time,
     );
   }
 }

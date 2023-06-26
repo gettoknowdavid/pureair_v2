@@ -39,7 +39,8 @@ class DetailsPage extends HookWidget {
         height: kToolbarHeight * 0.6,
         child: DetailsAddButton(
           onPressed: () {
-            context.read<AirQualityCubit>().addCity(aq.value!.city);
+            final updatedCity = aq.value!.city.copyWith(isLocal: false);
+            context.read<AirQualityCubit>().addCity(updatedCity);
             context.router.popUntilRoot();
           },
         ),
