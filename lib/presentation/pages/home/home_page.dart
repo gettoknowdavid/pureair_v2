@@ -7,6 +7,7 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 import 'widgets/air_quality_list.dart';
+import 'widgets/local_air_quality.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -24,6 +25,8 @@ class HomePage extends StatelessWidget {
           children: [
             12.verticalSpace,
             const _TopSection(),
+            20.verticalSpace,
+            const LocalAirQuality(),
             20.verticalSpace,
             const AirQualityList(),
             40.verticalSpace,

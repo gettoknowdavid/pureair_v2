@@ -8,13 +8,16 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
+import 'air_quality_card_city_name.dart';
+import 'air_quality_card_skeleton.dart';
+
 class AirQualityCard extends StatelessWidget {
-  final AirQuality airQuality;
+  final AirQuality? airQuality;
   final bool loading;
 
   const AirQualityCard({
     super.key,
-    required this.airQuality,
+    this.airQuality,
     this.loading = false,
   });
 
@@ -24,6 +27,10 @@ class AirQualityCard extends StatelessWidget {
     final smallContainerHeight = (size.height * 0.25) * 0.3;
 
     final colorScheme = Theme.of(context).colorScheme;
+
+    if (airQuality == null || loading) {
+      return const AirQualityCardSkeleton();
+    }
 
     return InkWell(
       onTap: () => context.router.push(DetailsRoute(airQuality: airQuality)),
@@ -42,23 +49,23 @@ class AirQualityCard extends StatelessWidget {
             child: Column(
               children: [
                 18.verticalSpace,
-                _TopSection(
-                  airQuality: airQuality,
+                AirQualityCardCityName(
+                  airQuality: airQuality!,
                   height: smallContainerHeight,
                 ),
                 const AppDivider(height: 40, indent: 16, endIndent: 16),
-                WeatherSection(airQuality.measurements),
+                WeatherSection(airQuality!.measurements),
                 20.verticalSpace,
               ],
             ),
           ),
-          if (airQuality.city.isLocal == false)
+          if (airQuality!.city.isLocal == false)
             Positioned(
               top: 8,
               right: 8,
               child: InkWell(
                 onTap: () {
-                  context.read<AirQualityCubit>().removeCity(airQuality.city);
+                  context.read<AirQualityCubit>().removeCity(airQuality!.city);
                 },
                 child: AppContainer(
                   height: 30,
@@ -68,36 +75,6 @@ class AirQualityCard extends StatelessWidget {
                 ),
               ),
             ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TopSection extends StatelessWidget {
-  final AirQuality airQuality;
-  final double height;
-  const _TopSection({required this.airQuality, required this.height});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: kHorizontalPadding18,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          AqiWidget(height: height, airQuality: airQuality),
-          16.horizontalSpace,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CityName(city: airQuality.city),
-                4.verticalSpace,
-                HealthMessageWidget(aqi: airQuality.aqi),
-              ],
-            ),
-          ),
         ],
       ),
     );

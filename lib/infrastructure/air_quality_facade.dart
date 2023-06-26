@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
-import 'package:pureair_v2/config/config.dart';
 import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/infrastructure/infrastructure.dart';
@@ -91,15 +89,12 @@ class AirQualityFacade implements IAirQualityFacade {
       final dto = result.data;
       final airQuality = _airQualityMapper.toDomain(dto);
 
-      final uid = generateUUIDFromGeo(airQuality!.city.geo);
-      final updatedCity = airQuality.city.copyWith(uid: uid, isLocal: true);
-      await addCity(updatedCity);
+      // final uid = generateUUIDFromGeo(airQuality!.city.geo);
+      // final updatedCity = airQuality.city.copyWith(uid: uid, isLocal: true);
+      // _local.addLocal(_cityMapper.fromDomain(updatedCity)!);
 
       return right(airQuality);
     } on DioError catch (e) {
-      Logger().wtf(e);
-      Logger().wtf(e.response);
-      Logger().wtf(e.response?.data);
       return left(AQError.message(e.message));
     } on TimeoutException {
       return left(const AQError.message(kTimeout));

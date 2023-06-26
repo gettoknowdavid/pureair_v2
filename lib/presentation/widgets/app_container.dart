@@ -26,7 +26,7 @@ class AppContainer extends StatefulWidget {
     this.width,
     this.boxShadow,
     this.disabled = false,
-    this.duration = const Duration(milliseconds: 1000),
+    this.duration = const Duration(milliseconds: 650),
     this.loading = false,
     this.child,
     this.margin,
@@ -98,7 +98,7 @@ class _AppContainerState extends State<AppContainer>
             child: CustomPaint(
               isComplex: true,
               foregroundPainter: _BorderPainter(
-                color: _colorAnimation.value!,
+                color: _colorAnimation.value,
                 thickness: widget.thickness,
               ),
               child: Container(
@@ -118,15 +118,15 @@ class _AppContainerState extends State<AppContainer>
 }
 
 class _BorderPainter extends CustomPainter {
-  final Color color;
+  final Color? color;
   final double thickness;
 
-  _BorderPainter({required this.color, required this.thickness});
+  _BorderPainter({this.color, required this.thickness});
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color
+      ..color = color ?? const Color.fromARGB(255, 94, 94, 94)
       ..strokeWidth = thickness
       ..style = PaintingStyle.stroke;
 

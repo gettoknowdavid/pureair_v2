@@ -31,8 +31,6 @@ class _SkeletonLoaderState extends State<SkeletonLoader>
       return widget.child;
     }
 
-    
-
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {

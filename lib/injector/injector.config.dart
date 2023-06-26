@@ -75,9 +75,8 @@ extension GetItInjectableX on _i1.GetIt {
       () => registerModule.sharedPrefService,
       preResolve: true,
     );
-    gh.lazySingleton<_i14.AQLocalDatasource>(() => _i14.AQLocalDatasource(
-          gh<_i10.ObjectBoxService>(),
-        ));
+    gh.lazySingleton<_i14.AQLocalDatasource>(
+        () => _i14.AQLocalDatasource(gh<_i10.ObjectBoxService>()));
     gh.lazySingleton<_i15.AuthLocalDatasource>(
         () => _i15.AuthLocalDatasource(gh<_i10.SecureStorageService>()));
     gh.lazySingleton<_i16.IAirQualityFacade>(() => _i17.AirQualityFacade(

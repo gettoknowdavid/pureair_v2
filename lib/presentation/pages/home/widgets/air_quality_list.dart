@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pureair_v2/application/application.dart';
-import 'package:pureair_v2/constants/app_sizes.dart';
+import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
-import 'package:pureair_v2/presentation/pages/home/widgets/air_quality_card.dart';
-import 'package:pureair_v2/presentation/pages/loader.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
+
+import 'air_quality_card.dart';
+import 'air_quality_card_skeleton.dart';
 
 class AirQualityList extends HookWidget {
   const AirQualityList({super.key});
@@ -18,8 +19,7 @@ class AirQualityList extends HookWidget {
 
     return BlocConsumer<AirQualityCubit, AirQualityState>(
       bloc: bloc,
-      buildWhen: (p, c) =>
-          p.citiesOption != c.citiesOption || p.loading != c.loading,
+      buildWhen: (p, c) => p.citiesLoading != c.citiesLoading,
       listenWhen: (p, c) => p.citiesOption != c.citiesOption,
       listener: (context, state) {
         state.citiesOption.fold(
@@ -31,8 +31,8 @@ class AirQualityList extends HookWidget {
         );
       },
       builder: (context, state) {
-        if (bloc.state.loading) {
-          return const Loader();
+        if (bloc.state.citiesLoading) {
+          return const _Skeleton();
         }
 
         if (cities.value.isEmpty) {
@@ -60,5 +60,20 @@ class AirQualityList extends HookWidget {
       theme: Theme.of(context),
       content: SnackbarContent(failure.mapOrNull(message: (v) => v.message)),
     ));
+  }
+}
+
+class _Skeleton extends StatelessWidget {
+  const _Skeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: 2,
+      separatorBuilder: (context, index) => 20.verticalSpace,
+      itemBuilder: (context, index) => const AirQualityCardSkeleton(),
+    );
   }
 }

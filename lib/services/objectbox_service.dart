@@ -9,9 +9,11 @@ class ObjectBoxService {
   late final Store store;
 
   late final Box<CityDto> cityBox;
+  late final Box<CityDto> localBox;
 
   ObjectBoxService._create(this.store) {
     cityBox = Box<CityDto>(store);
+    localBox = Box<CityDto>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.
