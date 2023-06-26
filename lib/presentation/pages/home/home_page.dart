@@ -15,13 +15,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: context.read<AirQualityCubit>().refresh,
-      color: Colors.transparent,
-      child: Scaffold(
-        body: ListView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: kHorizontalPadding18,
+    return Scaffold(
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: kHorizontalPadding18,
+        child: Column(
           children: [
             12.verticalSpace,
             const _TopSection(),
