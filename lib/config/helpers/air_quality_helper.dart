@@ -167,13 +167,12 @@ List<ParameterInfo?> parameterColors = [
   ),
   ParameterInfo(
     parameter: "so2",
-    thresholds: [0.034, 0.144, 0.224, 0.304, 0.604, 0.804],
-    // thresholds: [0.034, 0.144, 0.224, 0.304, 0.604, 0.804, 1.004],
+    thresholds: [0.034, 0.144, 0.224, 0.304, 0.604, 0.804, 1.004],
     colors: _aqiColors,
   ),
   ParameterInfo(
     parameter: "no2",
-    thresholds: [1.24, 1.64, 2.04],
+    thresholds: [1.24, 1.64, 2.04, 3.04, 4.04, 5.04],
     colors: _aqiColors,
   ),
 ];
@@ -184,12 +183,17 @@ Color getColorForParameter(String parameter, [num? value]) {
     orElse: () => null,
   );
 
-  if (parameterColor != null && value != null) {
+  if (value == null) {
+    return Colors.transparent;
+  }
+
+  if (parameterColor != null) {
     for (var i = 0; i < parameterColor.thresholds.length; i++) {
       if (value <= parameterColor.thresholds[i]) {
         return parameterColor.colors[i];
       }
     }
   }
-  return Colors.black;
+
+  return kColorHazardous;
 }

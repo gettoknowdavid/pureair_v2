@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pureair_v2/config/helpers/air_quality_helper.dart';
-import 'package:pureair_v2/constants/app_sizes.dart';
-import 'package:pureair_v2/domain/entities/air_quality/measurements.dart';
-import 'package:pureair_v2/presentation/pages/details/widgets/details_section_title.dart';
-import 'package:pureair_v2/presentation/widgets/app_container.dart';
-import 'package:pureair_v2/presentation/widgets/app_divider.dart';
+import 'package:pureair_v2/config/config.dart';
+import 'package:pureair_v2/constants/constants.dart';
+import 'package:pureair_v2/domain/domain.dart';
+import 'package:pureair_v2/presentation/pages/details/widgets/index.dart';
+import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 class PollutantsGrid extends StatelessWidget {
   final Measurements measurements;
@@ -24,11 +23,11 @@ class PollutantsGrid extends StatelessWidget {
     return AppContainer(
       padding: const EdgeInsets.symmetric(vertical: kGlobalPadding),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const DetailsSectionTitle(title: 'Pollutants'),
           const AppDivider(height: 40, indent: 16, endIndent: 10),
           Wrap(
-            spacing: 16,
             runSpacing: 16,
             children: dictionary.entries.map((e) {
               return LayoutBuilder(
@@ -41,9 +40,11 @@ class PollutantsGrid extends StatelessWidget {
                     height: 46,
                     thickness: 1,
                     width: halfWidth - (12 * 2),
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         const Spacer(),
                         _Name(name: e.key, width: valueWidth),

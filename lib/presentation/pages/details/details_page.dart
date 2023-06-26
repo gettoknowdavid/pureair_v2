@@ -7,17 +7,13 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
-import 'health_recommendation.dart';
-import 'info_section.dart';
-import 'pollutants_grid.dart';
-import 'station_details.dart';
-import 'widgets/details_chart_section.dart';
-import 'widgets/forecast_widget.dart';
+import 'widgets/index.dart';
 
 @RoutePage(deferredLoading: true)
 class DetailsPage extends HookWidget {
   final AirQuality? airQuality;
   final List<double>? geo;
+  
   const DetailsPage({
     super.key,
     this.airQuality,
