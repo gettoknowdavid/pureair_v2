@@ -6,16 +6,6 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/pages/loader.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
-final _locations = [
-  "Trending",
-  "Lagos",
-  "Abuja",
-  "Bali",
-  "Port Harcourt",
-  "Chicago",
-  "Beijing"
-];
-
 class AddCityBottomSheet extends StatelessWidget {
   const AddCityBottomSheet({super.key});
 
@@ -39,16 +29,15 @@ class AddCityBottomSheet extends StatelessWidget {
             padding: kHorizontalPadding18,
             child: Text(
               'Add another city',
-              style: textTheme.bodyLarge?.copyWith(
+              style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          20.verticalSpace,
+          14.verticalSpace,
           BlocBuilder<SearchCubit, SearchState>(
             bloc: cubit,
-            buildWhen: (p, c) =>
-                p.keyword != c.keyword || p.loading != c.loading,
+            buildWhen: (p, c) => p.keyword != c.keyword,
             builder: (context, state) => Column(
               children: [
                 Padding(
@@ -62,7 +51,7 @@ class AddCityBottomSheet extends StatelessWidget {
                   ),
                 ),
                 20.verticalSpace,
-                const LimitedBox(maxHeight: 22, child: _ChipList()),
+                // const LimitedBox(maxHeight: 22, child: _ChipList()),
                 if (cubit.state.loading)
                   SizedBox(
                     height: 50,
@@ -93,30 +82,40 @@ class AddCityBottomSheet extends StatelessWidget {
   }
 }
 
-class _ChipList extends StatelessWidget {
-  const _ChipList();
+// class _ChipList extends StatelessWidget {
+//   const _ChipList();
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
+//   @override
+//   Widget build(BuildContext context) {
+//     final theme = Theme.of(context);
+//     final colorScheme = theme.colorScheme;
+//     final textTheme = theme.textTheme;
 
-    return ListView.separated(
-      padding: kHorizontalPadding18,
-      itemCount: _locations.length,
-      separatorBuilder: (context, index) => 14.horizontalSpace,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) => OutlinedButton(
-        onPressed: () {},
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          backgroundColor: index == 0 ? colorScheme.tertiary : null,
-          foregroundColor: index == 0 ? colorScheme.onTertiary : null,
-          textStyle: textTheme.labelMedium,
-        ),
-        child: Text(_locations[index]),
-      ),
-    );
-  }
-}
+//     return ListView.separated(
+//       padding: kHorizontalPadding18,
+//       itemCount: _locations.length,
+//       separatorBuilder: (context, index) => 14.horizontalSpace,
+//       scrollDirection: Axis.horizontal,
+//       itemBuilder: (context, index) => OutlinedButton(
+//         onPressed: () {},
+//         style: OutlinedButton.styleFrom(
+//           padding: const EdgeInsets.symmetric(horizontal: 10),
+//           backgroundColor: index == 0 ? colorScheme.tertiary : null,
+//           foregroundColor: index == 0 ? colorScheme.onTertiary : null,
+//           textStyle: textTheme.labelMedium,
+//         ),
+//         child: Text(_locations[index]),
+//       ),
+//     );
+//   }
+// }
+
+// final _locations = [
+//   "Trending",
+//   "Lagos",
+//   "Abuja",
+//   "Bali",
+//   "Port Harcourt",
+//   "Chicago",
+//   "Beijing"
+// ];

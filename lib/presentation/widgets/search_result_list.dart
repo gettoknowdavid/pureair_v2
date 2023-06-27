@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
 
@@ -49,8 +48,6 @@ class _SearchResultListState extends State<SearchResultList> {
       listenWhen: (p, c) => p.keyword != c.keyword,
       listener: (context, state) {},
       builder: (context, state) {
-        Logger().wtf(state);
-
         if (cubit.state.result.isEmpty) {
           return const SizedBox();
         }
