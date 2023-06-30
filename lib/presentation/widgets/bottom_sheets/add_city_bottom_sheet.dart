@@ -44,7 +44,7 @@ class AddCityBottomSheet extends StatelessWidget {
                   padding: kHorizontalPadding18,
                   child: AppTextField(
                     hint: 'Search city',
-                    key: const Key(AppKeys.loginEmailInput),
+                    key: const Key(AppKeys.searchKeywordInput),
                     keyboardType: TextInputType.emailAddress,
                     onChanged: cubit.keywordChanged,
                     prefixIcon: Icon(PhosphorIcons.regular.magnifyingGlass),

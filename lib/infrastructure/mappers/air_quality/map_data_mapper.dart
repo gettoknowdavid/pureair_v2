@@ -15,6 +15,7 @@ class MapDataMapper {
       lon: entity.lon,
       station: CityMapper().fromDomain(entity.station)!,
       uid: entity.uid,
+      markerIcon: entity.markerIcon,
     );
   }
 
@@ -29,6 +30,7 @@ class MapDataMapper {
       lon: dto.lon,
       station: CityMapper().toDomain(dto.station)!,
       uid: dto.uid,
+      markerIcon: dto.markerIcon,
     );
   }
 }

@@ -7,7 +7,7 @@ class City with _$City {
   factory City({
     int? id,
     String? uid,
-    required List<double> geo,
+    List<double>? geo,
     required String name,
     String? url,
     String? location,

@@ -22,6 +22,7 @@ class AppTextField extends StatefulWidget {
   final bool isFieldValid;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final Color? fillColor;
 
   const AppTextField({
     super.key,
@@ -43,6 +44,7 @@ class AppTextField extends StatefulWidget {
     this.isFieldValid = false,
     this.suffixIcon,
     this.prefixIcon,
+    this.fillColor,
   });
 
   @override
@@ -88,6 +90,8 @@ class _AppTextFieldState extends State<AppTextField> {
         hintText: widget.hint,
         labelText: widget.label,
         labelStyle: labelStyle,
+        fillColor: widget.fillColor,
+        filled: widget.fillColor != null,
         floatingLabelStyle: floatingLabelStyle,
         hintStyle: hintStyle,
         suffixIcon: _suffixIcon(theme),

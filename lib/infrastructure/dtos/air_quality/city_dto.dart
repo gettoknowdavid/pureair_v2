@@ -10,7 +10,7 @@ class CityDto with _$CityDto {
   factory CityDto({
     int? id,
     @Unique() String? uid,
-    required final List<double> geo,
+    final List<double>? geo,
     required final String name,
     final String? url,
     final String? location,

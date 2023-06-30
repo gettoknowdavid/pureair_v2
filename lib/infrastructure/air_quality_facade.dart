@@ -40,7 +40,7 @@ class AirQualityFacade implements IAirQualityFacade {
     final cities = _local.getCities();
 
     final List<Future<AirQuality?>> futures = cities.map((e) async {
-      final result = await _remote.getByGeo(e!.geo[0], e.geo[1]);
+      final result = await _remote.getByGeo(e!.geo![0], e.geo![1]);
       final dto = result.data?.copyWith(city: e);
       return _airQualityMapper.toDomain(dto);
     }).toList();

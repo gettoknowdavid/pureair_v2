@@ -16,7 +16,7 @@ class AirQualityCubit extends Cubit<AirQualityState> {
   Future<void> addCity(City city) async {
     emit(state.copyWith(citiesLoading: true));
 
-    final uid = generateUUIDFromGeo(city.geo);
+    final uid = generateUUIDFromGeo(city.geo!);
     await _facade.addCity(city.copyWith(uid: uid, addedTime: DateTime.now()));
     final cities = await _facade.getAllCityData();
 

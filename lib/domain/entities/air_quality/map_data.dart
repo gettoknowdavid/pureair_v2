@@ -12,5 +12,6 @@ class MapData with _$MapData {
     required int uid,
     required String aqi,
     required City station,
+    dynamic markerIcon,
   }) = _MapData;
 }

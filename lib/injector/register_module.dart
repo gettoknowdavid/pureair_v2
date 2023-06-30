@@ -8,11 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @module
 abstract class RegisterModule {
-  final _dio = dioClient();
+  final _aqiDio = dioClient();
+
+  final aOptions = const AndroidOptions(encryptedSharedPreferences: true);
 
   @lazySingleton
   AQRemoteDatasource get aqRemote {
-    return AQRemoteDatasource(_dio, baseUrl: Env.waqiBaseUrl);
+    return AQRemoteDatasource(_aqiDio, baseUrl: Env.waqiBaseUrl);
   }
 
   @lazySingleton
@@ -26,9 +28,7 @@ abstract class RegisterModule {
 
   @lazySingleton
   FlutterSecureStorage get secureStorage {
-    return const FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    );
+    return FlutterSecureStorage(aOptions: aOptions);
   }
 
   @preResolve

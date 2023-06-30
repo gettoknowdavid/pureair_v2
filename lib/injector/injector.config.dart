@@ -9,21 +9,22 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:firebase_auth/firebase_auth.dart' as _i5;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i7;
+import 'package:firebase_auth/firebase_auth.dart' as _i6;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i4;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i13;
 
-import '../application/air_quality_cubit/air_quality_cubit.dart' as _i23;
-import '../application/auth_bloc/auth_bloc.dart' as _i24;
+import '../application/air_quality_cubit/air_quality_cubit.dart' as _i24;
+import '../application/auth_bloc/auth_bloc.dart' as _i25;
 import '../application/forgot_password_cubit/forgot_password_cubit.dart'
-    as _i25;
+    as _i26;
 import '../application/login_cubit/login_cubit.dart' as _i20;
+import '../application/map/map_cubit.dart' as _i21;
 import '../application/password_cubit/password_cubit.dart' as _i11;
-import '../application/register_cubit/register_cubit.dart' as _i21;
-import '../application/search_cubit/search_cubit.dart' as _i22;
-import '../config/router/app_router.dart' as _i4;
+import '../application/register_cubit/register_cubit.dart' as _i22;
+import '../application/search_cubit/search_cubit.dart' as _i23;
+import '../config/router/app_router.dart' as _i5;
 import '../domain/domain.dart' as _i16;
 import '../infrastructure/air_quality_facade.dart' as _i17;
 import '../infrastructure/auth_facade.dart' as _i18;
@@ -32,12 +33,12 @@ import '../infrastructure/datasources/air_quality/aq_local_datasource.dart'
 import '../infrastructure/datasources/auth_local_datasource.dart' as _i15;
 import '../infrastructure/datasources/datasources.dart' as _i19;
 import '../infrastructure/infrastructure.dart' as _i3;
-import '../services/firebase_auth_service.dart' as _i6;
+import '../services/firebase_auth_service.dart' as _i7;
 import '../services/location_service.dart' as _i8;
 import '../services/mail_app_service.dart' as _i9;
 import '../services/secure_storage_service.dart' as _i12;
 import '../services/services.dart' as _i10;
-import 'register_module.dart' as _i26;
+import 'register_module.dart' as _i27;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -52,11 +53,12 @@ extension GetItInjectableX on _i1.GetIt {
     );
     final registerModule = _$RegisterModule();
     gh.lazySingleton<_i3.AQRemoteDatasource>(() => registerModule.aqRemote);
-    gh.factory<_i4.AppRouter>(() => _i4.AppRouter());
-    gh.lazySingleton<_i5.FirebaseAuth>(() => registerModule.firebaseAuth);
-    gh.factory<_i6.FirebaseAuthService>(
-        () => _i6.FirebaseAuthService(gh<_i5.FirebaseAuth>()));
-    gh.lazySingleton<_i7.FlutterSecureStorage>(
+    gh.factory<_i4.AndroidOptions>(() => registerModule.aOptions);
+    gh.factory<_i5.AppRouter>(() => _i5.AppRouter());
+    gh.lazySingleton<_i6.FirebaseAuth>(() => registerModule.firebaseAuth);
+    gh.factory<_i7.FirebaseAuthService>(
+        () => _i7.FirebaseAuthService(gh<_i6.FirebaseAuth>()));
+    gh.lazySingleton<_i4.FlutterSecureStorage>(
         () => registerModule.secureStorage);
     gh.singleton<_i8.LocationService>(_i8.LocationService());
     gh.lazySingleton<_i9.MailAppService>(() => _i9.MailAppService());
@@ -66,7 +68,7 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.factory<_i11.PasswordCubit>(() => _i11.PasswordCubit());
     gh.lazySingleton<_i12.SecureStorageService>(
-        () => _i12.SecureStorageService(gh<_i7.FlutterSecureStorage>()));
+        () => _i12.SecureStorageService(gh<_i4.FlutterSecureStorage>()));
     await gh.factoryAsync<_i13.SharedPreferences>(
       () => registerModule.pref,
       preResolve: true,
@@ -88,14 +90,18 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i19.AuthLocalDatasource>(),
         ));
     gh.factory<_i20.LoginCubit>(() => _i20.LoginCubit(gh<_i16.IAuthFacade>()));
-    gh.factory<_i21.RegisterCubit>(
-        () => _i21.RegisterCubit(gh<_i16.IAuthFacade>()));
-    gh.factory<_i22.SearchCubit>(
-        () => _i22.SearchCubit(gh<_i16.IAirQualityFacade>()));
-    gh.factory<_i23.AirQualityCubit>(
-        () => _i23.AirQualityCubit(gh<_i16.IAirQualityFacade>()));
-    gh.factory<_i24.AuthBloc>(() => _i24.AuthBloc(gh<_i16.IAuthFacade>()));
-    gh.factory<_i25.ForgotPasswordCubit>(() => _i25.ForgotPasswordCubit(
+    gh.factory<_i21.MapCubit>(() => _i21.MapCubit(
+          gh<_i8.LocationService>(),
+          gh<_i16.IAirQualityFacade>(),
+        ));
+    gh.factory<_i22.RegisterCubit>(
+        () => _i22.RegisterCubit(gh<_i16.IAuthFacade>()));
+    gh.factory<_i23.SearchCubit>(
+        () => _i23.SearchCubit(gh<_i16.IAirQualityFacade>()));
+    gh.factory<_i24.AirQualityCubit>(
+        () => _i24.AirQualityCubit(gh<_i16.IAirQualityFacade>()));
+    gh.factory<_i25.AuthBloc>(() => _i25.AuthBloc(gh<_i16.IAuthFacade>()));
+    gh.factory<_i26.ForgotPasswordCubit>(() => _i26.ForgotPasswordCubit(
           gh<_i16.IAuthFacade>(),
           gh<_i10.MailAppService>(),
         ));
@@ -103,4 +109,4 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i26.RegisterModule {}
+class _$RegisterModule extends _i27.RegisterModule {}

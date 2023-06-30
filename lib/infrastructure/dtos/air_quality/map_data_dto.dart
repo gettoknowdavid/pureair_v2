@@ -14,6 +14,7 @@ class MapDataDto with _$MapDataDto {
     required int uid,
     required String aqi,
     required CityDto station,
+    dynamic markerIcon,
   }) = _MapDataDto;
 
   factory MapDataDto.fromJson(Map<String, dynamic> json) =>
