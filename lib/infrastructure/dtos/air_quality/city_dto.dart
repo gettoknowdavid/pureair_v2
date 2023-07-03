@@ -18,6 +18,9 @@ class CityDto with _$CityDto {
     @Property(type: PropertyType.date) final DateTime? time,
     @Property(type: PropertyType.date) final DateTime? addedTime,
     final bool? isLocal,
+    int? aqi,
+    String? flagUrl,
+    String? localeName,
   }) = _CityDto;
 
   factory CityDto.fromJson(Map<String, dynamic> json) =>

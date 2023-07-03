@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/config/router/router.dart';
+import 'package:pureair_v2/constants/constants.dart';
 
 import 'widgets/widgets.dart';
 
@@ -14,6 +15,7 @@ class LayoutPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBarStyle = Theme.of(context).textTheme.bodyLarge;
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
         await context.read<MapCubit>().initialized();
@@ -35,8 +37,10 @@ class LayoutPage extends HookWidget {
             child = HomeAppBar(onTap: () => tabsRouter.setActiveIndex(3));
             break;
           case 1:
-            child = const ExploreAppBar();
+            child = AppBar(title: Text(kExploreTitle, style: appBarStyle));
             break;
+          case 2:
+            child = AppBar(title: Text(kRankTitle, style: appBarStyle));
           default:
         }
 

@@ -18,6 +18,9 @@ class CityMapper {
       url: entity.url,
       addedTime: entity.addedTime,
       time: entity.time,
+      aqi: entity.aqi,
+      flagUrl: entity.flagUrl,
+      localeName: entity.localeName,
     );
   }
 
@@ -36,6 +39,9 @@ class CityMapper {
       url: dto.url,
       addedTime: dto.addedTime,
       time: dto.time,
+      aqi: dto.aqi,
+      flagUrl: dto.flagUrl,
+      localeName: dto.localeName,
     );
   }
 }

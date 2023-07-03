@@ -49,7 +49,7 @@ class DetailsPage extends HookWidget {
         aq.value = airQuality!;
         loading.value = false;
       } else {
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
           await context.read<SearchCubit>().loadDetails(geo!).then((value) {
             aq.value = value!;
             loading.value = false;

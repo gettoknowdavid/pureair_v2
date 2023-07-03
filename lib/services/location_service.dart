@@ -1,3 +1,5 @@
+import 'package:flag/flag.dart';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -72,6 +74,21 @@ class LocationService {
     _currentGeo = LatLng(location.latitude, location.longitude);
 
     return location;
+  }
+
+  Future<List<double>> geoFromAddress(String name) async {
+    final location = await locationFromAddress(name);
+    final geo = [location[0].latitude, location[0].longitude];
+    return geo;
+  }
+
+  Future<Flag> getFlag(List<double> geo) async {
+    try {
+      final placemarks = await placemarkFromCoordinates(geo[0], geo[1]);
+      return Flag.fromString(placemarks[0].isoCountryCode!, fit: BoxFit.fill);
+    } catch (e) {
+      return Future.error('No placemark found for set geo points.');
+    }
   }
 
   Future<Place> getPlace(String placeId) async {

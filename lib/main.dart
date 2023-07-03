@@ -28,10 +28,8 @@ Future<void> main() async {
         BlocProvider(create: (ctx) => di<SearchCubit>()),
         BlocProvider(create: (ctx) => di<AuthBloc>()),
         BlocProvider(create: (ctx) => di<MapCubit>()..initialized()),
-        BlocProvider(
-          create: (ctx) => di<AirQualityCubit>()..initialized(),
-          lazy: true,
-        ),
+        BlocProvider(create: (ctx) => di<RankCubit>()..initialized()),
+        BlocProvider(create: (ctx) => di<AirQualityCubit>()..initialized()),
       ],
       child: const PureAirApp(),
     ),

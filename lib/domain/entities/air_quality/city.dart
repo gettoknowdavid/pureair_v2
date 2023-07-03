@@ -15,5 +15,8 @@ class City with _$City {
     DateTime? time,
     DateTime? addedTime,
     bool? isLocal,
+    int? aqi,
+    String? flagUrl,
+    String? localeName,
   }) = _City;
 }
