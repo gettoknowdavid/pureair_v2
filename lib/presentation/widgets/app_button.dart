@@ -73,7 +73,7 @@ class GoogleButton extends AppButton {
   });
 
   @override
-  Color? get backgroundColor => kTertiary;
+  Color? get backgroundColor => kSecondary;
 
   @override
   Widget? get icon {
@@ -90,6 +90,35 @@ class GoogleButton extends AppButton {
 
   @override
   String get title => 'Continue with Google';
+}
+
+class FacebookButton extends AppButton {
+  const FacebookButton({
+    super.key,
+    super.title = 'Continue with Facebook',
+    super.disabled,
+    super.loading,
+    super.onPressed,
+  });
+
+  @override
+  Color? get backgroundColor => kTertiary;
+
+  @override
+  Widget? get icon {
+    return Container(
+      height: 20,
+      width: 20,
+      decoration: const ShapeDecoration(
+        color: Colors.white,
+        shape: CircleBorder(side: BorderSide()),
+      ),
+      child: PhosphorIcon(PhosphorIcons.bold.facebookLogo, size: 18),
+    );
+  }
+
+  @override
+  String get title => 'Continue with Facebook';
 }
 
 class PrimaryButton extends AppButton {
