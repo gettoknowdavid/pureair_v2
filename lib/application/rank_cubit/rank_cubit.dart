@@ -30,7 +30,7 @@ class RankCubit extends Cubit<RankState> {
   Future<void> initialized() async {
     emit(state.copyWith(loading: true));
     final result = await _getMapData();
-    final filteredList = RankFilter.worst.apply(result);
+    final filteredList = RankFilter.top10.apply(result);
     emit(state.copyWith(loading: false, cities: filteredList));
   }
 
