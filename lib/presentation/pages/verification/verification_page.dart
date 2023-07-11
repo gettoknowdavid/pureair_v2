@@ -60,6 +60,7 @@ class VerificationPage extends StatelessWidget {
               40.verticalSpace,
               TertiaryButton(
                 onPressed: () {},
+                foregroundColor: colorScheme.onBackground,
                 title: 'Open mail app',
               ),
               20.verticalSpace,
