@@ -21,6 +21,9 @@ class AppTextField extends StatefulWidget {
   final TextInputAction textInputAction;
   final bool isFieldValid;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final Color? fillColor;
+
   const AppTextField({
     super.key,
     required this.hint,
@@ -40,6 +43,8 @@ class AppTextField extends StatefulWidget {
     this.textInputAction = TextInputAction.next,
     this.isFieldValid = false,
     this.suffixIcon,
+    this.prefixIcon,
+    this.fillColor,
   });
 
   @override
@@ -85,9 +90,12 @@ class _AppTextFieldState extends State<AppTextField> {
         hintText: widget.hint,
         labelText: widget.label,
         labelStyle: labelStyle,
+        fillColor: widget.fillColor,
+        filled: widget.fillColor != null,
         floatingLabelStyle: floatingLabelStyle,
         hintStyle: hintStyle,
         suffixIcon: _suffixIcon(theme),
+        prefixIcon: widget.prefixIcon,
         contentPadding: const EdgeInsets.all(16),
         enabled: widget.enabled,
       ),

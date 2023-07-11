@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/app.dart';
 import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/services/location_service.dart';
 
 import 'firebase_options.dart';
 import 'injector/injector.dart';
@@ -15,24 +16,20 @@ Future<void> main() async {
 
   await configureDependencies();
 
+  await di<LocationService>().determinePosition();
+
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (ctx) => di<LoginCubit>(), lazy: true),
-        BlocProvider(create: (ctx) => di<RegisterCubit>(), lazy: true),
-        BlocProvider(create: (ctx) => di<ForgotPasswordCubit>(), lazy: true),
-        BlocProvider(create: (ctx) => di<PasswordCubit>(), lazy: true),
-        BlocProvider(
-          create: (ctx) =>
-              di<AirQualityBloc>()..add(const AirQualityEvent.initialized()),
-          lazy: true,
-        ),
-        BlocProvider(
-          create: (ctx) => di<WeatherCubit>()..initialized(),
-          lazy: true,
-        ),
-        BlocProvider(create: (ctx) => di<LocationCubit>()..getUserLocation()),
+        BlocProvider(create: (ctx) => di<LoginCubit>()),
+        BlocProvider(create: (ctx) => di<RegisterCubit>()),
+        BlocProvider(create: (ctx) => di<ForgotPasswordCubit>()),
+        BlocProvider(create: (ctx) => di<PasswordCubit>()),
+        BlocProvider(create: (ctx) => di<SearchCubit>()),
         BlocProvider(create: (ctx) => di<AuthBloc>()),
+        BlocProvider(create: (ctx) => di<MapCubit>()..initialized()),
+        BlocProvider(create: (ctx) => di<RankCubit>()..initialized()),
+        BlocProvider(create: (ctx) => di<AirQualityCubit>()..initialized()),
       ],
       child: const PureAirApp(),
     ),

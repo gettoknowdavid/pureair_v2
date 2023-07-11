@@ -36,7 +36,7 @@ class _AuthRedirectionTextState extends State<AuthRedirectionText> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    final style = textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold);
+    final style = textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold);
 
     return RichText(
       textAlign: TextAlign.center,

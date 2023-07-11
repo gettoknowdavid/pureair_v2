@@ -11,6 +11,7 @@
         android:label="pureair_v2"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDPKQi4rKr2hwF-XkjqlwBGY9TLQ_J7KfU"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

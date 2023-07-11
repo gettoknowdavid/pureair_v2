@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/config/router/router.dart';
-import 'package:pureair_v2/presentation/pages/layout/widgets/home_app_bar.dart';
+import 'package:pureair_v2/constants/constants.dart';
 
 import 'widgets/widgets.dart';
 
@@ -12,6 +12,8 @@ class LayoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBarStyle = Theme.of(context).textTheme.bodyLarge;
+
     return AutoTabsScaffold(
       routes: const [
         HomeRoute(),
@@ -25,6 +27,13 @@ class LayoutPage extends StatelessWidget {
           case 0:
             child = HomeAppBar(onTap: () => tabsRouter.setActiveIndex(3));
             break;
+          case 1:
+            child = AppBar(title: Text(kExploreTitle, style: appBarStyle));
+            break;
+          case 2:
+            child = AppBar(title: Text(kRankTitle, style: appBarStyle));
+          case 3:
+            child = const ProfileAppBar();
           default:
         }
 

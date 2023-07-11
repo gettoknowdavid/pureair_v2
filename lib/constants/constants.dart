@@ -3,3 +3,5 @@ export 'app_keys.dart';
 export 'app_sizes.dart';
 export 'app_texts.dart';
 export 'password_rules.dart';
+
+const timeLimit = Duration(seconds: 30);

@@ -7,6 +7,7 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 import 'login_form.dart';
+import 'widgets/terms_condition_policy_link.dart';
 
 @RoutePage(deferredLoading: true)
 class LoginPage extends StatelessWidget {
@@ -61,12 +62,20 @@ class LoginPage extends StatelessWidget {
               disabled: cubit.state.loading || cubit.state.googleSignInLoading,
               onPressed: cubit.googleSignPressed,
             ),
+            30.verticalSpace,
+            FacebookButton(
+              loading: false,
+              disabled: cubit.state.loading || cubit.state.googleSignInLoading,
+              onPressed: () {},
+            ),
             40.verticalSpace,
             AuthRedirectionText(
               text: "Don't have an account yet? ",
               buttonText: "Register now",
               action: () => context.router.push(const RegisterRoute()),
             ),
+            70.verticalSpace,
+            const TermsConditionPolicyLink(),
             30.verticalSpace,
           ],
         ),

@@ -1,29 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pureair_v2/application/air_quality_bloc/air_quality_bloc.dart';
-import 'package:pureair_v2/constants/app_sizes.dart';
-import 'package:pureair_v2/presentation/pages/home/widgets/air_quality_card.dart';
-import 'package:pureair_v2/presentation/pages/loader.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/constants/constants.dart';
+import 'package:pureair_v2/domain/domain.dart';
+import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
-class AirQualityList extends StatelessWidget {
+import 'air_quality_card.dart';
+import 'air_quality_card_skeleton.dart';
+
+class AirQualityList extends HookWidget {
   const AirQualityList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<AirQualityBloc>();
-    return BlocBuilder<AirQualityBloc, AirQualityState>(
+    final bloc = context.watch<AirQualityCubit>();
+    final cities = useState<List<AirQuality?>>([]);
+
+    return BlocConsumer<AirQualityCubit, AirQualityState>(
       bloc: bloc,
-      buildWhen: (p, c) => p.airQualityList != c.airQualityList,
+      buildWhen: (p, c) => p.citiesLoading != c.citiesLoading,
+      listenWhen: (p, c) => p.citiesOption != c.citiesOption,
+      listener: (context, state) {
+        state.citiesOption.fold(
+          () => null,
+          (either) => either.fold(
+            (failure) => _showFailureMessage(failure, context),
+            (success) => cities.value = success,
+          ),
+        );
+      },
       builder: (context, state) {
-        if (bloc.state.currentAQIOption.isNone() && bloc.state.loading) {
-          return const Loader();
+        if (bloc.state.citiesLoading) {
+          return const _Skeleton();
         }
 
-        if (bloc.state.airQualityList.isEmpty) {
+        if (cities.value.isEmpty) {
           return const SizedBox();
         }
 
-        final length = bloc.state.airQualityList.length;
+        final length = cities.value.length;
 
         return ListView.separated(
           shrinkWrap: true,
@@ -31,11 +47,33 @@ class AirQualityList extends StatelessWidget {
           itemCount: length,
           separatorBuilder: (context, index) => 20.verticalSpace,
           itemBuilder: (context, index) {
-            final airQuality = bloc.state.airQualityList[index]!;
+            final airQuality = cities.value[index]!;
             return AirQualityCard(airQuality: airQuality);
           },
         );
       },
+    );
+  }
+
+  void _showFailureMessage(AQError failure, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(AppSnackbar(
+      theme: Theme.of(context),
+      content: SnackbarContent(failure.mapOrNull(message: (v) => v.message)),
+    ));
+  }
+}
+
+class _Skeleton extends StatelessWidget {
+  const _Skeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: 2,
+      separatorBuilder: (context, index) => 20.verticalSpace,
+      itemBuilder: (context, index) => const AirQualityCardSkeleton(),
     );
   }
 }

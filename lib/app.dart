@@ -4,15 +4,10 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import 'config/router/app_router.dart';
 
-class PureAirApp extends StatefulWidget {
+final router = AppRouter();
+
+class PureAirApp extends StatelessWidget {
   const PureAirApp({super.key});
-
-  @override
-  State<PureAirApp> createState() => _PureAirAppState();
-}
-
-class _PureAirAppState extends State<PureAirApp> {
-  final router = AppRouter();
 
   @override
   Widget build(BuildContext context) {
