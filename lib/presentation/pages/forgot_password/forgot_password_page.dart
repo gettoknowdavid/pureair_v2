@@ -72,7 +72,7 @@ class ForgotPasswordPage extends StatelessWidget {
   }
 
   void _showFailureMessage(AuthError failure, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(AppSnackbar(
+    ScaffoldMessenger.of(context).showSnackBar(ErrorSnackbar(
       theme: Theme.of(context),
       content: SnackbarContent(failure.mapOrNull(
         serverError: (_) => kServerError,
@@ -127,27 +127,22 @@ class _ConfirmationPage extends StatelessWidget {
 class _Email extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<ForgotPasswordCubit>();
-
-    final emailValidator = context.select(
-      (ForgotPasswordCubit cubit) => cubit.state.email.value.fold(
-        (f) => f.mapOrNull(invalidEmail: (_) => kInvalidEmail),
-        (r) => null,
-      ),
-    );
-
+    final cubit = context.watch<ForgotPasswordCubit>();
     return BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
-      bloc: bloc,
+      bloc: cubit,
       buildWhen: (p, c) => p.email != c.email,
       builder: (context, state) => AppTextField(
         key: const Key(AppKeys.forgotPasswordEmailInput),
         keyboardType: TextInputType.emailAddress,
-        enabled: !bloc.state.loading,
-        onChanged: bloc.emailChanged,
-        validator: (_) => emailValidator,
+        enabled: !cubit.state.loading,
+        onChanged: cubit.emailChanged,
         label: 'Email address',
         hint: 'Your Email',
-        isFieldValid: bloc.state.email.isValid(),
+        isFieldValid: cubit.state.email.isValid(),
+        validator: (_) => cubit.state.email.value.fold(
+          (f) => f.mapOrNull(invalidEmail: (_) => kInvalidEmail),
+          (r) => null,
+        ),
       ),
     );
   }
@@ -168,7 +163,6 @@ class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ForgotPasswordCubit>();
-
     return BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
       builder: (context, state) => PrimaryButton(
         key: const Key(AppKeys.forgotPasswordButton),

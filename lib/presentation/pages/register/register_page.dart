@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/application/application.dart';
 import 'package:pureair_v2/constants/constants.dart';
+import 'package:pureair_v2/injector/injector.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 import 'register_form.dart';
@@ -17,11 +18,11 @@ class RegisterPage extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    return WillPopScope(
-      onWillPop: () async {
-        context.read<RegisterCubit>().dispose();
-        return true;
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (ctx) => di<RegisterCubit>()),
+        BlocProvider(create: (ctx) => di<PasswordCubit>()),
+      ],
       child: Scaffold(
         appBar: AppBar(leading: const AppBackButton()),
         body: ListView(

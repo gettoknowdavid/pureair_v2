@@ -13,12 +13,13 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthFacade _authFacade;
   AuthBloc(this._authFacade) : super(const _Loading()) {
+    on<_UserCreated>(_created);
     on<_AuthChecked>(_authChecked);
     on<_LogoutPressed>(_logoutPressed);
     on<_VerificationChecked>(_verificationChecked);
     on<_VerificationMailSent>(_verificationMailSent);
 
-    _authStatusSubscription = _authFacade.authStateChanges().listen((user) {
+    _authStatusSubscription = _authFacade.authStateChanges.listen((user) {
       add(_AuthChecked(user));
     });
   }
@@ -31,20 +32,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     return super.close();
   }
 
+  _created(_UserCreated event, Emitter<AuthState> emit) async {
+    return emit(_Registered(event.user!));
+  }
+
   /// Checks if the user's authentication state has changed.
   /// Sets the state to [AuthState.unauthenticated()] if the user is null.
   /// Sets the state to [AuthState.unverified()] if the user's email is not verified.
   /// Sets the state to [AuthState.authenticated(user)] if the user is not null and their email is verified.
   _authChecked(_AuthChecked event, Emitter<AuthState> emit) async {
-    switch (event.user) {
-      case null:
-        return emit(const _Unauthenticated());
-      default:
-        if (event.user?.emailVerified == false) {
-          return emit(const _Unverified());
-        } else {
-          return emit(_Authenticated(event.user!));
-        }
+    if (event.user == null) {
+      return emit(const _Unauthenticated());
+    }
+
+    if (event.user?.emailVerified == false) {
+      return emit(const _Unverified());
+    } else {
+      return emit(_Authenticated(event.user!));
     }
   }
 
@@ -62,6 +66,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _VerificationChecked event,
     Emitter<AuthState> emit,
   ) async {
+    emit(const AuthState.loading());
     final verifiedOption = await _authFacade.checkEmailVerified();
     verifiedOption.fold(
       () => emit(const AuthState.unauthenticated()),

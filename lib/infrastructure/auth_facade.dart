@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/domain/domain.dart';
+import 'package:pureair_v2/infrastructure/mappers/mappers.dart';
 import 'package:pureair_v2/services/services.dart';
 
 import 'datasources/datasources.dart';
-import 'dtos/dtos.dart';
 
 @Injectable(as: IAuthFacade)
 class AuthFacade implements IAuthFacade {
@@ -22,19 +22,11 @@ class AuthFacade implements IAuthFacade {
   ///
   /// @return a Stream object which emits a User object or null depending on the user's authentication state changes.
   @override
-  Stream<User?> authStateChanges() {
-    return _authService.authStateChanges().map((fUser) {
-      if (fUser == null) {
-        return null;
-      } else {
-        return User(
-          uid: fUser.uid,
-          email: fUser.email == null ? null : Email(fUser.email!),
-          name: fUser.displayName == null ? null : Name(fUser.displayName!),
-          avatar: fUser.photoURL,
-          emailVerified: fUser.emailVerified,
-        );
-      }
+  Stream<User> get authStateChanges {
+    return _authService.userChanges().map<User>((firebaseUser) {
+      final user = firebaseUser == null ? User.empty() : firebaseUser.toUser;
+      _localDatasource.storeUser(UserMapper().fromDomain(user));
+      return user;
     });
   }
 
@@ -60,19 +52,9 @@ class AuthFacade implements IAuthFacade {
   }
 
   @override
-  Future<User?> currentUser() async {
-    final fUser = _authService.currentUser;
-    if (fUser == null) {
-      return null;
-    } else {
-      return User(
-        uid: fUser.uid,
-        email: fUser.email == null ? null : Email(fUser.email!),
-        name: fUser.displayName == null ? null : Name(fUser.displayName!),
-        avatar: fUser.photoURL,
-        emailVerified: fUser.emailVerified,
-      );
-    }
+  Future<User> get currentUser async {
+    final userDto = await _localDatasource.getUser();
+    return userDto == null ? User.empty() : UserMapper().toDomain(userDto)!;
   }
 
   /// Logs in the user using their Google account credentials.
@@ -84,14 +66,9 @@ class AuthFacade implements IAuthFacade {
   @override
   Future<Either<AuthError, Unit>> googleLogin() async {
     try {
-      final result = await _authService.signInWithGoogle();
-
-      // Get the user data from Firestore and store it in local storage.
-      final userDto = (await usersRef.doc(result.user!.uid).get()).data;
-      await _localDatasource.storeUser(userDto);
-
+      await _authService.signInWithGoogle();
       return right(unit);
-    } on FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException catch (e) {
       // Return an error if the user's Google account cannot be accessed
       return left(AuthError.error(e.message));
     } on TimeoutException {
@@ -113,19 +90,15 @@ class AuthFacade implements IAuthFacade {
   }) async {
     try {
       // Attempt to sign in using Firebase Authentication.
-      final result = await _authService.signIn(email.get()!, password.get()!);
-
-      // Get the user data from Firestore and store it in local storage.
-      final userDto = (await usersRef.doc(result.user!.uid).get()).data;
-      await _localDatasource.storeUser(userDto);
-
+      await _authService.signIn(email.get()!, password.get()!);
       return right(unit);
-    } on FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException catch (e) {
       // Handle specific Firebase authentication exceptions.
       switch (e.code) {
         case 'wrong-password':
-        case 'user-not-found':
           return left(const AuthError.invalidEmailOrPassword());
+        case 'user-not-found':
+          return left(const AuthError.userNotFound());
         default:
           return left(const AuthError.serverError());
       }
@@ -157,36 +130,22 @@ class AuthFacade implements IAuthFacade {
     required Password password,
   }) async {
     try {
-      final res = await _authService.signUp(
-        email: email.get()!,
-        password: password.get()!,
-        name: name.get()!,
-      );
+      // Create account
+      await _authService.signUp(email: email.get()!, password: password.get()!);
 
-      if (res.user == null) {
-        return left(const AuthError.cannotComplete());
-      }
+      // Reload
+      await _authService.reload();
 
-      // Create a new UserDto object and add it to the Firestore users collection
-      final user = UserDto(
-        uid: res.user!.uid,
-        name: res.user!.displayName!,
-        email: res.user!.email!,
-        emailVerified: res.user!.emailVerified,
-      );
-
-      await usersRef.doc(user.uid).set(user);
-
-      // Store the user in local storage
-      await _localDatasource.storeUser(user);
+      // Change user name
+      await _authService.updateName(name.get()!);
 
       // Send a verification email to the user
       await _authService.sendVerificationEmail();
 
       // Return the right value (unit)
       return right(unit);
-    } on FirebaseAuthException catch (e) {
-      // Handle any FirebaseAuthExceptions that may occur
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      // Handle any firebase_auth.FirebaseAuthExceptions that may occur
       if (e.code == 'email-already-in-use') {
         return left(const AuthError.emailInUse());
       } else {
@@ -196,6 +155,9 @@ class AuthFacade implements IAuthFacade {
       return left(const AuthError.timeOut());
     }
   }
+
+  @override
+  Future<void> reload() => _authService.reload();
 
   /// Sends a password reset email to the specified email address.
   ///
@@ -210,7 +172,7 @@ class AuthFacade implements IAuthFacade {
       // Send password reset email using Firebase authentication.
       await _authService.sendPasswordResetEmail(email.get()!);
       return right(unit);
-    } on FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException catch (e) {
       // Handle specific Firebase authentication exceptions.
       switch (e.code) {
         case 'user-not-found':
@@ -235,5 +197,18 @@ class AuthFacade implements IAuthFacade {
     } on Exception {
       return left(const AuthError.serverError());
     }
+  }
+}
+
+extension on firebase_auth.User {
+  /// Maps a [firebase_auth.User] into a [User].
+  User get toUser {
+    return User(
+      uid: uid,
+      email: email == null ? null : Email(email!),
+      name: displayName == null ? null : Name(displayName!),
+      avatar: photoURL,
+      emailVerified: emailVerified,
+    );
   }
 }

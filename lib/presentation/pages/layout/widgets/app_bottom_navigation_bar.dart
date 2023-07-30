@@ -32,6 +32,8 @@ class AppBottomNavigationBar extends StatelessWidget {
       fontWeight: FontWeight.bold,
     );
 
+    final border = Border.all(width: 2, color: colorScheme.onBackground);
+
     final tiles = List.generate(4, (i) {
       return AppBottomNavigationBarItem(
         onTap: () => onTap?.call(i),
@@ -44,18 +46,21 @@ class AppBottomNavigationBar extends StatelessWidget {
       );
     });
 
-    return Container(
-      width: size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-      padding: kHorizontalPadding18,
-      constraints: _constraints,
-      decoration: BoxDecoration(color: colorScheme.primary, border: kBorder2),
-      child: IconTheme(
-        data: const IconThemeData(color: kOnPrimary),
-        child: Wrap(
-          alignment: WrapAlignment.spaceAround,
-          runAlignment: WrapAlignment.center,
-          children: tiles,
+    return ColoredBox(
+      color: theme.scaffoldBackgroundColor,
+      child: Container(
+        width: size.width,
+        margin: kHorizontalPadding18,
+        padding: kHorizontalPadding18,
+        constraints: _constraints,
+        decoration: BoxDecoration(color: colorScheme.primary, border: border),
+        child: IconTheme(
+          data: const IconThemeData(color: kOnPrimary),
+          child: Wrap(
+            alignment: WrapAlignment.spaceAround,
+            runAlignment: WrapAlignment.center,
+            children: tiles,
+          ),
         ),
       ),
     );

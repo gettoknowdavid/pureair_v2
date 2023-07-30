@@ -8,87 +8,199 @@ import 'package:pureair_v2/constants/constants.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
+import 'widgets/profile_tile.dart';
+
 @RoutePage()
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
     return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        return SizedBox(child: state.mapOrNull(
-          authenticated: (value) {
-            return LayoutBuilder(builder: (context, constraints) {
-              return SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      18.verticalSpace,
-                      const _Avatar(),
-                      20.verticalSpace,
-                      Text(
-                        'David Michael',
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+      builder: (context, state) => state.maybeMap(
+        orElse: () => const SizedBox(),
+        authenticated: (value) => LayoutBuilder(
+          builder: (context, constraints) => Padding(
+            padding: kHorizontalPadding18,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                kToolbarHeight.verticalSpace,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _Avatar(height: constraints.minHeight * 0.15),
+                    12.horizontalSpace,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const _Name(),
+                          2.verticalSpace,
+                          const _Email(),
+                          1.verticalSpace,
+                          const _Location(),
+                        ],
                       ),
-                      4.verticalSpace,
-                      Text(
-                        value.user.email!.get()!,
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              );
-            });
-          },
-        ));
-      },
+                50.verticalSpace,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ProfileTile(
+                      title: 'Account',
+                      leading: PhosphorIcon(PhosphorIcons.duotone.pencil),
+                    ),
+                    15.verticalSpace,
+                    ProfileTile(
+                      title: 'Saved Cities',
+                      leading: PhosphorIcon(PhosphorIcons.duotone.heart),
+                    ),
+                    15.verticalSpace,
+                    ProfileTile(
+                      title: 'Health Condition',
+                      leading: PhosphorIcon(PhosphorIcons.duotone.pulse),
+                    ),
+                    15.verticalSpace,
+                    ProfileTile(
+                      title: 'Settings',
+                      leading: PhosphorIcon(PhosphorIcons.duotone.nut),
+                    ),
+                    15.verticalSpace,
+                    ProfileTile(
+                      title: 'About',
+                      leading: PhosphorIcon(PhosphorIcons.duotone.info),
+                    ),
+                    15.verticalSpace,
+                    ProfileTile(
+                      title: 'Logout',
+                      showTrailing: false,
+                      onTap: () {
+                        context
+                            .read<AuthBloc>()
+                            .add(const AuthEvent.logoutPressed());
+                      },
+                      leading: PhosphorIcon(PhosphorIcons.duotone.signOut),
+                    ),
+                    15.verticalSpace,
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar();
+  final double height;
+  const _Avatar({required this.height});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
+    return BlocSelector<AuthBloc, AuthState, String?>(
+      selector: (state) => state.whenOrNull(authenticated: (u) => u.avatar),
+      builder: (context, imageUrl) {
+        Widget child;
+
+        if (imageUrl == null) {
+          child = PhosphorIcon(PhosphorIcons.bold.user, color: kOnPrimary);
+        } else {
+          child = CachedNetworkImage(
+            imageUrl: imageUrl,
+            fit: BoxFit.cover,
+            progressIndicatorBuilder: (context, url, download) {
+              if (download.progress != 100) {
+                return Shimmer(child: Container());
+              }
+              return const SizedBox();
+            },
+          );
+        }
+
         return AppContainer(
           padding: EdgeInsets.zero,
           backgroundColor: Colors.grey,
-          child: state.mapOrNull(
-            loading: (_) => Shimmer(child: Container()),
-            authenticated: (value) {
-              final imageUrl = value.user.avatar;
+          borderColor: Colors.white,
+          height: height,
+          width: height,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 12,
+              spreadRadius: 3,
+            )
+          ],
+          child: child,
+        );
+      },
+    );
+  }
+}
 
-              if (imageUrl == null) {
-                return PhosphorIcon(PhosphorIcons.bold.user, color: kOnPrimary);
-              }
+class _Email extends StatelessWidget {
+  const _Email();
 
-              return CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                progressIndicatorBuilder: (context, url, progress) {
-                  if (progress.progress != 100) {
-                    return Shimmer(child: Container());
-                  }
-                  return const SizedBox();
-                },
-              );
-            },
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return BlocSelector<AuthBloc, AuthState, String>(
+      selector: (s) => s.whenOrNull(authenticated: (u) => u.email!.get())!,
+      builder: (context, email) => Text(
+        email,
+        style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+}
+
+class _Location extends StatelessWidget {
+  const _Location();
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return BlocSelector<LocationCubit, LocationState, String?>(
+      selector: (state) {
+        if (state.myCity == null && state.myCountry == null) {
+          return null;
+        }
+
+        return "${state.myCity}, ${state.myCountry}";
+      },
+      builder: (context, myLocation) {
+        if (myLocation == null) {
+          return const SizedBox();
+        }
+        return Text(
+          myLocation,
+          style: textTheme.labelMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: textTheme.labelLarge?.color?.withOpacity(0.5),
           ),
         );
       },
+    );
+  }
+}
+
+class _Name extends StatelessWidget {
+  const _Name();
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(context).textTheme.titleLarge;
+    return BlocSelector<AuthBloc, AuthState, String>(
+      selector: (s) => s.whenOrNull(authenticated: (u) => u.name!.get())!,
+      builder: (context, name) => Text(
+        name,
+        style: style?.copyWith(fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

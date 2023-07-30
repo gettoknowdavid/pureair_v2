@@ -14,6 +14,9 @@ class AuthState with _$AuthState {
 
   /// The state when the user is authenticated.
   const factory AuthState.authenticated(User user) = _Authenticated;
+  
+  /// The state when the user is registered/created.
+  const factory AuthState.registered(User user) = _Registered;
 
   /// The state when the user is not authenticated.
   const factory AuthState.unauthenticated() = _Unauthenticated;

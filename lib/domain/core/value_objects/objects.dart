@@ -40,7 +40,7 @@ class Name extends ValueObject<String> {
   /// transformed to begin with an uppercase letter, and empty inputs are
   /// considered invalid.
   factory Name(String input) {
-    return Name._(validateEmpty(toBeginningOfSentenceCase(input)));
+    return Name._(validateEmpty(toBeginningOfSentenceCase(input.trim())));
   }
 
   /// Private constructor that creates a Name object with the given [value].

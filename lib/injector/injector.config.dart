@@ -15,16 +15,17 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i13;
 
-import '../application/air_quality_cubit/air_quality_cubit.dart' as _i25;
-import '../application/auth_bloc/auth_bloc.dart' as _i26;
+import '../application/air_quality_cubit/air_quality_cubit.dart' as _i26;
+import '../application/auth_bloc/auth_bloc.dart' as _i27;
 import '../application/forgot_password_cubit/forgot_password_cubit.dart'
-    as _i27;
-import '../application/login_cubit/login_cubit.dart' as _i20;
-import '../application/map/map_cubit.dart' as _i21;
+    as _i28;
+import '../application/location_cubit/location_cubit.dart' as _i20;
+import '../application/login_cubit/login_cubit.dart' as _i21;
+import '../application/map/map_cubit.dart' as _i22;
 import '../application/password_cubit/password_cubit.dart' as _i11;
-import '../application/rank_cubit/rank_cubit.dart' as _i22;
-import '../application/register_cubit/register_cubit.dart' as _i23;
-import '../application/search_cubit/search_cubit.dart' as _i24;
+import '../application/rank_cubit/rank_cubit.dart' as _i23;
+import '../application/register_cubit/register_cubit.dart' as _i24;
+import '../application/search_cubit/search_cubit.dart' as _i25;
 import '../config/router/app_router.dart' as _i5;
 import '../domain/domain.dart' as _i16;
 import '../infrastructure/air_quality_facade.dart' as _i17;
@@ -39,7 +40,7 @@ import '../services/location_service.dart' as _i8;
 import '../services/mail_app_service.dart' as _i9;
 import '../services/secure_storage_service.dart' as _i12;
 import '../services/services.dart' as _i10;
-import 'register_module.dart' as _i28;
+import 'register_module.dart' as _i29;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -90,23 +91,25 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i10.FirebaseAuthService>(),
           gh<_i19.AuthLocalDatasource>(),
         ));
-    gh.factory<_i20.LoginCubit>(() => _i20.LoginCubit(gh<_i16.IAuthFacade>()));
-    gh.factory<_i21.MapCubit>(() => _i21.MapCubit(
+    gh.factory<_i20.LocationCubit>(
+        () => _i20.LocationCubit(gh<_i10.LocationService>()));
+    gh.factory<_i21.LoginCubit>(() => _i21.LoginCubit(gh<_i16.IAuthFacade>()));
+    gh.factory<_i22.MapCubit>(() => _i22.MapCubit(
           gh<_i8.LocationService>(),
           gh<_i16.IAirQualityFacade>(),
         ));
-    gh.factory<_i22.RankCubit>(() => _i22.RankCubit(
+    gh.factory<_i23.RankCubit>(() => _i23.RankCubit(
           gh<_i16.IAirQualityFacade>(),
           gh<_i8.LocationService>(),
         ));
-    gh.factory<_i23.RegisterCubit>(
-        () => _i23.RegisterCubit(gh<_i16.IAuthFacade>()));
-    gh.factory<_i24.SearchCubit>(
-        () => _i24.SearchCubit(gh<_i16.IAirQualityFacade>()));
-    gh.factory<_i25.AirQualityCubit>(
-        () => _i25.AirQualityCubit(gh<_i16.IAirQualityFacade>()));
-    gh.factory<_i26.AuthBloc>(() => _i26.AuthBloc(gh<_i16.IAuthFacade>()));
-    gh.factory<_i27.ForgotPasswordCubit>(() => _i27.ForgotPasswordCubit(
+    gh.factory<_i24.RegisterCubit>(
+        () => _i24.RegisterCubit(gh<_i16.IAuthFacade>()));
+    gh.factory<_i25.SearchCubit>(
+        () => _i25.SearchCubit(gh<_i16.IAirQualityFacade>()));
+    gh.factory<_i26.AirQualityCubit>(
+        () => _i26.AirQualityCubit(gh<_i16.IAirQualityFacade>()));
+    gh.factory<_i27.AuthBloc>(() => _i27.AuthBloc(gh<_i16.IAuthFacade>()));
+    gh.factory<_i28.ForgotPasswordCubit>(() => _i28.ForgotPasswordCubit(
           gh<_i16.IAuthFacade>(),
           gh<_i10.MailAppService>(),
         ));
@@ -114,4 +117,4 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i28.RegisterModule {}
+class _$RegisterModule extends _i29.RegisterModule {}

@@ -4,7 +4,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class AppTextField extends StatefulWidget {
   final String hint;
-
   final bool isPassword;
   final String? label;
   final TextInputType? keyboardType;
@@ -132,5 +131,11 @@ class _AppTextFieldState extends State<AppTextField> {
       duotoneSecondaryColor: theme.colorScheme.secondary,
       duotoneSecondaryOpacity: 1.0,
     );
+  }
+
+  @override
+  void dispose() {
+    
+    super.dispose();
   }
 }

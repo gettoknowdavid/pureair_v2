@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/config/router/router.dart';
-import 'package:pureair_v2/constants/constants.dart';
 
 import 'widgets/widgets.dart';
 
@@ -21,20 +20,19 @@ class LayoutPage extends StatelessWidget {
         RankRoute(),
         ProfileRoute(),
       ],
-      appBarBuilder: (context, tabsRouter) {
+      appBarBuilder: (context, tab) {
         Widget child = const SizedBox();
-        switch (tabsRouter.activeIndex) {
+        final title = Text(tab.current.title(context), style: appBarStyle);
+        final appBar = AppBar(title: title);
+
+        switch (tab.activeIndex) {
           case 0:
-            child = HomeAppBar(onTap: () => tabsRouter.setActiveIndex(3));
+            child = HomeAppBar(onTap: () => tab.setActiveIndex(3));
             break;
-          case 1:
-            child = AppBar(title: Text(kExploreTitle, style: appBarStyle));
-            break;
-          case 2:
-            child = AppBar(title: Text(kRankTitle, style: appBarStyle));
           case 3:
-            child = const ProfileAppBar();
+            child;
           default:
+            child = appBar;
         }
 
         return PreferredSize(
@@ -42,9 +40,9 @@ class LayoutPage extends StatelessWidget {
           child: child,
         );
       },
-      bottomNavigationBuilder: (context, tabsRouter) => AppBottomNavigationBar(
-        currentIndex: tabsRouter.activeIndex,
-        onTap: tabsRouter.setActiveIndex,
+      bottomNavigationBuilder: (context, tab) => AppBottomNavigationBar(
+        currentIndex: tab.activeIndex,
+        onTap: tab.setActiveIndex,
         items: [
           BottomNavigationBarItem(
             label: 'Home',

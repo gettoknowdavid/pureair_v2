@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pureair_v2/constants/constants.dart';
 
 class TermsConditionPolicyLink extends StatelessWidget {
   const TermsConditionPolicyLink({super.key});
@@ -8,7 +9,7 @@ class TermsConditionPolicyLink extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      padding: kHorizontalPadding18,
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(

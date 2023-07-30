@@ -56,7 +56,7 @@ class AirQualityList extends HookWidget {
   }
 
   void _showFailureMessage(AQError failure, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(AppSnackbar(
+    ScaffoldMessenger.of(context).showSnackBar(ErrorSnackbar(
       theme: Theme.of(context),
       content: SnackbarContent(failure.mapOrNull(message: (v) => v.message)),
     ));

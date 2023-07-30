@@ -21,12 +21,12 @@ Future<void> main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (ctx) => di<LoginCubit>()),
-        BlocProvider(create: (ctx) => di<RegisterCubit>()),
         BlocProvider(create: (ctx) => di<ForgotPasswordCubit>()),
-        BlocProvider(create: (ctx) => di<PasswordCubit>()),
         BlocProvider(create: (ctx) => di<SearchCubit>()),
-        BlocProvider(create: (ctx) => di<AuthBloc>()),
+        BlocProvider(
+          create: (ctx) => di<AuthBloc>()..add(const AuthEvent.authChecked()),
+        ),
+        BlocProvider(create: (ctx) => di<LocationCubit>(), lazy: false),
         BlocProvider(create: (ctx) => di<MapCubit>()..initialized()),
         BlocProvider(create: (ctx) => di<RankCubit>()..initialized()),
         BlocProvider(create: (ctx) => di<AirQualityCubit>()..initialized()),

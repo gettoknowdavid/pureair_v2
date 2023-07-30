@@ -46,13 +46,14 @@ class LoginForm extends StatelessWidget {
   }
 
   void _showFailureMessage(AuthError failure, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(AppSnackbar(
+    ScaffoldMessenger.of(context).showSnackBar(ErrorSnackbar(
       theme: Theme.of(context),
       content: SnackbarContent(failure.mapOrNull(
         error: (value) => value.message,
         serverError: (_) => kServerError,
         invalidEmailOrPassword: (_) => kInvalidEmailOrPassword,
         noNetworkConnection: (_) => kNoNetworkConnection,
+        userNotFound: (_) => kUserNotFound,
       )),
     ));
   }
@@ -62,14 +63,6 @@ class _Email extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<LoginCubit>();
-
-    final emailValidator = context.select<LoginCubit, String?>(
-      (selector) => selector.state.email.value.fold(
-        (f) => f.mapOrNull(invalidEmail: (_) => kInvalidEmail),
-        (r) => null,
-      ),
-    );
-
     return BlocBuilder<LoginCubit, LoginState>(
       bloc: cubit,
       buildWhen: (p, c) => p.email != c.email,
@@ -77,11 +70,14 @@ class _Email extends StatelessWidget {
         key: const Key(AppKeys.loginEmailInput),
         keyboardType: TextInputType.emailAddress,
         onChanged: cubit.emailChanged,
-        validator: (_) => emailValidator,
         enabled: !cubit.state.loading || !cubit.state.googleSignInLoading,
         label: 'Email address',
         hint: 'example@gmail.com',
         isFieldValid: cubit.state.email.isValid(),
+        validator: (_) => cubit.state.email.value.fold(
+          (f) => f.mapOrNull(invalidEmail: (_) => kInvalidEmail),
+          (r) => null,
+        ),
       ),
     );
   }
@@ -92,18 +88,16 @@ class _ForgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Align(
       alignment: Alignment.centerRight,
       child: InkWell(
         onTap: () => context.router.push(ForgotPasswordRoute()),
         child: Text(
           'Forgot Password?',
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            decoration: TextDecoration.underline,
-          ),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
         ),
       ),
     );
@@ -114,7 +108,6 @@ class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<LoginCubit>();
-
     return BlocBuilder<LoginCubit, LoginState>(
       builder: (context, state) {
         return PrimaryButton(
@@ -133,14 +126,6 @@ class _Password extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<LoginCubit>();
-
-    final passwordValidator = context.select<LoginCubit, String?>(
-      (selector) => selector.state.email.value.fold(
-        (f) => f.mapOrNull(invalidPassword: (_) => kInvalidPassword),
-        (r) => null,
-      ),
-    );
-
     return BlocBuilder<LoginCubit, LoginState>(
       bloc: cubit,
       buildWhen: (p, c) => p.password != c.password,
@@ -148,10 +133,13 @@ class _Password extends StatelessWidget {
         key: const Key(AppKeys.loginPasswordInput),
         isPassword: true,
         onChanged: cubit.passwordChanged,
-        validator: (_) => passwordValidator,
         enabled: !cubit.state.loading || !cubit.state.googleSignInLoading,
         label: 'Password',
         hint: 'Your password',
+        validator: (_) => cubit.state.email.value.fold(
+          (f) => f.mapOrNull(invalidPassword: (_) => kInvalidPassword),
+          (r) => null,
+        ),
       ),
     );
   }

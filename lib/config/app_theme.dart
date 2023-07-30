@@ -40,6 +40,7 @@ final lightTheme = FlexThemeData.light(
   lightIsWhite: true,
   subThemesData: FlexSubThemesData(
     appBarScrolledUnderElevation: 0.0,
+    adaptiveAppBarScrollUnderOff: const FlexAdaptive.off(),
     blendOnLevel: 10,
     blendOnColors: false,
     thinBorderWidth: 2.0,
@@ -74,6 +75,8 @@ final lightTheme = FlexThemeData.light(
     textButtonTextStyle: _textButtonTextStyle,
     chipRadius: 0.0,
   ),
+  appBarElevation: 0.0,
+  appBarStyle: FlexAppBarStyle.scaffoldBackground,
   useMaterial3ErrorColors: true,
   visualDensity: FlexColorScheme.comfortablePlatformDensity,
   useMaterial3: true,
@@ -98,6 +101,7 @@ final darkTheme = FlexThemeData.dark(
   darkIsTrueBlack: true,
   subThemesData: FlexSubThemesData(
     appBarScrolledUnderElevation: 0.0,
+    adaptiveAppBarScrollUnderOff: const FlexAdaptive.off(),
     blendOnLevel: 20,
     defaultRadius: 0.0,
     thinBorderWidth: 2.0,
@@ -130,6 +134,8 @@ final darkTheme = FlexThemeData.dark(
     textButtonTextStyle: _textButtonTextStyle,
     chipRadius: 0.0,
   ),
+  appBarElevation: 0.0,
+  appBarStyle: FlexAppBarStyle.scaffoldBackground,
   useMaterial3ErrorColors: false,
   visualDensity: FlexColorScheme.comfortablePlatformDensity,
   useMaterial3: true,

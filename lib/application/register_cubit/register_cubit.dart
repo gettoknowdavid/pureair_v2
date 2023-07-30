@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:pureair_v2/domain/domain.dart';
 
 part 'register_cubit.freezed.dart';
@@ -45,9 +46,9 @@ class RegisterCubit extends Cubit<RegisterState> {
   registerPressed() async {
     Either<AuthError, Unit> r;
 
-    final nameValid = state.name.isValid();
-    final emailValid = state.email.isValid();
-    final passwordValid = state.password.isValid();
+    final nameValid = state.name.isValid() == true;
+    final emailValid = state.email.isValid() == true;
+    final passwordValid = state.password.isValid() == true;
 
     if (nameValid && emailValid && passwordValid) {
       // Show a loading spinner while the registration is processing
@@ -68,7 +69,10 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(state.copyWith(loading: false, showError: true, option: none()));
   }
 
-  void dispose() {
-    return emit(RegisterState.initial());
+  @override
+  Future<void> close() async {
+    Logger().wtf('CLOSE');
+    emit(RegisterState.initial());
+    super.close();
   }
 }

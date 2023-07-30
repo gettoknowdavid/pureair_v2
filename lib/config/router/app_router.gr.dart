@@ -8,9 +8,9 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i12;
-import 'package:flutter/material.dart' as _i13;
-import 'package:pureair_v2/domain/domain.dart' as _i14;
+import 'package:auto_route/auto_route.dart' as _i11;
+import 'package:flutter/material.dart' as _i12;
+import 'package:pureair_v2/domain/domain.dart' as _i13;
 import 'package:pureair_v2/presentation/pages/details/details_page.dart'
     deferred as _i1;
 import 'package:pureair_v2/presentation/pages/explore/explore_page.dart' as _i2;
@@ -18,28 +18,26 @@ import 'package:pureair_v2/presentation/pages/forgot_password/forgot_password_pa
     deferred as _i3;
 import 'package:pureair_v2/presentation/pages/home/home_page.dart' as _i4;
 import 'package:pureair_v2/presentation/pages/layout/layout_page.dart' as _i5;
-import 'package:pureair_v2/presentation/pages/loading_page.dart'
-    deferred as _i6;
 import 'package:pureair_v2/presentation/pages/login/login_page.dart'
-    deferred as _i7;
-import 'package:pureair_v2/presentation/pages/profile/profile_page.dart' as _i8;
-import 'package:pureair_v2/presentation/pages/rank/rank_page.dart' as _i9;
+    deferred as _i6;
+import 'package:pureair_v2/presentation/pages/profile/profile_page.dart' as _i7;
+import 'package:pureair_v2/presentation/pages/rank/rank_page.dart' as _i8;
 import 'package:pureair_v2/presentation/pages/register/register_page.dart'
-    deferred as _i10;
+    deferred as _i9;
 import 'package:pureair_v2/presentation/pages/verification/verification_page.dart'
-    deferred as _i11;
+    deferred as _i10;
 
-abstract class $AppRouter extends _i12.RootStackRouter {
+abstract class $AppRouter extends _i11.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i12.PageFactory> pagesMap = {
+  final Map<String, _i11.PageFactory> pagesMap = {
     DetailsRoute.name: (routeData) {
       final args = routeData.argsAs<DetailsRouteArgs>(
           orElse: () => const DetailsRouteArgs());
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
+        child: _i11.DeferredWidget(
           _i1.loadLibrary,
           () => _i1.DetailsPage(
             key: args.key,
@@ -50,7 +48,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
       );
     },
     ExploreRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i2.ExplorePage(),
       );
@@ -58,9 +56,9 @@ abstract class $AppRouter extends _i12.RootStackRouter {
     ForgotPasswordRoute.name: (routeData) {
       final args = routeData.argsAs<ForgotPasswordRouteArgs>(
           orElse: () => const ForgotPasswordRouteArgs());
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
+        child: _i11.DeferredWidget(
           _i3.loadLibrary,
           () => _i3.ForgotPasswordPage(
             key: args.key,
@@ -70,62 +68,53 @@ abstract class $AppRouter extends _i12.RootStackRouter {
       );
     },
     HomeRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i4.HomePage(),
       );
     },
     LayoutRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i5.LayoutPage(),
       );
     },
-    LoadingRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i6.loadLibrary,
-          () => _i6.LoadingPage(),
-        ),
-      );
-    },
     LoginRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i7.loadLibrary,
-          () => _i7.LoginPage(),
+        child: _i11.DeferredWidget(
+          _i6.loadLibrary,
+          () => _i6.LoginPage(),
         ),
       );
     },
     ProfileRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.ProfilePage(),
+        child: const _i7.ProfilePage(),
       );
     },
     RankRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.RankPage(),
+        child: const _i8.RankPage(),
       );
     },
     RegisterRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i10.loadLibrary,
-          () => _i10.RegisterPage(),
+        child: _i11.DeferredWidget(
+          _i9.loadLibrary,
+          () => _i9.RegisterPage(),
         ),
       );
     },
     VerificationRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.DeferredWidget(
-          _i11.loadLibrary,
-          () => _i11.VerificationPage(),
+        child: _i11.DeferredWidget(
+          _i10.loadLibrary,
+          () => _i10.VerificationPage(),
         ),
       );
     },
@@ -134,12 +123,12 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 
 /// generated route for
 /// [_i1.DetailsPage]
-class DetailsRoute extends _i12.PageRouteInfo<DetailsRouteArgs> {
+class DetailsRoute extends _i11.PageRouteInfo<DetailsRouteArgs> {
   DetailsRoute({
-    _i13.Key? key,
-    _i14.AirQuality? airQuality,
+    _i12.Key? key,
+    _i13.AirQuality? airQuality,
     List<double>? geo,
-    List<_i12.PageRouteInfo>? children,
+    List<_i11.PageRouteInfo>? children,
   }) : super(
           DetailsRoute.name,
           args: DetailsRouteArgs(
@@ -152,8 +141,8 @@ class DetailsRoute extends _i12.PageRouteInfo<DetailsRouteArgs> {
 
   static const String name = 'DetailsRoute';
 
-  static const _i12.PageInfo<DetailsRouteArgs> page =
-      _i12.PageInfo<DetailsRouteArgs>(name);
+  static const _i11.PageInfo<DetailsRouteArgs> page =
+      _i11.PageInfo<DetailsRouteArgs>(name);
 }
 
 class DetailsRouteArgs {
@@ -163,9 +152,9 @@ class DetailsRouteArgs {
     this.geo,
   });
 
-  final _i13.Key? key;
+  final _i12.Key? key;
 
-  final _i14.AirQuality? airQuality;
+  final _i13.AirQuality? airQuality;
 
   final List<double>? geo;
 
@@ -177,8 +166,8 @@ class DetailsRouteArgs {
 
 /// generated route for
 /// [_i2.ExplorePage]
-class ExploreRoute extends _i12.PageRouteInfo<void> {
-  const ExploreRoute({List<_i12.PageRouteInfo>? children})
+class ExploreRoute extends _i11.PageRouteInfo<void> {
+  const ExploreRoute({List<_i11.PageRouteInfo>? children})
       : super(
           ExploreRoute.name,
           initialChildren: children,
@@ -186,16 +175,16 @@ class ExploreRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'ExploreRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i3.ForgotPasswordPage]
-class ForgotPasswordRoute extends _i12.PageRouteInfo<ForgotPasswordRouteArgs> {
+class ForgotPasswordRoute extends _i11.PageRouteInfo<ForgotPasswordRouteArgs> {
   ForgotPasswordRoute({
-    _i13.Key? key,
+    _i12.Key? key,
     bool emailSent = false,
-    List<_i12.PageRouteInfo>? children,
+    List<_i11.PageRouteInfo>? children,
   }) : super(
           ForgotPasswordRoute.name,
           args: ForgotPasswordRouteArgs(
@@ -207,8 +196,8 @@ class ForgotPasswordRoute extends _i12.PageRouteInfo<ForgotPasswordRouteArgs> {
 
   static const String name = 'ForgotPasswordRoute';
 
-  static const _i12.PageInfo<ForgotPasswordRouteArgs> page =
-      _i12.PageInfo<ForgotPasswordRouteArgs>(name);
+  static const _i11.PageInfo<ForgotPasswordRouteArgs> page =
+      _i11.PageInfo<ForgotPasswordRouteArgs>(name);
 }
 
 class ForgotPasswordRouteArgs {
@@ -217,7 +206,7 @@ class ForgotPasswordRouteArgs {
     this.emailSent = false,
   });
 
-  final _i13.Key? key;
+  final _i12.Key? key;
 
   final bool emailSent;
 
@@ -229,8 +218,8 @@ class ForgotPasswordRouteArgs {
 
 /// generated route for
 /// [_i4.HomePage]
-class HomeRoute extends _i12.PageRouteInfo<void> {
-  const HomeRoute({List<_i12.PageRouteInfo>? children})
+class HomeRoute extends _i11.PageRouteInfo<void> {
+  const HomeRoute({List<_i11.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -238,13 +227,13 @@ class HomeRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i5.LayoutPage]
-class LayoutRoute extends _i12.PageRouteInfo<void> {
-  const LayoutRoute({List<_i12.PageRouteInfo>? children})
+class LayoutRoute extends _i11.PageRouteInfo<void> {
+  const LayoutRoute({List<_i11.PageRouteInfo>? children})
       : super(
           LayoutRoute.name,
           initialChildren: children,
@@ -252,27 +241,13 @@ class LayoutRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'LayoutRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.LoadingPage]
-class LoadingRoute extends _i12.PageRouteInfo<void> {
-  const LoadingRoute({List<_i12.PageRouteInfo>? children})
-      : super(
-          LoadingRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LoadingRoute';
-
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i7.LoginPage]
-class LoginRoute extends _i12.PageRouteInfo<void> {
-  const LoginRoute({List<_i12.PageRouteInfo>? children})
+/// [_i6.LoginPage]
+class LoginRoute extends _i11.PageRouteInfo<void> {
+  const LoginRoute({List<_i11.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -280,13 +255,13 @@ class LoginRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.ProfilePage]
-class ProfileRoute extends _i12.PageRouteInfo<void> {
-  const ProfileRoute({List<_i12.PageRouteInfo>? children})
+/// [_i7.ProfilePage]
+class ProfileRoute extends _i11.PageRouteInfo<void> {
+  const ProfileRoute({List<_i11.PageRouteInfo>? children})
       : super(
           ProfileRoute.name,
           initialChildren: children,
@@ -294,13 +269,13 @@ class ProfileRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'ProfileRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.RankPage]
-class RankRoute extends _i12.PageRouteInfo<void> {
-  const RankRoute({List<_i12.PageRouteInfo>? children})
+/// [_i8.RankPage]
+class RankRoute extends _i11.PageRouteInfo<void> {
+  const RankRoute({List<_i11.PageRouteInfo>? children})
       : super(
           RankRoute.name,
           initialChildren: children,
@@ -308,13 +283,13 @@ class RankRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'RankRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.RegisterPage]
-class RegisterRoute extends _i12.PageRouteInfo<void> {
-  const RegisterRoute({List<_i12.PageRouteInfo>? children})
+/// [_i9.RegisterPage]
+class RegisterRoute extends _i11.PageRouteInfo<void> {
+  const RegisterRoute({List<_i11.PageRouteInfo>? children})
       : super(
           RegisterRoute.name,
           initialChildren: children,
@@ -322,13 +297,13 @@ class RegisterRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'RegisterRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i11.VerificationPage]
-class VerificationRoute extends _i12.PageRouteInfo<void> {
-  const VerificationRoute({List<_i12.PageRouteInfo>? children})
+/// [_i10.VerificationPage]
+class VerificationRoute extends _i11.PageRouteInfo<void> {
+  const VerificationRoute({List<_i11.PageRouteInfo>? children})
       : super(
           VerificationRoute.name,
           initialChildren: children,
@@ -336,5 +311,5 @@ class VerificationRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'VerificationRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }

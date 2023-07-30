@@ -7,7 +7,7 @@ import 'errors/errors.dart';
 /// An interface that defines the contract for an authentication facade.
 abstract class IAuthFacade {
   /// Returns a stream of [User] objects representing the current user's authentication state.
-  Stream<User?> authStateChanges();
+  Stream<User> get authStateChanges;
 
   /// Checks if the current user's email address is verified.
   ///
@@ -17,7 +17,7 @@ abstract class IAuthFacade {
   /// Gets the currently signed-in user.
   ///
   /// Returns a [Future] that completes with a [User] object representing the current user, or `null` if there is no authenticated user.
-  Future<User?> currentUser();
+  Future<User> get currentUser;
 
   /// Signs in the user using their Google account.
   ///
@@ -50,10 +50,10 @@ abstract class IAuthFacade {
     required Password password,
   });
 
-  // /// Reloads the current user's information.
-  // ///
-  // /// Returns a [Future] that completes when the operation is complete.
-  // Future<void> reload();
+  /// Reloads the current user's information.
+  ///
+  /// Returns a [Future] that completes when the operation is complete.
+  Future<void> reload();
 
   /// Sends a password reset email to the specified [email].
   ///

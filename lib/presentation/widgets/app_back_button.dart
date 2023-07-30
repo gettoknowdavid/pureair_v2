@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class AppBackButton extends StatelessWidget {
-  const AppBackButton({super.key});
+  final void Function()? onTap;
+  const AppBackButton({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class AppBackButton extends StatelessWidget {
               constraints: _constraints(),
               style: styleFrom,
               padding: EdgeInsets.zero,
-              onPressed: action,
+              onPressed: onTap ?? action,
               tooltip: 'Back Button',
               icon: PhosphorIcon(getBackIcon(), size: 20),
             ),

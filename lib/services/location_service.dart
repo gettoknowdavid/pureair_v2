@@ -13,6 +13,11 @@ class LocationService {
 
   LatLng get currentGeo => _currentGeo;
 
+  final locationSettings = const LocationSettings(
+    accuracy: LocationAccuracy.high,
+    distanceFilter: 100,
+  );
+
   Future<List<PlaceSuggestion?>> autoComplete(String input) async {
     final request = '/place/autocomplete/json?input=$input&types=address';
 
@@ -75,6 +80,11 @@ class LocationService {
 
     return location;
   }
+
+  Stream<Position> getPositionStream() {
+    return Geolocator.getPositionStream(locationSettings: locationSettings);
+  }
+  
 
   Future<List<double>> geoFromAddress(String name) async {
     final location = await locationFromAddress(name);

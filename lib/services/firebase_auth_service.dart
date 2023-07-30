@@ -37,6 +37,9 @@ class FirebaseAuthService {
   /// Notifies about changes to the user's sign-in state (such as sign-in or sign-out).
   Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
 
+  /// Notifies about changes to the firebase current user.
+  Stream<User?> userChanges() => _firebaseAuth.userChanges();
+
   /// If the current user is signed in, it refreshes
   Future<void> reload() async {
     try {
@@ -110,18 +113,13 @@ class FirebaseAuthService {
 
   /// Signs up a new user with the given [name], [email] and [password].
   Future<UserCredential> signUp({
-    required String name,
     required String email,
     required String password,
   }) async {
     try {
       return await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) async {
-        await _firebaseAuth.currentUser?.updateDisplayName(name);
-        await _firebaseAuth.currentUser?.reload();
-        return value;
-      }).timeout(_limit);
+          .timeout(_limit);
     } on FirebaseAuthException catch (e) {
       throw _getError(e);
     } on TimeoutException catch (e) {
@@ -131,8 +129,8 @@ class FirebaseAuthService {
 
   Future<void> updateName(String name) async {
     try {
-      return await _firebaseAuth.currentUser
-          ?.updateDisplayName(name)
+      return await _firebaseAuth.currentUser!
+          .updateDisplayName(name)
           .timeout(_limit);
     } on TimeoutException catch (e) {
       throw TimeoutException(e.message);
