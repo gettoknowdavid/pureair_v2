@@ -6,26 +6,28 @@ import 'package:pureair_v2/presentation/pages/details/widgets/index.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 class PollutantsGrid extends StatelessWidget {
-  final Measurements measurements;
-  const PollutantsGrid({super.key, required this.measurements});
+  final Measurements? measurements;
+  final bool loading;
+  const PollutantsGrid({super.key, this.measurements, this.loading = false});
 
   @override
   Widget build(BuildContext context) {
     final dictionary = {
-      "pm25": measurements.pm25?.value,
-      "pm10": measurements.pm10?.value,
-      "so2": measurements.so2?.value,
-      "no2": measurements.no2?.value,
-      "o3": measurements.o3?.value,
-      "co": measurements.co?.value,
+      "pm25": measurements?.pm25?.value,
+      "pm10": measurements?.pm10?.value,
+      "so2": measurements?.so2?.value,
+      "no2": measurements?.no2?.value,
+      "o3": measurements?.o3?.value,
+      "co": measurements?.co?.value,
     };
 
     return AppContainer(
+      loading: loading,
       padding: const EdgeInsets.symmetric(vertical: kGlobalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const DetailsSectionTitle(title: 'Pollutants'),
+          DetailsSectionTitle(title: 'Pollutants', loading: loading),
           const AppDivider(height: 40, indent: 16, endIndent: 10),
           Wrap(
             runSpacing: 16,
@@ -35,6 +37,14 @@ class PollutantsGrid extends StatelessWidget {
                   final halfWidth = (constraints.maxWidth / 2);
                   final colorWidth = halfWidth * 0.15;
                   final valueWidth = halfWidth * 0.2;
+
+                  if (loading) {
+                    return ShimmerWidget(
+                      46,
+                      width: halfWidth - (12 * 2),
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                    );
+                  }
 
                   return AppContainer(
                     height: 46,

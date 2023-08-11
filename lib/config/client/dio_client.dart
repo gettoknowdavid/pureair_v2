@@ -10,13 +10,13 @@ Dio dioClient() {
     );
 
   dio.interceptors.addAll([
-    // LogInterceptor(
-    //   requestHeader: true,
-    //   requestBody: true,
-    //   responseBody: true,
-    //   responseHeader: false,
-    //   error: true,
-    // ),
+    LogInterceptor(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+    ),
   ]);
 
   return dio;

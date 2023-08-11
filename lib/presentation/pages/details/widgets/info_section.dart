@@ -3,17 +3,19 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/config/helpers/air_quality_helper.dart';
 import 'package:pureair_v2/constants/app_sizes.dart';
 import 'package:pureair_v2/domain/entities/air_quality/air_quality.dart';
-import 'package:pureair_v2/presentation/widgets/app_divider.dart';
+import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 class InfoSection extends StatelessWidget {
-  final AirQuality airQuality;
-  const InfoSection({super.key, required this.airQuality});
+  final AirQuality? airQuality;
+  final bool loading;
+  const InfoSection({super.key, this.airQuality, this.loading = false});
 
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme.labelLarge;
 
-    final color = getAirQualityColor(airQuality.aqi);
+    final color =
+        loading ? Colors.transparent : getAirQualityColor(airQuality!.aqi);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -25,25 +27,31 @@ class InfoSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Important Information',
-                style: style?.copyWith(fontWeight: FontWeight.bold),
-              ),
+              loading
+                  ? const ShimmerWidget(14, width: 150)
+                  : Text(
+                      'Important Information',
+                      style: style?.copyWith(fontWeight: FontWeight.bold),
+                    ),
               10.verticalSpace,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PhosphorIcon(
-                    PhosphorIcons.fill.shieldWarning,
-                    color: airQualityColor[airQuality.aqi],
-                    size: 20,
-                  ),
+                  loading
+                      ? const ShimmerWidget(20, width: 20)
+                      : PhosphorIcon(
+                          PhosphorIcons.fill.shieldWarning,
+                          size: 20,
+                          color: airQualityColor[airQuality!.aqi],
+                        ),
                   10.horizontalSpace,
                   Expanded(
-                    child: Text(
-                      "Don't forget to always a nose mask when doing activities outside.",
-                      style: style?.copyWith(fontSize: 13),
-                    ),
+                    child: loading
+                        ? const ShimmerWidget(30)
+                        : Text(
+                            "Don't forget to always a nose mask when doing activities outside.",
+                            style: style?.copyWith(fontSize: 13),
+                          ),
                   ),
                 ],
               ),

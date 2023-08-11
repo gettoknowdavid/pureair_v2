@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pureair_v2/constants/app_sizes.dart';
+import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
 class DetailsSectionTitle extends StatelessWidget {
   final String title;
   final String? subtitle;
-
-  const DetailsSectionTitle({super.key, required this.title, this.subtitle});
+  final bool loading;
+  const DetailsSectionTitle({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.loading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +23,20 @@ class DetailsSectionTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            title,
-            style: textTheme.bodyLarge?.copyWith(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          loading
+              ? const ShimmerWidget(16, width: 150)
+              : Text(
+                  title,
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
           if (subtitle != null) ...[
             const Spacer(),
-            Text(subtitle!, style: textTheme.bodySmall),
+            loading
+                ? const ShimmerWidget(13, width: 60)
+                : Text(subtitle!, style: textTheme.bodySmall),
           ]
         ],
       ),

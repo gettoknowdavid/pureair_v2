@@ -11,14 +11,14 @@ import 'widgets/index.dart';
 
 @RoutePage(deferredLoading: true)
 class DetailsPage extends HookWidget {
-  final AirQuality? airQuality;
+  final bool showActions;
   final List<double>? geo;
-  
+
   const DetailsPage({
     super.key,
-    this.airQuality,
     this.geo,
-  }) : assert(!(airQuality != null && geo != null));
+    this.showActions = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,30 +45,21 @@ class DetailsPage extends HookWidget {
     ];
 
     useEffect(() {
-      if (airQuality != null) {
-        aq.value = airQuality!;
-        loading.value = false;
-      } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          await context.read<SearchCubit>().loadDetails(geo!).then((value) {
-            aq.value = value!;
-            loading.value = false;
-          });
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await context.read<SearchCubit>().loadDetails(geo!).then((value) {
+          aq.value = value!;
+          loading.value = false;
         });
-      }
+      });
       return null;
     }, []);
-
-    if (loading.value) {
-      return const Scaffold(body: Loading());
-    }
 
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButton(),
         centerTitle: true,
-        title: const Text('Detail'),
-        actions: geo == null ? null : actions,
+        title: const Text('Details'),
+        actions: showActions ? actions : null,
       ),
       body: SingleChildScrollView(
         padding: kHorizontalPadding18,
@@ -76,30 +67,40 @@ class DetailsPage extends HookWidget {
           children: [
             10.verticalSpace,
             AppContainer(
+              loading: loading.value,
               backgroundColor: colorScheme.background,
               child: Column(
                 children: [
                   18.verticalSpace,
                   StationDetails(
-                    airQuality: aq.value!,
+                    loading: loading.value,
+                    airQuality: aq.value,
                     height: smallContainerHeight,
                   ),
                   const AppDivider(height: 40, indent: 16, endIndent: 16),
-                  WeatherSection(aq.value!.measurements),
+                  WeatherSection(
+                    measurements: aq.value?.measurements,
+                    loading: loading.value,
+                  ),
                   20.verticalSpace,
-                  InfoSection(airQuality: aq.value!),
+                  InfoSection(airQuality: aq.value, loading: loading.value),
                 ],
               ),
             ),
             20.verticalSpace,
-            HealthRecommendation(aqi: aq.value!.aqi),
+            HealthRecommendation(aqi: aq.value?.aqi, loading: loading.value),
             20.verticalSpace,
-            PollutantsGrid(measurements: aq.value!.measurements),
+            PollutantsGrid(
+              measurements: aq.value?.measurements,
+              loading: loading.value,
+            ),
             20.verticalSpace,
-            ForecastWidget(forecast: aq.value!.forecast),
-            20.verticalSpace,
-            DetailsChartSection(airQuality: aq.value!),
-            50.verticalSpace,
+            if (!loading.value) ...[
+              ForecastWidget(forecast: aq.value!.forecast),
+              20.verticalSpace,
+              DetailsChartSection(airQuality: aq.value!),
+              50.verticalSpace,
+            ],
           ],
         ),
       ),

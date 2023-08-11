@@ -14,6 +14,7 @@ export 'health_message_widget.dart';
 export 'loading.dart';
 export 'search_result_card.dart';
 export 'search_result_list.dart';
+export 'shimmer_widget.dart';
 export 'skeleton_loader.dart';
 export 'weather_section.dart';
 export 'weather_widget.dart';

@@ -5,15 +5,12 @@ import 'package:pureair_v2/domain/entities/air_quality/measurements.dart';
 import 'package:pureair_v2/presentation/widgets/weather_widget.dart';
 
 class WeatherSection extends StatelessWidget {
-  final Measurements measurements;
-  const WeatherSection(this.measurements, {super.key});
+  final Measurements? measurements;
+  final bool loading;
+  const WeatherSection({super.key, this.measurements, this.loading = false});
 
   @override
   Widget build(BuildContext context) {
-    final humidity = measurements.humidity;
-    final pressure = measurements.pressure;
-    final temperature = measurements.temperature;
-    final wind = measurements.wind;
     return Padding(
       padding: kHorizontalPadding18,
       child: Row(
@@ -21,19 +18,23 @@ class WeatherSection extends StatelessWidget {
         children: [
           WeatherWidget(
             icon: PhosphorIcons.regular.thermometerSimple,
-            label: "${temperature?.value}°C",
+            label: "${measurements?.temperature?.value}°C",
+            loading: loading,
           ),
           WeatherWidget(
             icon: PhosphorIcons.regular.drop,
-            label: "${humidity?.value}%",
+            label: "${measurements?.humidity?.value}%",
+            loading: loading,
           ),
           WeatherWidget(
             icon: PhosphorIcons.regular.gauge,
-            label: "${pressure?.value}mb",
+            label: "${measurements?.pressure?.value}mb",
+            loading: loading,
           ),
           WeatherWidget(
             icon: PhosphorIcons.regular.wind,
-            label: "${wind?.value}/s",
+            label: "${measurements?.wind?.value}/s",
+            loading: loading,
           ),
         ],
       ),

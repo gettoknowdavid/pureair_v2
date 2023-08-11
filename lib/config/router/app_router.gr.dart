@@ -10,7 +10,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:flutter/material.dart' as _i12;
-import 'package:pureair_v2/domain/domain.dart' as _i13;
 import 'package:pureair_v2/presentation/pages/details/details_page.dart'
     deferred as _i1;
 import 'package:pureair_v2/presentation/pages/explore/explore_page.dart' as _i2;
@@ -41,8 +40,8 @@ abstract class $AppRouter extends _i11.RootStackRouter {
           _i1.loadLibrary,
           () => _i1.DetailsPage(
             key: args.key,
-            airQuality: args.airQuality,
             geo: args.geo,
+            showActions: args.showActions,
           ),
         ),
       );
@@ -126,15 +125,15 @@ abstract class $AppRouter extends _i11.RootStackRouter {
 class DetailsRoute extends _i11.PageRouteInfo<DetailsRouteArgs> {
   DetailsRoute({
     _i12.Key? key,
-    _i13.AirQuality? airQuality,
     List<double>? geo,
+    bool showActions = true,
     List<_i11.PageRouteInfo>? children,
   }) : super(
           DetailsRoute.name,
           args: DetailsRouteArgs(
             key: key,
-            airQuality: airQuality,
             geo: geo,
+            showActions: showActions,
           ),
           initialChildren: children,
         );
@@ -148,19 +147,19 @@ class DetailsRoute extends _i11.PageRouteInfo<DetailsRouteArgs> {
 class DetailsRouteArgs {
   const DetailsRouteArgs({
     this.key,
-    this.airQuality,
     this.geo,
+    this.showActions = true,
   });
 
   final _i12.Key? key;
 
-  final _i13.AirQuality? airQuality;
-
   final List<double>? geo;
+
+  final bool showActions;
 
   @override
   String toString() {
-    return 'DetailsRouteArgs{key: $key, airQuality: $airQuality, geo: $geo}';
+    return 'DetailsRouteArgs{key: $key, geo: $geo, showActions: $showActions}';
   }
 }
 

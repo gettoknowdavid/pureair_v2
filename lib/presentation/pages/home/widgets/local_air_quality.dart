@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pureair_v2/application/application.dart';
+import 'package:pureair_v2/config/router/app_router.gr.dart';
 import 'package:pureair_v2/domain/domain.dart';
 import 'package:pureair_v2/presentation/widgets/widgets.dart';
 
@@ -37,7 +39,12 @@ class LocalAirQuality extends HookWidget {
           return const SizedBox();
         }
 
-        return AirQualityCard(airQuality: airQuality.value);
+        return AirQualityCard(
+          airQuality: airQuality.value,
+          onTap: () => context.router.navigate(
+            DetailsRoute(geo: airQuality.value?.city.geo, showActions: false),
+          ),
+        );
       },
     );
   }

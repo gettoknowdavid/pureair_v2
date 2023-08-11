@@ -30,7 +30,7 @@ class SearchResultCard extends StatelessWidget {
             AppContainer(
               height: 50,
               width: 50,
-              thickness: 1.5,
+              thickness: 2,
               alignment: Alignment.center,
               backgroundColor: backgroundColor,
               child: Text(

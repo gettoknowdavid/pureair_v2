@@ -31,26 +31,22 @@ class _SearchResultListState extends State<SearchResultList> {
   void _scrollListener() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      _loadMoreResults();
+      context.read<SearchCubit>().loadMore();
     }
-  }
-
-  Future<void> _loadMoreResults() async {
-    await context.read<SearchCubit>().loadMore();
   }
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<SearchCubit>();
 
-    return BlocConsumer<SearchCubit, SearchState>(
+    return BlocBuilder<SearchCubit, SearchState>(
       bloc: cubit,
-      listenWhen: (p, c) => p.keyword != c.keyword,
-      listener: (context, state) {},
+      buildWhen: (p, c) => p.keyword != c.keyword,
       builder: (context, state) {
         if (cubit.state.result.isEmpty) {
           return const SizedBox();
         }
+
         final displayedResult = cubit.state.displayedResult;
 
         return ListView.separated(
@@ -64,23 +60,27 @@ class _SearchResultListState extends State<SearchResultList> {
               final data = displayedResult[index]!;
               return SearchResultCard(data: data);
             } else {
-              return _buildLoadMoreButton(context);
+              return const _LoadMoreButton();
             }
           },
         );
       },
     );
   }
+}
 
-  Widget _buildLoadMoreButton(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyMedium;
+class _LoadMoreButton extends StatelessWidget {
+  const _LoadMoreButton();
+
+  @override
+  Widget build(BuildContext context) {
     return TextButton(
-      onPressed: _loadMoreResults,
+      onPressed: context.read<SearchCubit>().loadMore,
       style: TextButton.styleFrom(
-        textStyle: textStyle?.copyWith(
-          fontWeight: FontWeight.bold,
-          decoration: TextDecoration.underline,
-        ),
+        textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
+            ),
       ),
       child: const Text('Load more...'),
     );

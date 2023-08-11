@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pureair_v2/constants/app_sizes.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
+
+import 'shimmer_widget.dart';
 
 class WeatherWidget extends StatelessWidget {
   final IconData icon;
@@ -16,27 +17,20 @@ class WeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final style = Theme.of(context).textTheme.labelMedium?.copyWith(
+          fontWeight: FontWeight.bold,
+        );
 
     return ConstrainedBox(
       constraints: const BoxConstraints(minWidth: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Shimmer(enabled: loading, colorOpacity: 1, child: Icon(icon)),
+          loading ? const ShimmerWidget(24, width: 22) : Icon(icon),
           10.verticalSpace,
-          Shimmer(
-            enabled: loading,
-            colorOpacity: 1,
-            child: loading
-                ? SizedBox(height: textTheme.labelMedium?.height)
-                : Text(
-                    label!,
-                    style: textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-          )
+          loading
+              ? const ShimmerWidget(14, width: 40)
+              : Text(label!, style: style)
         ],
       ),
     );
