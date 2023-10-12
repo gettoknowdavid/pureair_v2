@@ -1,0 +1,79 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../common/common.dart';
+import '../../../../constants/constants.dart';
+import '../../../../router/router.dart';
+import '../../application/application.dart';
+import 'login_form.dart';
+import 'terms_condition_policy_link.dart';
+
+@RoutePage(deferredLoading: true)
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
+    final cubit = context.read<LoginFormCubit>();
+
+    return WillPopScope(
+      onWillPop: () async {
+        cubit.dispose();
+        return true;
+      },
+      child: Scaffold(
+        body: ListView(
+          padding: const EdgeInsets.all(kGlobalPadding),
+          shrinkWrap: true,
+          children: [
+            (kToolbarHeight * 1.5).verticalSpace,
+            Text(
+              'Welcome back!',
+              style: textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0,
+              ),
+            ),
+            4.verticalSpace,
+            Text(
+              'Use your credentials below to login to your account.',
+              style: textTheme.bodyLarge?.copyWith(
+                letterSpacing: 0,
+                color: colorScheme.onBackground.withOpacity(0.5),
+              ),
+            ),
+            40.verticalSpace,
+            const LoginForm(),
+            18.verticalSpace,
+            Text(
+              'or login with',
+              textAlign: TextAlign.center,
+              style:
+                  textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            18.verticalSpace,
+            GoogleButton(
+              loading: cubit.state.googleSignInLoading,
+              disabled: cubit.state.loading || cubit.state.googleSignInLoading,
+              onPressed: cubit.googleSignPressed,
+            ),
+            30.verticalSpace,
+            AuthRedirectionText(
+              text: "Don't have an account yet? ",
+              buttonText: "Register now",
+              action: () => context.navigateTo(const RegisterRoute()),
+            ),
+            60.verticalSpace,
+            const TermsConditionPolicyLink(),
+            20.verticalSpace,
+          ],
+        ),
+      ),
+    );
+  }
+}

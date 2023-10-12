@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pureair_v2/config/app_theme.dart';
+import 'package:pureair_v2/src/theme/app_theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'config/router/app_router.dart';
+import 'src/router/app_router.dart';
 
 final router = AppRouter();
 

@@ -4,8 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_lambdas
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: type=lint
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
@@ -13,37 +12,46 @@ import 'package:firebase_auth/firebase_auth.dart' as _i6;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i4;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:shared_preferences/shared_preferences.dart' as _i13;
+import 'package:shared_preferences/shared_preferences.dart' as _i19;
 
-import '../application/air_quality_cubit/air_quality_cubit.dart' as _i26;
-import '../application/auth_bloc/auth_bloc.dart' as _i27;
-import '../application/forgot_password_cubit/forgot_password_cubit.dart'
+import '../src/features/air_quality/application/air_quality_cubit/air_quality_cubit.dart'
     as _i28;
-import '../application/location_cubit/location_cubit.dart' as _i20;
-import '../application/login_cubit/login_cubit.dart' as _i21;
-import '../application/map/map_cubit.dart' as _i22;
-import '../application/password_cubit/password_cubit.dart' as _i11;
-import '../application/rank_cubit/rank_cubit.dart' as _i23;
-import '../application/register_cubit/register_cubit.dart' as _i24;
-import '../application/search_cubit/search_cubit.dart' as _i25;
-import '../config/router/app_router.dart' as _i5;
-import '../domain/domain.dart' as _i16;
-import '../infrastructure/air_quality_facade.dart' as _i17;
-import '../infrastructure/auth_facade.dart' as _i18;
-import '../infrastructure/datasources/air_quality/aq_local_datasource.dart'
-    as _i14;
-import '../infrastructure/datasources/auth_local_datasource.dart' as _i15;
-import '../infrastructure/datasources/datasources.dart' as _i19;
-import '../infrastructure/infrastructure.dart' as _i3;
-import '../services/firebase_auth_service.dart' as _i7;
-import '../services/location_service.dart' as _i8;
-import '../services/mail_app_service.dart' as _i9;
-import '../services/secure_storage_service.dart' as _i12;
-import '../services/services.dart' as _i10;
+import '../src/features/air_quality/application/aq_map/aq_map_cubit.dart'
+    as _i27;
+import '../src/features/air_quality/application/rank_cubit/rank_cubit.dart'
+    as _i25;
+import '../src/features/air_quality/application/search_cubit/search_cubit.dart'
+    as _i26;
+import '../src/features/air_quality/domain/i_air_quality_facade.dart' as _i23;
+import '../src/features/air_quality/infrastructure/air_quality_facade.dart'
+    as _i24;
+import '../src/features/air_quality/infrastructure/datasources/aq_local_datasource.dart'
+    as _i20;
+import '../src/features/air_quality/infrastructure/datasources/datasources.dart'
+    as _i3;
+import '../src/features/auth/application/auth_bloc/auth_bloc.dart' as _i21;
+import '../src/features/auth/application/forgot_password_cubit/forgot_password_cubit.dart'
+    as _i22;
+import '../src/features/auth/application/login_form_cubit/login_form_cubit.dart'
+    as _i11;
+import '../src/features/auth/application/password_cubit/password_cubit.dart'
+    as _i16;
+import '../src/features/auth/application/register_form_cubit/register_form_cubit.dart'
+    as _i17;
+import '../src/features/auth/domain/domain.dart' as _i12;
+import '../src/features/auth/domain/i_auth_facade.dart' as _i8;
+import '../src/features/auth/infrastructure/auth_facade.dart' as _i9;
+import '../src/features/map/application/map_cubit/map_cubit.dart' as _i14;
+import '../src/router/app_router.dart' as _i5;
+import '../src/services/firebase_auth_service.dart' as _i7;
+import '../src/services/location_service.dart' as _i10;
+import '../src/services/mail_app_service.dart' as _i13;
+import '../src/services/secure_storage_service.dart' as _i18;
+import '../src/services/services.dart' as _i15;
 import 'register_module.dart' as _i29;
 
 extension GetItInjectableX on _i1.GetIt {
-  // initializes the registration of main-scope dependencies inside of GetIt
+// initializes the registration of main-scope dependencies inside of GetIt
   Future<_i1.GetIt> init({
     String? environment,
     _i2.EnvironmentFilter? environmentFilter,
@@ -62,57 +70,53 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i7.FirebaseAuthService(gh<_i6.FirebaseAuth>()));
     gh.lazySingleton<_i4.FlutterSecureStorage>(
         () => registerModule.secureStorage);
-    gh.singleton<_i8.LocationService>(_i8.LocationService());
-    gh.lazySingleton<_i9.MailAppService>(() => _i9.MailAppService());
-    await gh.factoryAsync<_i10.ObjectBoxService>(
+    gh.factory<_i8.IAuthFacade>(
+        () => _i9.AuthFacade(gh<_i7.FirebaseAuthService>()));
+    gh.singleton<_i10.LocationService>(_i10.LocationService());
+    gh.factory<_i11.LoginFormCubit>(
+        () => _i11.LoginFormCubit(gh<_i12.IAuthFacade>()));
+    gh.lazySingleton<_i13.MailAppService>(() => _i13.MailAppService());
+    gh.factory<_i14.MapCubit>(() => _i14.MapCubit(gh<_i15.LocationService>()));
+    await gh.factoryAsync<_i15.ObjectBoxService>(
       () => registerModule.obj,
       preResolve: true,
     );
-    gh.factory<_i11.PasswordCubit>(() => _i11.PasswordCubit());
-    gh.lazySingleton<_i12.SecureStorageService>(
-        () => _i12.SecureStorageService(gh<_i4.FlutterSecureStorage>()));
-    await gh.factoryAsync<_i13.SharedPreferences>(
+    gh.factory<_i16.PasswordCubit>(() => _i16.PasswordCubit());
+    gh.factory<_i17.RegisterFormCubit>(
+        () => _i17.RegisterFormCubit(gh<_i12.IAuthFacade>()));
+    gh.lazySingleton<_i18.SecureStorageService>(
+        () => _i18.SecureStorageService(gh<_i4.FlutterSecureStorage>()));
+    await gh.factoryAsync<_i19.SharedPreferences>(
       () => registerModule.pref,
       preResolve: true,
     );
-    await gh.factoryAsync<_i10.SharedPreferencesService>(
+    await gh.factoryAsync<_i15.SharedPreferencesService>(
       () => registerModule.sharedPrefService,
       preResolve: true,
     );
-    gh.lazySingleton<_i14.AQLocalDatasource>(
-        () => _i14.AQLocalDatasource(gh<_i10.ObjectBoxService>()));
-    gh.lazySingleton<_i15.AuthLocalDatasource>(
-        () => _i15.AuthLocalDatasource(gh<_i10.SecureStorageService>()));
-    gh.lazySingleton<_i16.IAirQualityFacade>(() => _i17.AirQualityFacade(
+    gh.lazySingleton<_i20.AQLocalDatasource>(
+        () => _i20.AQLocalDatasource(gh<_i15.ObjectBoxService>()));
+    gh.factory<_i21.AuthBloc>(() => _i21.AuthBloc(gh<_i12.IAuthFacade>()));
+    gh.factory<_i22.ForgotPasswordCubit>(() => _i22.ForgotPasswordCubit(
+          gh<_i12.IAuthFacade>(),
+          gh<_i15.MailAppService>(),
+        ));
+    gh.lazySingleton<_i23.IAirQualityFacade>(() => _i24.AirQualityFacade(
           gh<_i3.AQLocalDatasource>(),
           gh<_i3.AQRemoteDatasource>(),
         ));
-    gh.factory<_i16.IAuthFacade>(() => _i18.AuthFacade(
-          gh<_i10.FirebaseAuthService>(),
-          gh<_i19.AuthLocalDatasource>(),
+    gh.factory<_i25.RankCubit>(() => _i25.RankCubit(
+          gh<_i23.IAirQualityFacade>(),
+          gh<_i15.LocationService>(),
         ));
-    gh.factory<_i20.LocationCubit>(
-        () => _i20.LocationCubit(gh<_i10.LocationService>()));
-    gh.factory<_i21.LoginCubit>(() => _i21.LoginCubit(gh<_i16.IAuthFacade>()));
-    gh.factory<_i22.MapCubit>(() => _i22.MapCubit(
-          gh<_i8.LocationService>(),
-          gh<_i16.IAirQualityFacade>(),
+    gh.factory<_i26.SearchCubit>(
+        () => _i26.SearchCubit(gh<_i23.IAirQualityFacade>()));
+    gh.factory<_i27.AQMapCubit>(() => _i27.AQMapCubit(
+          gh<_i15.LocationService>(),
+          gh<_i23.IAirQualityFacade>(),
         ));
-    gh.factory<_i23.RankCubit>(() => _i23.RankCubit(
-          gh<_i16.IAirQualityFacade>(),
-          gh<_i8.LocationService>(),
-        ));
-    gh.factory<_i24.RegisterCubit>(
-        () => _i24.RegisterCubit(gh<_i16.IAuthFacade>()));
-    gh.factory<_i25.SearchCubit>(
-        () => _i25.SearchCubit(gh<_i16.IAirQualityFacade>()));
-    gh.factory<_i26.AirQualityCubit>(
-        () => _i26.AirQualityCubit(gh<_i16.IAirQualityFacade>()));
-    gh.factory<_i27.AuthBloc>(() => _i27.AuthBloc(gh<_i16.IAuthFacade>()));
-    gh.factory<_i28.ForgotPasswordCubit>(() => _i28.ForgotPasswordCubit(
-          gh<_i16.IAuthFacade>(),
-          gh<_i10.MailAppService>(),
-        ));
+    gh.factory<_i28.AirQualityCubit>(
+        () => _i28.AirQualityCubit(gh<_i23.IAirQualityFacade>()));
     return this;
   }
 }

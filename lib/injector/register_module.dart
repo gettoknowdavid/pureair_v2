@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pureair_v2/config/config.dart';
-import 'package:pureair_v2/infrastructure/infrastructure.dart';
-import 'package:pureair_v2/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../src/features/air_quality/infrastructure/datasources/datasources.dart';
+import '../src/services/services.dart';
+import '../src/utils/utils.dart';
 
 @module
 abstract class RegisterModule {
