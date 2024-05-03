@@ -1,16 +1,24 @@
-# pureair_v2
+#  PureAir
+PureAir is an air quality monitoring application for delivering current and tailored air quality data based on the user's location and based on the user's set health condition. It gives health messages, recommendations and tips tailored to the user's currently selected health condition.
 
-A new Flutter project.
+## Features
+-  Authentication using Firebase Authentication
+-  World Air Quality Index (AQI) rankings using web scraping
+-  Health condition selector [asthma, bronchitis, lung cancer, etc]
+-  Location-based AQI readings
+-  Air pollutant details
+-  Health recommendations based on the currently selected health condition
 
-## Getting Started
+##  What's Included:
+###  Mobile Application ([Flutter](./flutter/README.md))
 
-This project is a starting point for a Flutter application.
+-  State Management ([Bloc](https://pub.dev/packages/flutter_bloc))
+-  Routing ([AutoRoute](https://pub.dev/packages/auto_route))
+-  Authentication ([Firebase](https://pub.dev/packages/firebase_auth))
+-  Adjustable Theme ([Firebase](https://pub.dev/packages/firebase_auth))
 
-A few resources to get you started if this is your first Flutter project:
+###  Backend
+-  RESTApi backend ([WAQI](https://waqi.info))
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+###  UI Inspiration
+-  Sultan Handaya for Pelorous from Dribbble ([Air Quality App](https://dribbble.com/shots/20036134-Air-Quality-App))
