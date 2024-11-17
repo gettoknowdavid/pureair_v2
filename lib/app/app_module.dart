@@ -11,6 +11,7 @@ class AppModule extends Module {
   @override
   void routes(RouteManager r) {
     r
+      ..child(R.root, child: (_) => const HomePage())
       ..child(R.login, child: (_) => const LoginPage())
       ..child(R.register, child: (_) => const RegisterPage());
   }
