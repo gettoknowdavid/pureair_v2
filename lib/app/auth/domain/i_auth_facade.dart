@@ -6,7 +6,7 @@ import 'package:pureair_v2/app/auth/domain/value_objects/password.dart';
 import 'package:pureair_v2/app/core/value_objects/single_line_string.dart';
 
 abstract class IAuthFacade {
-  Stream<User> get userChanges;
+  Stream<User?> get userChanges;
 
   Future<Either<AuthException, Unit>> register({
     required SingleLineString fullName,

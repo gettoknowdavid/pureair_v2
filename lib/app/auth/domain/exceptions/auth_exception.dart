@@ -10,4 +10,8 @@ class AuthException with _$AuthException {
       InvalidEmailOrPasswordException;
 
   const factory AuthException.serverException() = ServerException;
+
+  const factory AuthException.canceled() = AuthCanceledException;
+
+  const factory AuthException.message(String error) = AuthMessageException;
 }
