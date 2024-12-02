@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 
-class RegisterRedirectionButton extends ConsumerWidget {
-  const RegisterRedirectionButton({super.key});
+class SignUpRedirectionButton extends ConsumerWidget {
+  const SignUpRedirectionButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,8 +29,8 @@ class RegisterRedirectionButton extends ConsumerWidget {
   }
 }
 
-class LoginRedirectionButton extends StatelessWidget {
-  const LoginRedirectionButton({super.key});
+class SignInRedirectionButton extends StatelessWidget {
+  const SignInRedirectionButton({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 
-class LoginForm extends HookConsumerWidget {
-  const LoginForm({super.key});
+class SignInForm extends HookConsumerWidget {
+  const SignInForm({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class LoginForm extends HookConsumerWidget {
           SizedBox(height: 30),
           ForgotPasswordButton(),
           SizedBox(height: 30),
-          LoginButton(),
+          SignInButton(),
         ],
       ),
     );

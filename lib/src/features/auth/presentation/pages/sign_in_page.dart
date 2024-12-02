@@ -4,45 +4,46 @@ import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class RegisterPage extends ConsumerWidget {
-  const RegisterPage({super.key});
+const _topSpace = kToolbarHeight * 1.5;
+
+class SignInPage extends ConsumerWidget {
+  const SignInPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = PureAirTextTheme.of(context)!;
-
+    final router = ref.watch(routerProvider);
     ref.listen(authProvider, (previous, next) {
+      if (router.state?.path != R.login) return;
       next.whenOrNull(
         failure: (exception) => context.showErrorSnackBar(
           exception.maybeWhen(
             orElse: () => ErMsg.unknown,
             canceled: () => ErMsg.cancelled,
-            emailAddressInUse: () => ErMsg.emailAlreadyInUse,
-            message: (error) => error,
+            invalidEmailOrPassword: () => ErMsg.invalidEmailOrPassword,
           ),
         ),
       );
     });
 
     return Scaffold(
-      appBar: AppBar(leading: const PBackButton()),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 4),
-            Text('Register ', style: textTheme.heading1),
-            const SizedBox(height: 4),
+            const SizedBox(height: _topSpace),
+            Text('Welcome back!', style: textTheme.heading1),
+            const SizedBox(height: 10),
             Text(
-              'Use your credentials to create your new account.',
+              'Use your credentials below to sign in to your account.',
               style: textTheme.caption,
             ),
-            const SizedBox(height: 24),
-            const RegisterForm(),
+            const SizedBox(height: 40),
+            const SignInForm(),
             const SizedBox(height: 24),
             Text(
-              'Or login with',
+              'Or',
               textAlign: TextAlign.center,
               style: textTheme.captionBold,
             ),
@@ -50,8 +51,8 @@ class RegisterPage extends ConsumerWidget {
             const GoogleSignInButton(),
             const SizedBox(height: 18),
             const FacebookSignInButton(),
-            const SizedBox(height: 30),
-            const LoginRedirectionButton(),
+            const SizedBox(height: 40),
+            const SignUpRedirectionButton(),
             const SizedBox(height: 20),
             const TermsConditionPolicyLink(),
           ],

@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/router/routes.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
 import 'package:pureair_v2/src/features/auth/presentation/pages/home_page.dart';
-import 'package:pureair_v2/src/features/auth/presentation/pages/login_page.dart';
-import 'package:pureair_v2/src/features/auth/presentation/pages/register_page.dart';
+import 'package:pureair_v2/src/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:pureair_v2/src/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -31,8 +31,8 @@ GoRouter router(Ref ref) {
     routes: [
       GoRoute(path: R.root, builder: (_, __) => const Scaffold()),
       GoRoute(path: R.home, builder: (_, __) => const HomePage()),
-      GoRoute(path: R.login, builder: (_, __) => const LoginPage()),
-      GoRoute(path: R.register, builder: (_, __) => const RegisterPage()),
+      GoRoute(path: R.login, builder: (_, __) => const SignInPage()),
+      GoRoute(path: R.register, builder: (_, __) => const SignUpPage()),
     ],
   );
 }

@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class LoginButton extends ConsumerWidget {
-  const LoginButton({super.key});
+class SignInButton extends ConsumerWidget {
+  const SignInButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
