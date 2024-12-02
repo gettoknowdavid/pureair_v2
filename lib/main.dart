@@ -1,12 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pureair_v2/app/app.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pureair_v2/app.dart';
+import 'package:pureair_v2/firebase_options.dart';
 
-void main() {
-  runApp(
-    ModularApp(
-      module: AppModule(),
-      child: const AppWidget(),
-    ),
-  );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const ProviderScope(child: PureAirApp()));
 }

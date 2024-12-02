@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "72909982448",
+    "project_id": "pureair-f9995",
+    "storage_bucket": "pureair-f9995.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72909982448:android:6e997eee5ef99bfe691035",
+        "android_client_info": {
+          "package_name": "com.example.pureair_v2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXRCQv7f32PUwgU3dMrFwW0uYxgkYNggM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

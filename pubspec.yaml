@@ -7,7 +7,6 @@ environment:
   sdk: ^3.5.4
 
 dependencies:
-  auto_route: ^9.2.2
   bloc: ^8.1.4
   cached_network_image: ^3.4.1
   cloud_firestore: ^5.5.0
@@ -26,8 +25,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_gen: ^5.8.0
   flutter_hooks: ^0.20.5
-  flutter_modular: ^6.3.4
   flutter_secure_storage: ^9.2.2
   freezed_annotation: ^2.4.4
   geocoding: ^3.0.0
@@ -37,6 +36,7 @@ dependencies:
   google_fonts: ^6.2.1
   google_maps_flutter: ^2.10.0
   google_sign_in: ^6.2.2
+  hooks_riverpod: ^2.6.1
   injectable: ^2.5.0
   intl: ^0.19.0
   json_annotation: ^4.9.0
@@ -50,15 +50,16 @@ dependencies:
   phosphor_flutter: ^2.1.0
   responsive_framework: ^1.5.1
   retrofit: ^4.4.1
+  riverpod_annotation: ^2.6.1
   shared_preferences: ^2.3.3
   shimmer_animation: ^2.2.1
   table_calendar: ^3.1.2
   uuid: ^4.5.1
 
 dev_dependencies:
-  auto_route_generator: ^9.0.0
   build_runner: ^2.4.13
   cloud_firestore_odm_generator: ^1.0.0-dev.89
+  custom_lint: ^0.7.0
   envied_generator: ^1.0.0
   flutter_lints: ^5.0.0
   flutter_test:
@@ -70,9 +71,41 @@ dev_dependencies:
   mockito: ^5.4.4
   objectbox_generator: ^4.0.3
   retrofit_generator: ^9.1.5
+  riverpod_generator: ^2.6.3
+  riverpod_lint: ^2.6.3
   very_good_analysis: ^6.0.0
+
+flutter_gen:
+  output: lib/src/core/theme
+
+  integrations:
+    lottie: true
+
+  assets:
+    enabled: true
+    outputs:
+      class_name: PureAirAssets
+  
+  fonts:
+    outputs:
+      class_name: PureAirFontFamily
+  
 
 flutter:
   uses-material-design: true
   assets:
     - assets/animations/lottie-loader.json
+
+  fonts: 
+    - family: Figtree
+      fonts:
+        - asset: assets/fonts/Figtree-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Figtree-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Figtree-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Figtree-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Figtree-Bold.ttf
+          weight: 700
