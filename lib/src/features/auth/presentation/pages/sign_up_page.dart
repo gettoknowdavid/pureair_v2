@@ -11,7 +11,7 @@ class SignUpPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = PureAirTextTheme.of(context)!;
 
-    ref.listen(authProvider, (previous, next) {
+    ref.listen(signUpNotifierProvider, (previous, next) {
       next.whenOrNull(
         failure: (exception) => context.showErrorSnackBar(
           exception.maybeWhen(
@@ -21,6 +21,10 @@ class SignUpPage extends ConsumerWidget {
             message: (error) => error,
           ),
         ),
+        success: () {
+          ref.read(verifyEmailNotifierProvider.notifier).sendVerificationMail();
+          ref.invalidate(routerProvider);
+        },
       );
     });
 

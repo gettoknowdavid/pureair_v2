@@ -9,6 +9,7 @@ extension FirebaseExtensions on fa.User {
       uid: Uid<User>.fromString(uid),
       fullName: SingleLineString(displayName ?? email!),
       emailAddress: EmailAddress(email!),
+      emailVerified: emailVerified,
       imageUrl: photoURL,
     );
   }

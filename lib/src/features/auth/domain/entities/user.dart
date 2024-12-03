@@ -14,6 +14,7 @@ class User with _$User implements IEntity<User> {
     required Uid<User> uid,
     required SingleLineString fullName,
     required EmailAddress emailAddress,
+    required bool emailVerified,
     String? imageUrl,
   }) = _User;
 }

@@ -1,9 +1,6 @@
 export 'auth_redirection_button.dart';
-export 'email_address_widget.dart';
 export 'facebook_sign_in_button.dart';
-export 'full_name_widget.dart';
 export 'google_sign_in_button.dart';
-export 'password_widget.dart';
 export 'sign_in/sign_in.dart';
 export 'sign_up/sign_up.dart';
 export 'terms_condition_policy_link.dart';

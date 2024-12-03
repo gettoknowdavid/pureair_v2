@@ -12,9 +12,7 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = PureAirTextTheme.of(context)!;
-    final router = ref.watch(routerProvider);
-    ref.listen(authProvider, (previous, next) {
-      if (router.state?.path != R.login) return;
+    ref.listen(signInNotifierProvider, (previous, next) {
       next.whenOrNull(
         failure: (exception) => context.showErrorSnackBar(
           exception.maybeWhen(
@@ -23,6 +21,7 @@ class SignInPage extends ConsumerWidget {
             invalidEmailOrPassword: () => ErMsg.invalidEmailOrPassword,
           ),
         ),
+        success: () => ref.invalidate(routerProvider),
       );
     });
 

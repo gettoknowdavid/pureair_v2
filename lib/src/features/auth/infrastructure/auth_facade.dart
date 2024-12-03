@@ -19,6 +19,27 @@ class AuthFacade implements IAuthFacade {
   }
 
   @override
+  Future<Option<bool>> checkVerificationStatus() async {
+    if (_firebaseAuth.currentUser == null) return const None();
+    await _firebaseAuth.currentUser!.reload();
+    final isEmailVerified = _firebaseAuth.currentUser!.emailVerified;
+    return Some(isEmailVerified);
+  }
+
+  @override
+  Future<Either<AuthException, EmailAddress>> sendVerificationEmail() async {
+    try {
+      await _firebaseAuth.currentUser?.sendEmailVerification();
+      final emailAddress = EmailAddress(_firebaseAuth.currentUser!.email!);
+      return right(emailAddress);
+    } on fa.FirebaseAuthException catch (e) {
+      return left(AuthMessageException(e.message ?? 'Unknown error'));
+    } catch (e) {
+      return left(AuthMessageException(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<AuthException, Unit>> signIn({
     required EmailAddress emailAddress,
     required Password password,
@@ -71,9 +92,9 @@ class AuthFacade implements IAuthFacade {
       final user = credential.user;
       if (user == null) return left(const AuthCanceledException());
 
+      await user.reload();
       final fullNameStr = fullName.value.getOrElse(() => 'Invalid full name');
       await user.updateDisplayName(fullNameStr);
-      await user.reload();
 
       return right(unit);
     } on fa.FirebaseAuthException catch (e) {

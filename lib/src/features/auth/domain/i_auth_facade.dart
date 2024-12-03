@@ -4,6 +4,10 @@ import 'package:pureair_v2/src/features/auth/auth.dart';
 abstract class IAuthFacade {
   Stream<User?> get userChanges;
 
+  Future<Option<bool>> checkVerificationStatus();
+
+  Future<Either<AuthException, EmailAddress>> sendVerificationEmail();
+
   Future<Either<AuthException, Unit>> signIn({
     required EmailAddress emailAddress,
     required Password password,

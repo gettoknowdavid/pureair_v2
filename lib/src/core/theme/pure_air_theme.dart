@@ -91,6 +91,14 @@ class PureAirTheme {
       ),
       visualDensity: VisualDensity.comfortable,
       useMaterial3: true,
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        contentTextStyle: textTheme.caption,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(width: 2, color: colorScheme.onSurface),
+        ),
+      ),
       extensions: [textTheme],
     );
   }
