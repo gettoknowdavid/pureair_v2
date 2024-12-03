@@ -10,7 +10,7 @@ part 'router.g.dart';
 @riverpod
 GoRouter router(Ref ref) {
   FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
-    final authState = ref.read(authProvider);
+    final authState = ref.read(authNotifierProvider);
     final isAllowedPath = authState.allowedPaths.contains(state.fullPath);
     if (!isAllowedPath) return authState.redirectPath;
     return null;
@@ -19,7 +19,7 @@ GoRouter router(Ref ref) {
   final refreshListenable = ValueNotifier(const AuthState.initial());
   ref
     ..onDispose(refreshListenable.dispose)
-    ..listen(authProvider, (_, next) => refreshListenable.value = next);
+    ..listen(authNotifierProvider, (_, next) => refreshListenable.value = next);
 
   return GoRouter(
     initialLocation: R.home,

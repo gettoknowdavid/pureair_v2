@@ -7,10 +7,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(
-      authProvider.select((v) => v.whenOrNull(authenticated: (u) => u)),
-    );
-
+    final user = ref.watch(userProvider);
     return Scaffold(
       body: Center(
         child: Column(
@@ -19,7 +16,7 @@ class HomePage extends ConsumerWidget {
             Text('Hello, ${user?.fullName.getOrCrash}'),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: ref.read(authProvider.notifier).signOut,
+              onPressed: ref.read(authNotifierProvider.notifier).signOut,
               child: const Text('Sign Out'),
             ),
           ],

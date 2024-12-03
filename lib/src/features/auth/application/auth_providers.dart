@@ -1,11 +1,10 @@
-// ignore_for_file: avoid_manual_providers_as_generated_provider_dependency
 import 'package:firebase_auth/firebase_auth.dart' as fa;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'providers.g.dart';
+part 'auth_providers.g.dart';
 
 @riverpod
 IAuthFacade authFacade(Ref ref) {
@@ -13,9 +12,7 @@ IAuthFacade authFacade(Ref ref) {
 }
 
 @riverpod
-Raw<Stream<User?>> userChanges(Ref ref) {
-  return ref.watch(authFacadeProvider).userChanges;
-}
+User? user(Ref ref) => ref.read(authFacadeProvider).user;
 
 @riverpod
 class EmailAddressNotifier extends _$EmailAddressNotifier {

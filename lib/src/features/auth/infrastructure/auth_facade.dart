@@ -10,6 +10,9 @@ class AuthFacade implements IAuthFacade {
   final fa.FirebaseAuth _firebaseAuth;
 
   @override
+  User? get user => _firebaseAuth.currentUser?.toDomain;
+
+  @override
   Stream<User?> get userChanges {
     final stream = _firebaseAuth.userChanges().map((authUser) {
       if (authUser == null) return null;

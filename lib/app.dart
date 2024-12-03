@@ -8,7 +8,7 @@ class PureAirApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(authProvider);
+    ref.watch(authNotifierProvider);
     return const PureAirAppView();
   }
 }

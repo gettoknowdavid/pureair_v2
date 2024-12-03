@@ -9,7 +9,7 @@ part 'auth_notifier.g.dart';
 part 'auth_state.dart';
 
 @riverpod
-class Auth extends _$Auth {
+class AuthNotifier extends _$AuthNotifier {
   @override
   AuthState build() {
     state = const AuthInitial();

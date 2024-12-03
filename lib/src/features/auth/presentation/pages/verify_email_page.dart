@@ -59,7 +59,7 @@ class VerifyEmailPage extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: ref.read(authProvider.notifier).signOut,
+                  onPressed: ref.read(authNotifierProvider.notifier).signOut,
                   child: const Text('Cancel'),
                 ),
                 TextButton(
