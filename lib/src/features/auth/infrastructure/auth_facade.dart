@@ -30,6 +30,21 @@ class AuthFacade implements IAuthFacade {
   }
 
   @override
+  Future<Either<AuthException, EmailAddress>> sendPasswordResetEmail(
+    EmailAddress emailAddress,
+  ) async {
+    try {
+      final emailStr = emailAddress.value.getOrElse(() => 'Invalid email');
+      await _firebaseAuth.sendPasswordResetEmail(email: emailStr);
+      return right(emailAddress);
+    } on fa.FirebaseAuthException catch (e) {
+      return left(AuthMessageException(e.message ?? 'Unknown error'));
+    } catch (e) {
+      return left(AuthMessageException(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<AuthException, EmailAddress>> sendVerificationEmail() async {
     try {
       await _firebaseAuth.currentUser?.sendEmailVerification();

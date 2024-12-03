@@ -8,6 +8,10 @@ abstract class IAuthFacade {
 
   Future<Option<bool>> checkVerificationStatus();
 
+  Future<Either<AuthException, EmailAddress>> sendPasswordResetEmail(
+    EmailAddress emailAddress,
+  );
+
   Future<Either<AuthException, EmailAddress>> sendVerificationEmail();
 
   Future<Either<AuthException, Unit>> signIn({

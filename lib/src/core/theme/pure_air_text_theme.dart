@@ -107,7 +107,7 @@ class _Typography {
 
   late final heading1 = _font(24);
   late final body = _font(16);
-  late final bodyBold = _font(16);
+  late final bodyBold = _font(16, weight: FontWeight.bold);
   late final titleRegular = _font(20);
   late final titleBold = _font(20);
   late final subtitle = _font(18);

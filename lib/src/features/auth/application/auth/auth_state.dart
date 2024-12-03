@@ -23,19 +23,18 @@ extension AuthStateX on AuthState {
       orElse: () => [
         R.login,
         R.register,
+        R.forgotPassword,
+        R.passwordResetConfirmation,
       ],
       unverified: (_) => [
         R.verifyEmail,
         R.login,
         R.register,
         R.forgotPassword,
+        R.passwordResetConfirmation,
       ],
       authenticated: (_) => [
         R.home,
-        R.login,
-        R.register,
-        R.forgotPassword,
-        R.verifyEmail,
       ],
     );
   }

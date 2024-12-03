@@ -19,7 +19,7 @@ class VerifyEmailPage extends HookConsumerWidget {
 
     ref.listen(verifyEmailNotifierProvider, (previous, next) {
       next.whenOrNull(
-        failure: context.showVerifyEmailException,
+        failure: context.showAuthExceptionMessageOrElse,
         mailSent: (emailAddress) => context.showSuccessSnackBar(
           'Verification mail has been sent to ${emailAddress.getOrCrash}',
         ),

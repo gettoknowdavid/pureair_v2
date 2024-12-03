@@ -56,6 +56,13 @@ class PureAirTheme {
 
     return ThemeData(
       colorScheme: colorScheme,
+      dialogTheme: DialogTheme(
+        titleTextStyle: textTheme.titleBold,
+        contentTextStyle: textTheme.body?.copyWith(height: 1.3),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(width: 2, color: colorScheme.onSurface),
+        ),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 0,

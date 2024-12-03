@@ -33,7 +33,7 @@ extension PureAirSnackbarX on BuildContext {
     );
   }
 
-  PMessenger showVerifyEmailException(AuthException exception) {
+  PMessenger showAuthExceptionMessageOrElse(AuthException exception) {
     return showErrorSnackBar(
       exception.maybeWhen(
         orElse: () => ErMsg.unknown,

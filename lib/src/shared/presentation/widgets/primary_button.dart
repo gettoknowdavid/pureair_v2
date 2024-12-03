@@ -8,18 +8,23 @@ class PrimaryButton extends StatelessWidget {
     this.disabled = false,
     this.loading = false,
     super.key,
+    this.height,
   });
 
   final String title;
   final VoidCallback? onPressed;
   final bool disabled;
   final bool loading;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: loading || disabled ? null : onPressed,
-      child: loading ? const LoadingIndicator() : Text(title),
+    return SizedBox(
+      height: height,
+      child: FilledButton(
+        onPressed: loading || disabled ? null : onPressed,
+        child: loading ? const LoadingIndicator() : Text(title),
+      ),
     );
   }
 }
