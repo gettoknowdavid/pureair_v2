@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pureair_v2/src/shared/presentation/widgets/loading_indicator.dart';
+import 'package:pureair_v2/src/shared/widgets/loading_indicator.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({

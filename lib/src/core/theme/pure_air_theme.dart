@@ -85,6 +85,7 @@ class PureAirTheme {
           textStyle: textTheme.button,
         ),
       ),
+      extensions: [textTheme],
       fontFamily: PureAirFontFamily.figtree,
       inputDecorationTheme: InputDecorationTheme(
         border: border,
@@ -96,8 +97,10 @@ class PureAirTheme {
         contentPadding: const EdgeInsets.all(16),
         hintStyle: textTheme.formHint,
       ),
-      visualDensity: VisualDensity.comfortable,
-      useMaterial3: true,
+      navigationBarTheme: const NavigationBarThemeData(
+        backgroundColor: Colors.transparent,
+        height: 60,
+      ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         contentTextStyle: textTheme.caption,
@@ -106,7 +109,8 @@ class PureAirTheme {
           side: BorderSide(width: 2, color: colorScheme.onSurface),
         ),
       ),
-      extensions: [textTheme],
+      useMaterial3: true,
+      visualDensity: VisualDensity.comfortable,
     );
   }
 }

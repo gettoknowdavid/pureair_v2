@@ -3,11 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
+import 'package:pureair_v2/src/shared/shared.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
+final mainLayoutNavigatorKey = GlobalKey<NavigatorState>();
 
 @riverpod
 GoRouter router(Ref ref) {
@@ -32,11 +34,7 @@ GoRouter router(Ref ref) {
       // Pages
       GoRoute(
         path: R.root,
-        builder: (context, state) => const Scaffold(),
-      ),
-      GoRoute(
-        path: R.home,
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => const Scaffold(body: LoadingIndicator()),
       ),
       GoRoute(
         path: R.login,
@@ -68,6 +66,49 @@ GoRouter router(Ref ref) {
           context.go(R.login);
           return true;
         },
+      ),
+      //
+      // Routes for the Main Navigation Bar
+      // Bottom Navigation Bar Routes
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) => PureAirLayout(
+          key: mainLayoutNavigatorKey,
+          navigationShell: navigationShell,
+        ),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: R.home,
+                builder: (context, state) => const HomePage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: R.explore,
+                builder: (context, state) => const ExplorePage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: R.ranks,
+                builder: (context, state) => const RanksPage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: R.profile,
+                builder: (context, state) => const ProfilePage(),
+              ),
+            ],
+          ),
+        ],
       ),
     ],
   );

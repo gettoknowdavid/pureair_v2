@@ -20,6 +20,7 @@ extension AuthStateX on AuthState {
 
   List<String> get allowedPaths {
     return maybeWhen(
+      initial: ()=> [R.root],
       orElse: () => [
         R.login,
         R.register,
@@ -35,6 +36,9 @@ extension AuthStateX on AuthState {
       ],
       authenticated: (_) => [
         R.home,
+        R.explore,
+        R.ranks,
+        R.profile,
       ],
     );
   }
