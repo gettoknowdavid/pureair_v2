@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as fa;
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
@@ -8,11 +9,33 @@ part 'auth_providers.g.dart';
 
 @riverpod
 IAuthFacade authFacade(Ref ref) {
-  return AuthFacade(firebaseAuth: fa.FirebaseAuth.instance);
+  const scopes = <String>[
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ];
+  return AuthFacade(
+    firebaseAuth: fa.FirebaseAuth.instance,
+    googleSignIn: GoogleSignIn(scopes: scopes),
+  );
 }
 
 @riverpod
 User? user(Ref ref) => ref.read(authFacadeProvider).user;
+
+@riverpod
+class GoogleSignInNotifier extends _$GoogleSignInNotifier {
+  @override
+  FutureOr<void> build() => null;
+
+  Future<void> signIn() async {
+    state = const AsyncLoading();
+    final result = await ref.read(authFacadeProvider).signInWithGoogle();
+    state = result.fold(
+      (failure) => AsyncError(failure, StackTrace.current),
+      AsyncData.new,
+    );
+  }
+}
 
 @riverpod
 class EmailAddressNotifier extends _$EmailAddressNotifier {

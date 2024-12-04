@@ -12,18 +12,19 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = PureAirTextTheme.of(context)!;
-    ref.listen(signInNotifierProvider, (previous, next) {
-      next.whenOrNull(
-        failure: (exception) => context.showErrorSnackBar(
-          exception.maybeWhen(
-            orElse: () => ErMsg.unknown,
-            canceled: () => ErMsg.cancelled,
-            invalidEmailOrPassword: () => ErMsg.invalidEmailOrPassword,
-          ),
-        ),
-        success: () => ref.invalidate(routerProvider),
-      );
-    });
+    ref
+      ..listen(signInNotifierProvider, (previous, next) {
+        next.whenOrNull(
+          failure: context.showSignInException,
+          success: () => ref.invalidate(routerProvider),
+        );
+      })
+      ..listen(googleSignInNotifierProvider, (previous, next) {
+        next.whenOrNull(
+          error: (e, _) => context.showSignInException(e as AuthException),
+          data: (data) => ref.invalidate(routerProvider),
+        );
+      });
 
     return Scaffold(
       body: SingleChildScrollView(

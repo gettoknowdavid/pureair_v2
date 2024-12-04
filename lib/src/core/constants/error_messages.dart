@@ -2,6 +2,8 @@ class ErMsg {
   const ErMsg._();
 
   static const String unknown = 'Unknown Error';
+  static const String permissionDenied = 'You do not have the permission to '
+      'run this operation. Please contact support.';
   static const String cancelled = 'The action was cancelled';
   static const String invalidEmailOrPassword =
       '''Invalid email address and password combination''';

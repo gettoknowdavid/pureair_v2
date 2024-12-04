@@ -13,5 +13,7 @@ class AuthException with _$AuthException {
 
   const factory AuthException.canceled() = AuthCanceledException;
 
+  const factory AuthException.permissionDenied() = AuthPermissionDenied;
+
   const factory AuthException.message(String error) = AuthMessageException;
 }

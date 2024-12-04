@@ -36,10 +36,13 @@ class _EmailAddressWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(emailAddressNotifierProvider.notifier);
+    final formState = ref.watch(signInNotifierProvider);
+    final googleState = ref.watch(googleSignInNotifierProvider);
+
     return PTextFormField(
       labelText: 'Email Address',
       hintText: 'john@example.com',
-      enabled: ref.watch(signInNotifierProvider) is! SignInInProgress,
+      enabled: formState is! SignInInProgress || googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
       keyboardType: TextInputType.emailAddress,
@@ -53,11 +56,14 @@ class _PasswordWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(passwordNotifierProvider.notifier);
+    final formState = ref.watch(signInNotifierProvider);
+    final googleState = ref.watch(googleSignInNotifierProvider);
+
     return PTextFormField(
       labelText: 'Password',
       hintText: 'Your password',
       isPassword: true,
-      enabled: ref.watch(signInNotifierProvider) is! SignInInProgress,
+      enabled: formState is! SignInInProgress || googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
     );
@@ -75,9 +81,13 @@ class _SignInButton extends ConsumerWidget {
       }
     }
 
+    final formState = ref.watch(signInNotifierProvider);
+    final googleState = ref.watch(googleSignInNotifierProvider);
+
     return PrimaryButton(
       title: 'Sign In',
-      loading: ref.watch(signInNotifierProvider) is SignInInProgress,
+      loading: formState is SignInInProgress,
+      disabled: formState is SignInInProgress || googleState is AsyncLoading,
       onPressed: signIn,
     );
   }

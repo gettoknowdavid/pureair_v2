@@ -41,4 +41,15 @@ extension PureAirSnackbarX on BuildContext {
       ),
     );
   }
+
+  PMessenger showSignInException(AuthException exception) {
+    return showErrorSnackBar(
+      exception.maybeWhen(
+        orElse: () => ErMsg.unknown,
+        canceled: () => ErMsg.cancelled,
+        permissionDenied: () => ErMsg.permissionDenied,
+        invalidEmailOrPassword: () => ErMsg.invalidEmailOrPassword,
+      ),
+    );
+  }
 }

@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pureair_v2/src/features/auth/auth.dart';
+import 'package:pureair_v2/src/shared/widgets/loading_indicator.dart';
 
-class GoogleSignInButton extends StatelessWidget {
+class GoogleSignInButton extends ConsumerWidget {
   const GoogleSignInButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
+    final loading = ref.watch(googleSignInNotifierProvider) is AsyncLoading;
+
+    final icon = PhosphorIcon(
+      PhosphorIconsDuotone.googleLogo,
+      duotoneSecondaryColor: colorScheme.surface,
+      duotoneSecondaryOpacity: 1,
+      size: 20,
+    );
+
     return FilledButton.icon(
-      onPressed: () {},
-      label: const Text('Continue with Google'),
-      icon: PhosphorIcon(
-        PhosphorIconsDuotone.googleLogo,
-        duotoneSecondaryColor: colorScheme.surface,
-        duotoneSecondaryOpacity: 1,
-        size: 20,
-      ),
+      onPressed: ref.watch(googleSignInNotifierProvider.notifier).signIn,
+      label: loading
+          ? const LoadingIndicator()
+          : const Text('Continue with Google'),
+      icon: loading ? null : icon,
       style: FilledButton.styleFrom(
         backgroundColor: colorScheme.secondary,
         foregroundColor: colorScheme.onSecondary,

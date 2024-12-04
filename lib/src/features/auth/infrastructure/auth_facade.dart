@@ -1,13 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fa;
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 
 class AuthFacade implements IAuthFacade {
   AuthFacade({
     required fa.FirebaseAuth firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth;
+    required GoogleSignIn googleSignIn,
+  })  : _firebaseAuth = firebaseAuth,
+        _googleSignIn = googleSignIn;
 
   final fa.FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
 
   @override
   User? get user => _firebaseAuth.currentUser?.toDomain;
@@ -87,11 +91,37 @@ class AuthFacade implements IAuthFacade {
 
   @override
   Future<Either<AuthException, Unit>> signInWithGoogle() async {
-    throw UnimplementedError();
+    try {
+      await _googleSignIn.signOut();
+      final googleUser = await _googleSignIn.signIn().catchError((_) => null);
+
+      if (googleUser == null) return left(const AuthCanceledException());
+
+      final googleAuthentication = await googleUser.authentication;
+      final credential = fa.GoogleAuthProvider.credential(
+        accessToken: googleAuthentication.accessToken,
+        idToken: googleAuthentication.idToken,
+      );
+
+      await _firebaseAuth.signInWithCredential(credential);
+      return right(unit);
+    } on fa.FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'operation-not-allowed':
+          return left(const AuthPermissionDenied());
+        default:
+          return left(AuthMessageException(e.message ?? 'Unknown error'));
+      }
+    } catch (e) {
+      return left(AuthException.message(e.toString()));
+    }
   }
 
   @override
-  Future<void> signOut() => _firebaseAuth.signOut();
+  Future<void> signOut() => Future.wait([
+        _firebaseAuth.signOut(),
+        _googleSignIn.signOut(),
+      ]);
 
   @override
   Future<Either<AuthException, Unit>> signUp({
