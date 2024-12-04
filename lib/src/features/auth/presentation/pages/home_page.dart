@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
+import 'package:pureair_v2/src/shared/widgets/user_avatar.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -35,7 +35,7 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 18),
+        padding: EdgeInsets.symmetric(horizontal: 24),
         child: Row(
           children: [
             UserAvatar(),
@@ -47,32 +47,6 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class UserAvatar extends ConsumerWidget {
-  const UserAvatar({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final colors = Theme.of(context).colorScheme;
-    final imageUrl = ref.watch(userProvider.select((value) => value?.imageUrl));
-    return RawMaterialButton(
-      onPressed: () {},
-      elevation: 12,
-      constraints: const BoxConstraints(
-        maxHeight: 48,
-        minHeight: 48,
-        maxWidth: 48,
-        minWidth: 48,
-      ),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(width: 4, color: colors.onPrimary),
-      ),
-      child: imageUrl == null
-          ? const Icon(PhosphorIconsBold.user)
-          : const SizedBox(),
-    );
-  }
 }
 
 class ExplorePage extends StatelessWidget {
