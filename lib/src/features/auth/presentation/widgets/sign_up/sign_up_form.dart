@@ -35,10 +35,12 @@ class _FullNameWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(fullNameNotifierProvider.notifier);
+    final formState = ref.watch(signUpNotifierProvider);
+    final googleState = ref.watch(googleSignInNotifierProvider);
     return PTextFormField(
       labelText: 'Full Name',
       hintText: 'John Doe',
-      enabled: ref.watch(signUpNotifierProvider) is! SignInInProgress,
+      enabled: formState is! SignUpInProgress || googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
     );
@@ -51,10 +53,12 @@ class _EmailAddressWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(emailAddressNotifierProvider.notifier);
+    final formState = ref.watch(signUpNotifierProvider);
+    final googleState = ref.watch(googleSignInNotifierProvider);
     return PTextFormField(
       labelText: 'Email Address',
       hintText: 'john@example.com',
-      enabled: ref.watch(signUpNotifierProvider) is! SignInInProgress,
+      enabled: formState is! SignUpInProgress || googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
       keyboardType: TextInputType.emailAddress,
@@ -68,11 +72,13 @@ class _PasswordWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(passwordNotifierProvider.notifier);
+    final formState = ref.watch(signUpNotifierProvider);
+    final googleState = ref.watch(googleSignInNotifierProvider);
     return PTextFormField(
       labelText: 'Password',
       hintText: 'Your password',
       isPassword: true,
-      enabled: ref.watch(signUpNotifierProvider) is! SignInInProgress,
+      enabled: formState is! SignUpInProgress || googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
     );
@@ -90,9 +96,13 @@ class _SignUpButton extends ConsumerWidget {
       }
     }
 
+    final formState = ref.watch(signUpNotifierProvider);
+    final googleState = ref.watch(googleSignInNotifierProvider);
+
     return PrimaryButton(
       title: 'Sign Up',
-      loading: ref.watch(signUpNotifierProvider) is SignUpInProgress,
+      loading: formState is SignUpInProgress,
+      disabled: formState is SignUpInProgress || googleState is AsyncLoading,
       onPressed: signUp,
     );
   }
