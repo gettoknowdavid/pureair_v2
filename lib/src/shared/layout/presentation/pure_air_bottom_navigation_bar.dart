@@ -20,8 +20,8 @@ class PureAirBottomNavigationBar extends StatelessWidget {
     final itemWidth = (size.width - kBottomNavigationBarPadding) / 4;
 
     return Container(
-      padding: kHorizontalPadding18,
-      margin: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+      padding: kHorizontalPadding24,
+      margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
       decoration: BoxDecoration(
         color: colors.primary,
         border: Border.all(width: 2, color: colors.onSurface),
