@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pureair_v2/src/features/aqi/domain/entities/parameter.dart';
 
 part 'iaqi.freezed.dart';
+part 'iaqi.g.dart';
 
 @freezed
 class IAQI with _$IAQI {
@@ -95,4 +96,7 @@ class IAQI with _$IAQI {
     /// Wind gusts are sudden, short bursts of stronger wind.
     Parameter? wg,
   }) = _IAQI;
+
+  factory IAQI.fromJson(Map<String, dynamic> json) => _$IAQIFromJson(json);
+
 }

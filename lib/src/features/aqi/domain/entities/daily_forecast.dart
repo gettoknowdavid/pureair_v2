@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'daily_forecast.freezed.dart';
+part 'daily_forecast.g.dart';
 
 @freezed
 class DailyForecast with _$DailyForecast {
@@ -12,4 +13,8 @@ class DailyForecast with _$DailyForecast {
   }) = _DailyForecast;
 
   factory DailyForecast.empty() => DailyForecast(day: DateTime.now());
+
+  factory DailyForecast.fromJson(Map<String, dynamic> json) =>
+      _$DailyForecastFromJson(json);
+
 }
