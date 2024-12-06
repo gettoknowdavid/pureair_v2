@@ -6,17 +6,14 @@ import 'package:pureair_v2/src/core/theme/theme.dart';
 class PureAirTheme {
   const PureAirTheme._();
 
-  static ThemeData get dark => _raw(Brightness.dark);
+  static ThemeData get dark => _raw(const ColorScheme.dark());
 
-  static ThemeData get light => _raw(Brightness.light);
+  static ThemeData get light => _raw(const ColorScheme.light());
 
-  static ThemeData _raw(Brightness brightness) {
-    final isLight = brightness == Brightness.light;
-
-    final colorScheme = ColorScheme(
-      brightness: brightness,
+  static ThemeData _raw(ColorScheme scheme) {
+    final colorScheme = ColorScheme.light(
+      brightness: scheme.brightness,
       primary: PureAirColors.primary,
-      onPrimary: PureAirColors.onPrimary,
       primaryContainer: PureAirColors.primaryContainer,
       secondary: PureAirColors.secondary,
       onSecondary: PureAirColors.onSecondary,
@@ -24,18 +21,6 @@ class PureAirTheme {
       tertiary: PureAirColors.tertiary,
       onTertiary: PureAirColors.onTertiary,
       tertiaryContainer: PureAirColors.tertiaryContainer,
-      error: PureAirColors.error,
-      onError: PureAirColors.onError,
-      surface: Internal.resolveTheme(
-        isLight,
-        PureAirColors.white,
-        PureAirColors.black,
-      ),
-      onSurface: Internal.resolveTheme(
-        isLight,
-        PureAirColors.black,
-        Colors.white,
-      ),
     );
 
     const border = OutlineInputBorder(

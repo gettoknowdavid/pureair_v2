@@ -106,13 +106,13 @@ class _Typography {
   final ColorScheme _c;
 
   late final heading1 = _font(24);
-  late final body = _font(16);
-  late final bodyBold = _font(16, weight: FontWeight.bold);
+  late final body = _font(15);
+  late final bodyBold = _font(15, weight: FontWeight.bold);
   late final titleRegular = _font(20);
-  late final titleBold = _font(20);
+  late final titleBold = _font(20, weight: FontWeight.bold);
   late final subtitle = _font(18);
-  late final caption = _font(14);
-  late final captionBold = _font(14);
+  late final caption = _font(13);
+  late final captionBold = _font(13, weight: FontWeight.bold);
   late final formLabel = _font(15, weight: FontWeight.w600, color: _c.primary);
   late final formHint = _font(16, color: _c.onSurface.withOpacity(0.4));
   late final button = _font(15, weight: FontWeight.w600);
@@ -120,7 +120,7 @@ class _Typography {
   TextStyle get _s => const TextStyle(fontFamily: PureAirFontFamily.figtree);
 
   TextStyle _font(
-    double size, {
+    double? size, {
     FontWeight weight = FontWeight.w500,
     TextDecoration? decoration,
     Color? color,

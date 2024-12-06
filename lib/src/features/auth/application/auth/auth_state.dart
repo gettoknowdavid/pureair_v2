@@ -12,7 +12,8 @@ class AuthState with _$AuthState {
 extension AuthStateX on AuthState {
   String get redirectPath {
     return maybeWhen(
-      orElse: () => R.login,
+      orElse: () => R.root,
+      unauthenticated: () => R.login,
       unverified: (user) => R.verifyEmail,
       authenticated: (user) => R.home,
     );
@@ -20,8 +21,8 @@ extension AuthStateX on AuthState {
 
   List<String> get allowedPaths {
     return maybeWhen(
-      initial: ()=> [R.root],
-      orElse: () => [
+      orElse: () => [R.root],
+      unauthenticated: () => [
         R.login,
         R.register,
         R.forgotPassword,

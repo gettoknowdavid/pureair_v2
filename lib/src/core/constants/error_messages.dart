@@ -5,6 +5,8 @@ class ErMsg {
   static const String permissionDenied = 'You do not have the permission to '
       'run this operation. Please contact support.';
   static const String cancelled = 'The action was cancelled';
+  static const String server = 'Server Error';
+  static const String unavailable = 'The requested data is not available.';
   static const String invalidEmailOrPassword =
       '''Invalid email address and password combination''';
   static const String emailAlreadyInUse =
