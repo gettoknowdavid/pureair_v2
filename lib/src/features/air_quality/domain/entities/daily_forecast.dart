@@ -16,5 +16,9 @@ class DailyForecast with _$DailyForecast {
 
   factory DailyForecast.fromJson(Map<String, dynamic> json) =>
       _$DailyForecastFromJson(json);
+}
 
+extension DailyForecastExtensions on DailyForecast {
+  DateTime? get dateOnly =>
+      day != null ? DateTime(day!.year, day!.month, day!.day) : null;
 }

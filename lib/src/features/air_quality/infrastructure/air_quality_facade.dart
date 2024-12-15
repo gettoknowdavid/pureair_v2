@@ -26,12 +26,19 @@ class AQIFacade implements IAirQualityFacade {
   }
 
   @override
-  Future<Either<AirQualityException, AirQuality?>> getByGeo({
-    required double lat,
-    required double lon,
-  }) async {
-    // TODO: implement getByGeo
-    throw UnimplementedError();
+  Future<Either<AirQualityException, AirQuality?>> getByGeo(
+    List<double> geo,
+  ) async {
+    try {
+      final result = await _remote.getByGeo(lat: geo[0], lon: geo[1]);
+      return right(result.data);
+    } on DioException catch (e) {
+      final message = e.message;
+      if (message == null) return left(const AQUnknownException());
+      return left(AQMessageException(message));
+    } on TimeoutException catch (e) {
+      return left(AQMessageException(e.message ?? 'Operation timed out'));
+    }
   }
 
   @override
@@ -54,6 +61,8 @@ class AQIFacade implements IAirQualityFacade {
       final message = e.message;
       if (message == null) return left(const AQUnknownException());
       return left(AQMessageException(message));
+    } on TimeoutException catch (e) {
+      return left(AQMessageException(e.message ?? 'Operation timed out'));
     }
   }
 
@@ -67,6 +76,8 @@ class AQIFacade implements IAirQualityFacade {
       final message = e.message;
       if (message == null) return left(const AQUnknownException());
       return left(AQMessageException(message));
+    } on TimeoutException catch (e) {
+      return left(AQMessageException(e.message ?? 'Operation timed out'));
     }
   }
 

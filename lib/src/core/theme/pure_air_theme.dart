@@ -40,6 +40,7 @@ class PureAirTheme {
     final textTheme = PureAirTextTheme.$default(colorScheme);
 
     return ThemeData(
+      appBarTheme: AppBarTheme(titleTextStyle: textTheme.titleRegular),
       colorScheme: colorScheme,
       dialogTheme: DialogTheme(
         titleTextStyle: textTheme.titleBold,

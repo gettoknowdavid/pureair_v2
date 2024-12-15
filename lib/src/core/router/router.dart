@@ -53,6 +53,10 @@ GoRouter router(Ref ref) {
         path: R.forgotPassword,
         builder: (context, state) => const ForgotPasswordPage(),
       ),
+      GoRoute(
+        path: R.details,
+        builder: (context, state) => const DetailsPage(),
+      ),
       //
       // Dialog Routes
       GoRoute(

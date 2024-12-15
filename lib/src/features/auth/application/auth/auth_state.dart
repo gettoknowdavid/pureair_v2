@@ -13,6 +13,7 @@ extension AuthStateX on AuthState {
   String get redirectPath {
     return maybeWhen(
       orElse: () => R.root,
+      failure: (exception) => R.login,
       unauthenticated: () => R.login,
       unverified: (user) => R.verifyEmail,
       authenticated: (user) => R.home,
@@ -40,6 +41,7 @@ extension AuthStateX on AuthState {
         R.explore,
         R.ranks,
         R.profile,
+        R.details,
       ],
     );
   }

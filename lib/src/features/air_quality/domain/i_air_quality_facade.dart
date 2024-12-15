@@ -17,10 +17,7 @@ abstract class IAirQualityFacade {
   ///
   /// `lat`: The latitude
   /// `lon`: The longitude
-  Future<Either<AirQualityException, AirQuality?>> getByGeo({
-    required double lat,
-    required double lon,
-  });
+  Future<Either<AirQualityException, AirQuality?>> getByGeo(List<double> geo);
 
   /// Returns a list of [City] saved to the repository
   List<City?> getCities();

@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
+import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 
 /// Enum representing Air Quality Index categories.
 ///
@@ -31,16 +32,19 @@ class IndexData {
   final List<int> thresholds;
 }
 
+/// Colors
+const _colors = [
+  Color(0xFF00E400),
+  Color(0xFFFFD700),
+  Color(0xFFFF8C00),
+  Color(0xFF990000),
+  Color(0xFF8F3F97),
+  Color(0xFF7E0023),
+];
+
 /// Singleton holding AQI configuration.
 const _data = IndexData(
-  colors: [
-    Color(0xFF00E400),
-    Color(0xFFFFD700),
-    Color(0xFFFF8C00),
-    Color(0xFF990000),
-    Color(0xFF8F3F97),
-    Color(0xFF7E0023),
-  ],
+  colors: _colors,
   longMessage: [
     'Enjoy outdoor activities! There are no health concerns.',
     'Limit prolonged outdoor activities. Some people may experience health effects.',
@@ -106,4 +110,41 @@ String getLongHealthMessage(num aqi) => getIndexCategory(aqi).longMessage;
 bool get isDayLight {
   final hour = DateTime.now().hour;
   return hour >= 6 && hour < 18;
+}
+
+const Map<String, ParameterInfo> parameterConfigs = {
+  'pm25': ParameterInfo(
+    thresholds: [15.4, 40.4, 65.4, 150.4, 250.4],
+    colors: _colors,
+  ),
+  'pm10': ParameterInfo(
+    thresholds: [54.0, 154.0, 254.0, 354.0, 424.0],
+    colors: _colors,
+  ),
+  'o3': ParameterInfo(
+    thresholds: [0.059, 0.075, 0.095, 0.115, 0.374],
+    colors: _colors,
+  ),
+  'co': ParameterInfo(
+    thresholds: [4.4, 9.4, 12.4, 15.4, 30.4, 40.4],
+    colors: _colors,
+  ),
+  'so2': ParameterInfo(
+    thresholds: [0.034, 0.144, 0.224, 0.304, 0.604, 0.804, 1.004],
+    colors: _colors,
+  ),
+  'no2': ParameterInfo(
+    thresholds: [1.24, 1.64, 2.04, 3.04, 4.04, 5.04],
+    colors: _colors,
+  ),
+};
+
+Color getParameterColor(String parameter, num? value) {
+  if (value == null) return Colors.transparent;
+  
+  final config = parameterConfigs[parameter];
+  if (config == null) throw Exception('Parameter not found: $parameter');
+
+  final index = config.getIndexForValue(value);
+  return config.colors[index];
 }

@@ -36,7 +36,7 @@ class PBackButton extends StatelessWidget {
 
     return Container(
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(left: 12),
+      margin: const EdgeInsets.only(left: 24),
       child: IconButton(
         constraints: _constraints(),
         style: styleFrom,

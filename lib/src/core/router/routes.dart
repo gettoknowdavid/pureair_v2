@@ -12,6 +12,7 @@ class R {
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
   static const String verifyEmail = '/verify-email';
+  static const String details = '/details';
   // Dialog routes
   static const String passwordResetConfirmation = '/password-reset-confirmation';
 }
