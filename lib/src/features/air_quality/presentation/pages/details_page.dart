@@ -36,6 +36,8 @@ class DetailsPage extends HookConsumerWidget {
             SizedBox(height: 24),
             ForecastWidget(),
             SizedBox(height: 24),
+            DetailsChartWidget(),
+            SizedBox(height: 48),
           ],
         ),
       ),

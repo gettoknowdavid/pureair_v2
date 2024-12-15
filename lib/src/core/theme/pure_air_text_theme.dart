@@ -14,6 +14,7 @@ class PureAirTextTheme extends ThemeExtension<PureAirTextTheme> {
     this.formLabel,
     this.formHint,
     this.button,
+    this.tiny,
   });
 
   factory PureAirTextTheme.$default(ColorScheme colors) {
@@ -30,6 +31,7 @@ class PureAirTextTheme extends ThemeExtension<PureAirTextTheme> {
       formLabel: typography.formLabel,
       formHint: typography.formHint,
       button: typography.button,
+      tiny: typography.tiny,
     );
   }
 
@@ -44,6 +46,7 @@ class PureAirTextTheme extends ThemeExtension<PureAirTextTheme> {
   final TextStyle? formLabel;
   final TextStyle? formHint;
   final TextStyle? button;
+  final TextStyle? tiny;
 
   @override
   ThemeExtension<PureAirTextTheme> copyWith({
@@ -58,6 +61,7 @@ class PureAirTextTheme extends ThemeExtension<PureAirTextTheme> {
     TextStyle? formLabel,
     TextStyle? formHint,
     TextStyle? button,
+    TextStyle? tiny,
   }) {
     return PureAirTextTheme(
       heading1: heading1 ?? this.heading1,
@@ -71,6 +75,7 @@ class PureAirTextTheme extends ThemeExtension<PureAirTextTheme> {
       formLabel: formLabel ?? this.formLabel,
       formHint: formHint ?? this.formHint,
       button: button ?? this.button,
+      tiny: tiny ?? this.tiny,
     );
   }
 
@@ -92,6 +97,7 @@ class PureAirTextTheme extends ThemeExtension<PureAirTextTheme> {
       formLabel: TextStyle.lerp(formLabel, other.formLabel, t),
       formHint: TextStyle.lerp(formHint, other.formHint, t),
       button: TextStyle.lerp(button, other.button, t),
+      tiny: TextStyle.lerp(tiny, other.tiny, t),
     );
   }
 
@@ -116,6 +122,7 @@ class _Typography {
   late final formLabel = _font(15, weight: FontWeight.w600, color: _c.primary);
   late final formHint = _font(16, color: _c.onSurface.withOpacity(0.4));
   late final button = _font(15, weight: FontWeight.w600);
+  late final tiny = _font(12, color: _c.onSurface.withOpacity(0.6));
 
   TextStyle get _s => const TextStyle(fontFamily: PureAirFontFamily.figtree);
 
