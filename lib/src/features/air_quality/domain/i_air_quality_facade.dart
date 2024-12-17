@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/domain/domain.dart';
 
 abstract class IAirQualityFacade {
@@ -46,4 +47,17 @@ abstract class IAirQualityFacade {
 
   /// Removes a [City] from the repository for saving
   Future<void> removeCity(City city);
+
+  /// Returns an array of possible stations matching the keyword inputted
+  /// for search by the user.
+  ///
+  /// If successful, the request returns an [List] of [SearchData] object and
+  /// if unsuccessful, the request returns an [AirQualityException].
+  ///
+  /// Accepts one parameters:
+  ///
+  /// `keyword`: The name of the station
+  Future<Either<AirQualityException, List<SearchData?>>> search(
+    SingleLineString keyword,
+  );
 }

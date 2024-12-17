@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
@@ -17,7 +18,7 @@ class HomePageTopSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const _NameWidget(),
-            AddButton(onPressed: () {}),
+            AddCityButton(onPressed: () => context.push(R.addCity)),
           ],
         ),
         const SizedBox(height: 4),

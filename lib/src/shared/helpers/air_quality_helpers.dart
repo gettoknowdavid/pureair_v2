@@ -141,10 +141,13 @@ const Map<String, ParameterInfo> parameterConfigs = {
 
 Color getParameterColor(String parameter, num? value) {
   if (value == null) return Colors.transparent;
-  
-  final config = parameterConfigs[parameter];
-  if (config == null) throw Exception('Parameter not found: $parameter');
 
-  final index = config.getIndexForValue(value);
-  return config.colors[index];
+  try {
+    final config = parameterConfigs[parameter];
+    if (config == null) return Colors.transparent;
+    final index = config.getIndexForValue(value);
+    return config.colors[index];
+  } catch (e) {
+    return Colors.transparent;
+  }
 }

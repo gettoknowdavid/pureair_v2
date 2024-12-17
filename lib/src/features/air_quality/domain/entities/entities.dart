@@ -7,3 +7,4 @@ export 'forecast_data.dart';
 export 'iaqi.dart';
 export 'parameter.dart';
 export 'parameter_info.dart';
+export 'search_data.dart';

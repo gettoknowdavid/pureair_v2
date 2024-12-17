@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 final format = DateFormat('YY-MM-DD');
 final today = format.format(DateTime.now());
@@ -19,9 +18,7 @@ class DetailsChartWidget extends ConsumerWidget {
     return state.when(
       data: (airQuality) => _DetailsChartView(forecast: airQuality!.forecast),
       error: (error, stackTrace) => const SizedBox(),
-      loading: () => const Skeletonizer(
-        child: _DetailsChartView(forecast: fakeForecast),
-      ),
+      loading: () => const SizedBox(),
     );
   }
 }
@@ -96,7 +93,6 @@ class _DetailsChartView extends StatelessWidget {
                               text = 'PM25';
                             default:
                               text = '';
-                              break;
                           }
                           return SideTitleWidget(
                             axisSide: meta.axisSide,

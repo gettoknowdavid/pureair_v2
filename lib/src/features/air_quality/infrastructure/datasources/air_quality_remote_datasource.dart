@@ -33,4 +33,12 @@ abstract class AirQualityRemoteDatasource {
   /// from the user's device.
   @GET('/feed/here/')
   Future<AirQualityResponse<AirQuality?>> getLocalized();
+
+  /// This API can be used to search stations by name.
+  ///
+  /// `keyword`: The name of the city, station you want to search
+  @GET('/search/?')
+  Future<AirQualityResponse<List<SearchData?>>> search(
+    @Query('keyword') String keyword,
+  );
 }

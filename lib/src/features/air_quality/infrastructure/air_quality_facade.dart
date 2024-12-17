@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/domain/domain.dart';
 import 'package:pureair_v2/src/features/air_quality/infrastructure/datasources/datasources.dart';
 
@@ -100,5 +101,22 @@ class AQIFacade implements IAirQualityFacade {
   Future<void> removeCity(City city) async {
     // TODO: implement removeCity
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<AirQualityException, List<SearchData?>>> search(
+    SingleLineString keyword,
+  ) async {
+    try {
+      final keywordString = keyword.getOrElse('');
+      final result = await _remote.search(keywordString);
+      return right(result.data);
+    } on DioException catch (e) {
+      final message = e.message;
+      if (message == null) return left(const AQUnknownException());
+      return left(AQMessageException(message));
+    } on TimeoutException catch (e) {
+      return left(AQMessageException(e.message ?? 'Operation timed out'));
+    }
   }
 }

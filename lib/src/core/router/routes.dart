@@ -15,6 +15,8 @@ class R {
   static const String details = '/details';
   // Dialog routes
   static const String passwordResetConfirmation = '/password-reset-confirmation';
+  // Bottom Sheet routes
+  static const String addCity = '/add-city';
 }
 
 class DialogPage<T> extends Page<void> {
@@ -35,6 +37,39 @@ class DialogPage<T> extends Page<void> {
       settings: this,
       useSafeArea: false,
       barrierDismissible: barrierDismissible,
+    );
+  }
+}
+
+class BottomSheetPage<T> extends Page<void> {
+  const BottomSheetPage({
+    required this.child,
+    super.key,
+    this.constraints,
+    this.isScrollControlled = false,
+    this.useRootNavigator = false,
+    this.isDismissible = true,
+    this.enableDrag = true,
+  });
+
+  final Widget child;
+  final BoxConstraints? constraints;
+  final bool isScrollControlled;
+  final bool useRootNavigator;
+  final bool isDismissible;
+  final bool enableDrag;
+
+  @override
+  Route<T> createRoute(BuildContext context) {
+    return ModalBottomSheetRoute<T>(
+      builder: (context) => Material(child: child),
+      constraints: constraints,
+      isScrollControlled: isScrollControlled,
+      isDismissible: isDismissible,
+      enableDrag: enableDrag,
+      showDragHandle: true,
+      useSafeArea: true,
+      settings: this,
     );
   }
 }

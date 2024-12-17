@@ -36,7 +36,10 @@ class DestinationWidget extends StatelessWidget {
       ),
       child: Text(
         destination.label,
-        style: textTheme.body?.copyWith(letterSpacing: 0),
+        style: textTheme.body?.copyWith(
+          letterSpacing: 0,
+          color: colors.onTertiary,
+        ),
       ),
     );
 

@@ -16,12 +16,17 @@ const fakeForecastData = ForecastData(
   uvi: fakeDailyForecasts,
 );
 const fakeForecast = Forecast(data: fakeForecastData);
+final fakeCity = City(name: BoneMock.name);
 final fakeAirQuality = AirQuality(
   value: 0,
   dominantPol: BoneMock.subtitle,
   idx: 123,
   attributions: [const Attribution()],
-  city: City(name: BoneMock.name),
+  city: fakeCity,
   iaqi: fakeIAQI,
   forecast: fakeForecast,
+);
+final fakeSearchList = List.generate(
+  3,
+  (index) => SearchData(uid: index, aqi: '0', station: fakeCity),
 );

@@ -49,6 +49,7 @@ class _PollutantsGridView extends StatelessWidget {
             const PDivider(height: 50),
             Wrap(
               runSpacing: 16,
+              spacing: 24,
               children: pollutants.map((e) {
                 return LayoutBuilder(
                   builder: (context, constraints) {
@@ -58,7 +59,7 @@ class _PollutantsGridView extends StatelessWidget {
 
                     return PContainer(
                       height: 46,
-                      width: halfWidth - (12 * 2),
+                      width: halfWidth - 12,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,

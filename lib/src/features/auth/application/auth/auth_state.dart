@@ -42,6 +42,7 @@ extension AuthStateX on AuthState {
         R.ranks,
         R.profile,
         R.details,
+        R.addCity,
       ],
     );
   }

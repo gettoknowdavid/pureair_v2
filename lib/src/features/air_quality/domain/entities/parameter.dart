@@ -8,6 +8,7 @@ class Parameter with _$Parameter {
   const factory Parameter({
     @JsonKey(name: 'v') required num value,
   }) = _Parameter;
+  
   factory Parameter.fromJson(Map<String, dynamic> json) =>
       _$ParameterFromJson(json);
 }

@@ -73,6 +73,17 @@ GoRouter router(Ref ref) {
         },
       ),
       //
+      // Bottom sheets
+      GoRoute(
+        path: R.addCity,
+        pageBuilder: (context, state) => const BottomSheetPage<void>(
+          isScrollControlled: true,
+          useRootNavigator: true,
+          child: AddCitySheetWidget(),
+        ),
+        
+      ),
+      //
       // Routes for the Main Navigation Bar
       // Bottom Navigation Bar Routes
       StatefulShellRoute.indexedStack(

@@ -7,10 +7,10 @@ import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
 
 const _constraints = BoxConstraints(
-  maxHeight: 48,
-  minHeight: 48,
-  maxWidth: 48,
-  minWidth: 48,
+  maxHeight: 40,
+  minHeight: 40,
+  maxWidth: 40,
+  minWidth: 40,
 );
 
 class UserAvatar extends ConsumerWidget {
@@ -18,7 +18,7 @@ class UserAvatar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final color = Theme.of(context).colorScheme.onPrimary;
+    final color = Theme.of(context).colorScheme.onSurface;
 
     final imageUrl = ref.watch(userProvider.select((value) => value?.imageUrl));
 
@@ -36,7 +36,7 @@ class UserAvatar extends ConsumerWidget {
     return RawMaterialButton(
       elevation: 12,
       constraints: _constraints,
-      shape: RoundedRectangleBorder(side: BorderSide(width: 4, color: color)),
+      shape: RoundedRectangleBorder(side: BorderSide(width: 3, color: color)),
       onPressed: () => context.go(R.profile),
       child: image,
     );

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/src/core/core.dart';
 
-class AddButton extends StatelessWidget {
-  const AddButton({
+class AddCityButton extends StatelessWidget {
+  const AddCityButton({
     required this.onPressed,
     this.label = 'Add',
     this.disabled = false,
@@ -33,6 +33,7 @@ class AddButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: colors.tertiary,
           foregroundColor: colors.onTertiary,
+          iconColor: colors.onTertiary,
           textStyle: PureAirTextTheme.of(context)?.caption,
           padding: EdgeInsets.zero,
         ),

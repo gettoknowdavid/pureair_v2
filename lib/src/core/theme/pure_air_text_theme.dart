@@ -117,12 +117,12 @@ class _Typography {
   late final titleRegular = _font(20);
   late final titleBold = _font(20, weight: FontWeight.bold);
   late final subtitle = _font(18);
-  late final caption = _font(13);
-  late final captionBold = _font(13, weight: FontWeight.bold);
+  late final caption = _font(12);
+  late final captionBold = _font(12, weight: FontWeight.bold);
   late final formLabel = _font(15, weight: FontWeight.w600, color: _c.primary);
-  late final formHint = _font(16, color: _c.onSurface.withOpacity(0.4));
+  late final formHint = _font(16, color: _c.onSurface.withValues(alpha: 0.4));
   late final button = _font(15, weight: FontWeight.w600);
-  late final tiny = _font(12, color: _c.onSurface.withOpacity(0.6));
+  late final tiny = _font(11, color: _c.onSurface.withValues(alpha: 0.6));
 
   TextStyle get _s => const TextStyle(fontFamily: PureAirFontFamily.figtree);
 

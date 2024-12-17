@@ -11,7 +11,7 @@ class PureAirTheme {
   static ThemeData get light => _raw(const ColorScheme.light());
 
   static ThemeData _raw(ColorScheme scheme) {
-    final colorScheme = ColorScheme.light(
+    final colorScheme = scheme.copyWith(
       brightness: scheme.brightness,
       primary: PureAirColors.primary,
       primaryContainer: PureAirColors.primaryContainer,
@@ -22,9 +22,9 @@ class PureAirTheme {
       onTertiary: PureAirColors.onTertiary,
       tertiaryContainer: PureAirColors.tertiaryContainer,
     );
-
-    const border = OutlineInputBorder(
-      borderSide: BorderSide(width: 2),
+    final borderSide = BorderSide(width: 2, color: colorScheme.onSurface);
+    final border = OutlineInputBorder(
+      borderSide: borderSide,
       borderRadius: BorderRadius.zero,
     );
     final focusedBorder = border.copyWith(
@@ -41,19 +41,18 @@ class PureAirTheme {
 
     return ThemeData(
       appBarTheme: AppBarTheme(titleTextStyle: textTheme.titleRegular),
+      bottomSheetTheme: BottomSheetThemeData(shape: Border(top: borderSide)),
       colorScheme: colorScheme,
       dialogTheme: DialogTheme(
         titleTextStyle: textTheme.titleBold,
         contentTextStyle: textTheme.body?.copyWith(height: 1.3),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 2, color: colorScheme.onSurface),
-        ),
+        shape: RoundedRectangleBorder(side: borderSide),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 0,
           shape: const RoundedRectangleBorder(),
-          side: const BorderSide(width: 2),
+          side: borderSide,
           backgroundColor: PureAirColors.primary,
           foregroundColor: PureAirColors.onPrimary,
           textStyle: textTheme.button,
@@ -64,7 +63,7 @@ class PureAirTheme {
         style: FilledButton.styleFrom(
           elevation: 0,
           shape: const RoundedRectangleBorder(),
-          side: const BorderSide(width: 2),
+          side: borderSide,
           fixedSize: const Size(double.infinity, 56),
           backgroundColor: PureAirColors.primary,
           foregroundColor: PureAirColors.onPrimary,
@@ -87,13 +86,19 @@ class PureAirTheme {
         backgroundColor: Colors.transparent,
         height: 60,
       ),
+      searchBarTheme: SearchBarThemeData(
+        elevation: const WidgetStatePropertyAll(0),
+        shape: const WidgetStatePropertyAll(BeveledRectangleBorder()),
+        side: WidgetStatePropertyAll(BorderSide(color: colorScheme.onSurface)),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(horizontal: 18),
+        ),
+      ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         contentTextStyle: textTheme.caption,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 2, color: colorScheme.onSurface),
-        ),
+        shape: RoundedRectangleBorder(side: borderSide),
       ),
       useMaterial3: true,
       visualDensity: VisualDensity.comfortable,
