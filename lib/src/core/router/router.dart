@@ -55,7 +55,9 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: R.details,
-        builder: (context, state) => const DetailsPage(),
+        builder: (context, state) => DetailsPage(
+          showAddButton: state.extra as bool? ?? false,
+        ),
       ),
       //
       // Dialog Routes

@@ -1,5 +1,5 @@
 import 'package:pureair_v2/objectbox.g.dart';
-import 'package:pureair_v2/src/features/air_quality/domain/entities/city.dart';
+import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/services/objectbox_service.dart';
 
 class AirQualityLocalDatasource {
@@ -10,6 +10,7 @@ class AirQualityLocalDatasource {
   final Objectbox _objectbox;
 
   void addCity(City city) => _objectbox.cityBox.put(city);
+  
 
   void clearSavedCities() => _objectbox.cityBox.removeAll();
 
@@ -29,6 +30,7 @@ class AirQualityLocalDatasource {
   }
 
   void removeCity(City city) {
-    _objectbox.cityBox.query(City_.uid.equals(city.uid!)).build().remove();
+    final uid = city.geo!.generateCityUid;
+    _objectbox.cityBox.query(City_.uid.equals(uid)).build().remove();
   }
 }

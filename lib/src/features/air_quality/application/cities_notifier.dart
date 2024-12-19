@@ -14,9 +14,14 @@ class CitiesNotifier extends _$CitiesNotifier {
 
   Future<void> addCity(City city) async {
     state = const AsyncLoading();
-    final newCity = city.copyWith(uid: city.geo?.generateUuid);
-    ref.read(airQualityFacadeProvider).addCity(newCity);
+    final cityWithUid = city.copyWith(uid: city.geo?.generateCityUid);
+    ref.read(airQualityFacadeProvider).addCity(cityWithUid);
     ref.invalidateSelf();
     await future;
+  }
+
+  void removeCity(City city) {
+    ref.read(airQualityFacadeProvider).removeCity(city);
+    ref.invalidateSelf();
   }
 }

@@ -20,7 +20,7 @@ class SearchResultCard extends ConsumerWidget {
     return InkWell(
       onTap: () {
         ref.read(detailsNotifierProvider.notifier).initWithGeo(station.geo!);
-        context.push(R.details);
+        context.push(R.details, extra: true);
       },
       child: PContainer(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),

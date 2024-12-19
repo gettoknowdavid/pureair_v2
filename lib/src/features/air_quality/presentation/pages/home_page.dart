@@ -9,7 +9,10 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return RefreshIndicator.adaptive(
-      onRefresh: () => ref.refresh(localAirQualityProvider.future),
+      onRefresh: () => Future.wait([
+        ref.refresh(localAirQualityProvider.future),
+        ref.refresh(citiesNotifierProvider.future),
+      ]),
       child: const Scaffold(
         appBar: HomeAppBar(),
         body: SingleChildScrollView(
@@ -22,7 +25,7 @@ class HomePage extends ConsumerWidget {
               SizedBox(height: 20),
               LocalAirQualityWidget(),
               SizedBox(height: 20),
-              // const AirQualityList(),
+              CitiesWidget(),
               SizedBox(height: 40),
             ],
           ),

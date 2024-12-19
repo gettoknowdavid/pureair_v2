@@ -16,7 +16,7 @@ class City with _$City {
     String? url,
     String? location,
     String? country,
-    bool? isLocal,
+    @Default(true) bool isLocal,
     int? aqi,
     String? flagUrl,
     String? localeName,
@@ -28,7 +28,7 @@ class City with _$City {
 }
 
 extension CityGenUidX on List<double> {
-  String get generateUuid {
+  String get generateCityUid {
     final formattedLatitude = this[0].toStringAsFixed(6);
     final formattedLongitude = this[1].toStringAsFixed(6);
 

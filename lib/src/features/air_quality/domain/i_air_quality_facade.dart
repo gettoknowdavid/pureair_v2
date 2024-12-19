@@ -46,7 +46,7 @@ abstract class IAirQualityFacade {
   Future<Either<AirQualityException, AirQuality>> getLocalized();
 
   /// Removes a [City] from the repository for saving
-  Future<void> removeCity(City city);
+  void removeCity(City city);
 
   /// Returns an array of possible stations matching the keyword inputted
   /// for search by the user.

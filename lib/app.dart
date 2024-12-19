@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
-import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
 
 class PureAirApp extends ConsumerWidget {
@@ -9,9 +8,7 @@ class PureAirApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref
-      ..watch(authNotifierProvider)
-      ..watch(localAirQualityProvider);
+    ref.watch(authNotifierProvider);
     return const PureAirAppView();
   }
 }

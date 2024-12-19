@@ -56,7 +56,8 @@ class AQIFacade implements IAirQualityFacade {
     }).toList();
 
     try {
-      final data = await Future.wait<AirQuality?>(futures);
+      final result = await Future.wait<AirQuality?>(futures);
+      final data = result.toLocalAirQualityData;
       return right(data);
     } on DioException catch (e) {
       final message = e.message;
@@ -98,10 +99,7 @@ class AQIFacade implements IAirQualityFacade {
   }
 
   @override
-  Future<void> removeCity(City city) async {
-    // TODO: implement removeCity
-    throw UnimplementedError();
-  }
+  void removeCity(City city) => _local.removeCity(city);
 
   @override
   Future<Either<AirQualityException, List<SearchData?>>> search(
@@ -118,5 +116,17 @@ class AQIFacade implements IAirQualityFacade {
     } on TimeoutException catch (e) {
       return left(AQMessageException(e.message ?? 'Operation timed out'));
     }
+  }
+}
+
+extension _AirQualityListX on List<AirQuality?> {
+  List<AirQuality?> get toLocalAirQualityData {
+    final list = map((a) {
+      final uid = a!.city.geo!.generateCityUid;
+      final updatedCity = a.city.copyWith(isLocal: false, uid: uid);
+      final updatedAQ = a.copyWith(city: updatedCity);
+      return updatedAQ;
+    }).toList();
+    return list;
   }
 }

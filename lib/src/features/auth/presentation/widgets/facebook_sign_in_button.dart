@@ -10,15 +10,11 @@ class FacebookSignInButton extends StatelessWidget {
     return FilledButton.icon(
       onPressed: () {},
       label: const Text('Continue with Facebook'),
-      icon: PhosphorIcon(
-        PhosphorIconsDuotone.facebookLogo,
-        duotoneSecondaryColor: colorScheme.surface,
-        duotoneSecondaryOpacity: 1,
-        size: 20,
-      ),
+      icon: const Icon(PhosphorIconsBold.facebookLogo),
       style: FilledButton.styleFrom(
         backgroundColor: colorScheme.tertiary,
         foregroundColor: colorScheme.onTertiary,
+        iconSize: 20,
       ),
     );
   }

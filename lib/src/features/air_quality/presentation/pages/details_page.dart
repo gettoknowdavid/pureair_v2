@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
 class DetailsPage extends HookConsumerWidget {
-  const DetailsPage({super.key});
+  const DetailsPage({required this.showAddButton, super.key});
+  final bool showAddButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,10 +17,7 @@ class DetailsPage extends HookConsumerWidget {
         centerTitle: true,
         title: const Text('Details'),
         actions: [
-          IconButton(
-            icon: const Icon(PhosphorIconsBold.dotsThree),
-            onPressed: () {},
-          ),
+          if (showAddButton) const DetailsAddCityButton(),
           const SizedBox(width: 18),
         ],
       ),
@@ -40,6 +38,24 @@ class DetailsPage extends HookConsumerWidget {
             SizedBox(height: 48),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class DetailsAddCityButton extends ConsumerWidget {
+  const DetailsAddCityButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(detailsNotifierProvider);
+    return state.maybeWhen(
+      orElse: () => const AddCityButton(onPressed: null),
+      data: (data) => AddCityButton(
+        onPressed: () {
+          ref.read(citiesNotifierProvider.notifier).addCity(data!.city);
+          context.go(R.home);
+        },
       ),
     );
   }

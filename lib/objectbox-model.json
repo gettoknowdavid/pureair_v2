@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:8879831941698657121",
-      "lastPropertyId": "13:5680495930024147349",
+      "lastPropertyId": "14:5784728221168542113",
       "name": "City",
       "properties": [
         {
@@ -18,13 +18,6 @@
           "name": "id",
           "type": 6,
           "flags": 1
-        },
-        {
-          "id": "3:8982148694810945507",
-          "name": "uid",
-          "type": 9,
-          "flags": 2080,
-          "indexId": "1:3217479393445281532"
         },
         {
           "id": "4:4143829761053673035",
@@ -75,20 +68,31 @@
           "id": "13:5680495930024147349",
           "name": "geo",
           "type": 29
+        },
+        {
+          "id": "14:5784728221168542113",
+          "name": "uid",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "2:2798996070014400149"
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "1:8879831941698657121",
-  "lastIndexId": "1:3217479393445281532",
+  "lastIndexId": "2:2798996070014400149",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredIndexUids": [
+    3217479393445281532
+  ],
+  "retiredPropertyUids": [
+    8982148694810945507
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

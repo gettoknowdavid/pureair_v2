@@ -12,22 +12,16 @@ class GoogleSignInButton extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final loading = ref.watch(googleSignInNotifierProvider) is AsyncLoading;
 
-    final icon = PhosphorIcon(
-      PhosphorIconsDuotone.googleLogo,
-      duotoneSecondaryColor: colorScheme.surface,
-      duotoneSecondaryOpacity: 1,
-      size: 20,
-    );
-
     return FilledButton.icon(
       onPressed: ref.watch(googleSignInNotifierProvider.notifier).signIn,
       label: loading
           ? const LoadingIndicator()
           : const Text('Continue with Google'),
-      icon: loading ? null : icon,
+      icon: loading ? null : const Icon(PhosphorIconsBold.googleLogo),
       style: FilledButton.styleFrom(
         backgroundColor: colorScheme.secondary,
         foregroundColor: colorScheme.onSecondary,
+        iconSize: 20,
       ),
     );
   }
