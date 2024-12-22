@@ -117,6 +117,22 @@ class AQIFacade implements IAirQualityFacade {
       return left(AQMessageException(e.message ?? 'Operation timed out'));
     }
   }
+
+  @override
+  Future<Either<AirQualityException, List<Station>>> stationsOnMap(
+    String latlng,
+  ) async {
+    try {
+      final result = await _remote.stationsOnMap(latlng);
+      return right(result.data);
+    } on DioException catch (e) {
+      final message = e.message;
+      if (message == null) return left(const AQUnknownException());
+      return left(AQMessageException(message));
+    } on TimeoutException catch (e) {
+      return left(AQMessageException(e.message ?? 'Operation timed out'));
+    }
+  }
 }
 
 extension _AirQualityListX on List<AirQuality?> {

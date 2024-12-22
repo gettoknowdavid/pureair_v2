@@ -114,7 +114,7 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: R.ranks,
-                builder: (context, state) => const RanksPage(),
+                builder: (context, state) => const RankingsPage(),
               ),
             ],
           ),

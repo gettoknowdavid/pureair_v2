@@ -60,4 +60,17 @@ abstract class IAirQualityFacade {
   Future<Either<AirQualityException, List<SearchData?>>> search(
     SingleLineString keyword,
   );
+
+  /// Returns an array of possible stations on a map within the given
+  /// geo boundary
+  ///
+  /// If successful, the request returns an [List] of [Station] object and
+  /// if unsuccessful, the request returns an [AirQualityException].
+  ///
+  /// Accepts one parameters:
+  ///
+  /// `latlng`: Map bounds in the form lat1, lng1, lat2, lng2
+  Future<Either<AirQualityException, List<Station>>> stationsOnMap(
+    String latlng,
+  );
 }

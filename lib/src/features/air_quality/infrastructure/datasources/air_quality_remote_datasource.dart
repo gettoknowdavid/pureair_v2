@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:pureair_v2/src/features/air_quality/domain/domain.dart';
 import 'package:pureair_v2/src/features/air_quality/infrastructure/datasources/datasources.dart';
@@ -40,5 +42,13 @@ abstract class AirQualityRemoteDatasource {
   @GET('/search/?')
   Future<AirQualityResponse<List<SearchData?>>> search(
     @Query('keyword') String keyword,
+  );
+
+  /// This API can be used to get all the stations within a given lat/lng
+  /// bounds.
+  @GET('/map/bounds/?')
+  Future<AirQualityResponse<List<Station>>> stationsOnMap(
+    /// Map bounds in the form lat1, lng1, lat2, lng2
+    @Query('latlng') String latlng,
   );
 }
