@@ -22,13 +22,14 @@ class RankingTile extends ConsumerWidget {
         ref.read(detailsNotifierProvider.notifier).initWithGeo(city.geo!);
         context.push(R.details, extra: true);
       },
-      leading: CountryFlag(city: city),
+      leading: CountryFlag(geo: city.geo),
       title: Text(
         city.name,
-        maxLines: 2,
+        maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: textTheme.bodyBold,
       ),
+      subtitle: CountryName(geo: city.geo),
       trailing: Skeleton.leaf(
         child: Container(
           height: 25,
