@@ -40,9 +40,18 @@ class PureAirTheme {
     final textTheme = PureAirTextTheme.$default(colorScheme);
 
     return ThemeData(
-      appBarTheme: AppBarTheme(titleTextStyle: textTheme.titleRegular),
+      appBarTheme: AppBarTheme(
+        titleTextStyle: textTheme.titleRegular,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      ),
       bottomSheetTheme: BottomSheetThemeData(shape: Border(top: borderSide)),
       colorScheme: colorScheme,
+      chipTheme: ChipThemeData(
+        showCheckmark: false,
+        shape: RoundedRectangleBorder(side: borderSide),
+        labelStyle: textTheme.caption,
+      ),
       dialogTheme: DialogTheme(
         titleTextStyle: textTheme.titleBold,
         contentTextStyle: textTheme.body?.copyWith(height: 1.3),

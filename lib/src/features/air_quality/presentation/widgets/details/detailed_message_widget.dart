@@ -18,7 +18,7 @@ class DetailedMessageWidget extends StatelessWidget {
         const PDivider(indent: 24, endIndent: 24),
         Container(
           padding: kAllPadding24,
-          color: color.withOpacity(0.2),
+          color: color.withValues(alpha: 0.2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

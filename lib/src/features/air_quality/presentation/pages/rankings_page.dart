@@ -8,7 +8,7 @@ class RankingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return RefreshIndicator(
-      onRefresh: () => ref.refresh(rankingsNotifierProvider.future),
+      onRefresh: () => ref.refresh(stationsProvider.future),
       child: Scaffold(
         appBar: AppBar(
           title: const Padding(
@@ -18,6 +18,7 @@ class RankingsPage extends ConsumerWidget {
         ),
         body: const Column(
           children: [
+            LimitedBox(maxHeight: 38, child: RankChips()),
             Expanded(child: RankingsList()),
           ],
         ),

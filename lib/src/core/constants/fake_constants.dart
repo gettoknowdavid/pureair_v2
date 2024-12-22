@@ -30,5 +30,5 @@ final fakeStation = Station(lat: 1, lon: 1, uid: 1, aqi: '0', city: fakeCity);
 
 final fakeSearchData = SearchData(uid: 0, aqi: '0', station: fakeCity);
 final fakeSearchList = List.generate(3, (index) => fakeSearchData);
-final fakeCities = List.generate(1, (index) => fakeAirQuality);
-final fakeStations = List.generate(1, (index) => fakeStation);
+final fakeCities = List.generate(5, (index) => fakeAirQuality);
+final fakeStations = List.generate(5, (index) => fakeCity);

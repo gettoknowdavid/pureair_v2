@@ -7,22 +7,19 @@ import 'package:pureair_v2/src/shared/shared.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class RankingTile extends ConsumerWidget {
-  const RankingTile({required this.station, super.key});
-  final Station station;
+  const RankingTile({required this.city, super.key});
+  final City city;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = PureAirTextTheme.of(context)!;
 
-    final aqi = int.tryParse(station.aqi) ?? 0;
-    final color = getAirQualityColor(aqi);
-    final city = station.city;
-    final geo = [station.lat, station.lon];
+    final color = getAirQualityColor(city.aqi ?? 0);
 
     return ListTile(
       onTap: () {
-        ref.read(detailsNotifierProvider.notifier).initWithGeo(geo);
+        ref.read(detailsNotifierProvider.notifier).initWithGeo(city.geo!);
         context.push(R.details, extra: true);
       },
       leading: CountryFlag(city: city),
@@ -43,7 +40,7 @@ class RankingTile extends ConsumerWidget {
             border: Border.all(width: 2, color: colors.onSurface),
           ),
           child: Text(
-            station.aqi,
+            city.aqi.toString(),
             textAlign: TextAlign.center,
             style: textTheme.captionBold?.copyWith(color: color.textColor),
           ),

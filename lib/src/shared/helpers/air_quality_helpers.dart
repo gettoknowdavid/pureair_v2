@@ -93,8 +93,14 @@ extension ColorX on Color {
 /// Helper function to determine the AQI category from an AQI value.
 IndexCategory getIndexCategory(num aqi) {
   if (aqi < 0) return IndexCategory.invalid;
-  final index = _data.thresholds.indexWhere((threshold) => aqi < threshold);
-  return index == -1 ? IndexCategory.hazardous : IndexCategory.values[index];
+
+  for (var i = 0; i < _data.thresholds.length - 1; i++) {
+    if (aqi >= _data.thresholds[i] && aqi < _data.thresholds[i + 1]) {
+      return IndexCategory.values[i];
+    }
+  }
+
+  return IndexCategory.hazardous;
 }
 
 /// Retrieves the color associated with a specific AQI value.

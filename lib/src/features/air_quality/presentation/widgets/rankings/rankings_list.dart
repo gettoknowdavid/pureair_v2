@@ -9,28 +9,28 @@ class RankingsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(rankingsNotifierProvider);
-    return state.when(
-      data: (stations) => _RankingsView(stations: stations),
+    final stationsState = ref.watch(stationsProvider);
+    return stationsState.when(
+      data: (_) => _RankingsView(cities: ref.watch(rankingsProvider)),
       error: (error, _) => Text(error.toString()),
-      loading: () => Skeletonizer(child: _RankingsView(stations: fakeStations)),
+      loading: () => Skeletonizer(child: _RankingsView(cities: fakeStations)),
     );
   }
 }
 
 class _RankingsView extends StatelessWidget {
-  const _RankingsView({required this.stations});
-  final List<Station> stations;
+  const _RankingsView({required this.cities});
+  final List<City> cities;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
       primary: false,
-      itemCount: stations.length,
-      padding: kHorizontalPadding24,
+      itemCount: cities.length,
+      padding: const EdgeInsets.all(24),
       separatorBuilder: (context, index) => const SizedBox(height: 24),
-      itemBuilder: (context, i) => RankingTile(station: stations[i]),
+      itemBuilder: (context, i) => RankingTile(city: cities[i]),
     );
   }
 }
