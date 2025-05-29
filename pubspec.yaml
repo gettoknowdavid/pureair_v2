@@ -7,7 +7,7 @@ environment:
   sdk: ^3.5.4
 
 dependencies:
-  bloc: ^8.1.4
+  bloc: ^9.0.0
   cached_network_image: ^3.4.1
   cloud_firestore: ^5.5.0
   cloud_firestore_odm: ^1.0.0-dev.88
@@ -20,32 +20,37 @@ dependencies:
   equatable: ^2.0.5
   firebase_auth: ^5.3.3
   firebase_core: ^3.8.0
-  fl_chart: ^0.69.0
+  fl_chart: ^1.0.0
   flag: ^7.0.0
   flex_color_scheme: ^8.0.1
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.1.1
   flutter_gen: ^5.8.0
-  flutter_hooks: ^0.20.5
+  flutter_hooks: ^0.21.2
+  flutter_map: ^8.1.1
+  flutter_map_cancellable_tile_provider: ^3.0.2
+  flutter_osm_plugin: ^1.3.6
   flutter_secure_storage: ^9.2.2
   freezed_annotation: ^2.4.4
-  geocoding: ^3.0.0
-  geolocator: ^13.0.2
+  geocoding: ^4.0.0
+  geolocator: ^14.0.1
   get_it: ^8.0.2
-  go_router: ^14.6.0
+  go_router: ^15.1.2
   google_fonts: ^6.2.1
   google_maps_flutter: ^2.10.0
   google_sign_in: ^6.2.2
   hooks_riverpod: ^2.6.1
   injectable: ^2.5.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   json_annotation: ^4.9.0
+  latlong2: ^0.9.1
   logger: ^2.5.0
   lottie: ^3.3.0
   objectbox: ^4.0.3
   objectbox_flutter_libs: ^4.0.3
 #  open_mail_app: ^0.4.5
+  osm_flutter_hooks: ^1.4.1
   path: any
   path_provider: any
   phosphor_flutter: ^2.1.0
@@ -54,7 +59,7 @@ dependencies:
   riverpod_annotation: ^2.6.1
   shared_preferences: ^2.3.3
   shimmer_animation: ^2.2.1
-  skeletonizer: ^1.4.2
+  skeletonizer: ^2.0.1
   table_calendar: ^3.1.2
   uuid: ^4.5.1
 
@@ -63,7 +68,7 @@ dev_dependencies:
   cloud_firestore_odm_generator: ^1.0.0-dev.89
   custom_lint: ^0.7.0
   envied_generator: ^1.0.0
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
   freezed: ^2.5.7
@@ -75,7 +80,7 @@ dev_dependencies:
   retrofit_generator: ^9.1.5
   riverpod_generator: ^2.6.3
   riverpod_lint: ^2.6.3
-  very_good_analysis: ^6.0.0
+  very_good_analysis: ^8.0.0
 
 flutter_gen:
   output: lib/src/core/theme

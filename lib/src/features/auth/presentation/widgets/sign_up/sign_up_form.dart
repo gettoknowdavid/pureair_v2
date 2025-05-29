@@ -40,7 +40,7 @@ class _FullNameWidget extends ConsumerWidget {
     return PTextFormField(
       labelText: 'Full Name',
       hintText: 'John Doe',
-      enabled: formState is! SignUpInProgress || googleState is! AsyncLoading,
+      enabled: formState is! SignUpInProgress && googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
     );
@@ -58,7 +58,7 @@ class _EmailAddressWidget extends ConsumerWidget {
     return PTextFormField(
       labelText: 'Email Address',
       hintText: 'john@example.com',
-      enabled: formState is! SignUpInProgress || googleState is! AsyncLoading,
+      enabled: formState is! SignUpInProgress && googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
       keyboardType: TextInputType.emailAddress,
@@ -78,7 +78,7 @@ class _PasswordWidget extends ConsumerWidget {
       labelText: 'Password',
       hintText: 'Your password',
       isPassword: true,
-      enabled: formState is! SignUpInProgress || googleState is! AsyncLoading,
+      enabled: formState is! SignUpInProgress && googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
     );

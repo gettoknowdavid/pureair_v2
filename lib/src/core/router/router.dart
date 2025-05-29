@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
+import 'package:pureair_v2/src/features/explore/explore.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

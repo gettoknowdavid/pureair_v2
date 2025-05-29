@@ -7,7 +7,7 @@ import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
 final format = DateFormat('YY-MM-DD');
-final today = format.format(DateTime.now());
+final String today = format.format(DateTime.now());
 
 class DetailsChartWidget extends ConsumerWidget {
   const DetailsChartWidget({super.key});
@@ -94,10 +94,7 @@ class _DetailsChartView extends StatelessWidget {
                             default:
                               text = '';
                           }
-                          return SideTitleWidget(
-                            axisSide: meta.axisSide,
-                            child: Text(text),
-                          );
+                          return SideTitleWidget(meta: meta, child: Text(text));
                         },
                       ),
                     ),
@@ -105,7 +102,7 @@ class _DetailsChartView extends StatelessWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) => SideTitleWidget(
-                          axisSide: meta.axisSide,
+                          meta: meta,
                           space: 0,
                           child: Text(
                             value.toInt().toString(),

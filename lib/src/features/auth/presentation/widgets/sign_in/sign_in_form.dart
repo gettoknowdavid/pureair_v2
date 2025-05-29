@@ -42,7 +42,7 @@ class _EmailAddressWidget extends ConsumerWidget {
     return PTextFormField(
       labelText: 'Email Address',
       hintText: 'john@example.com',
-      enabled: formState is! SignInInProgress || googleState is! AsyncLoading,
+      enabled: formState is! SignInInProgress && googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
       keyboardType: TextInputType.emailAddress,
@@ -63,7 +63,7 @@ class _PasswordWidget extends ConsumerWidget {
       labelText: 'Password',
       hintText: 'Your password',
       isPassword: true,
-      enabled: formState is! SignInInProgress || googleState is! AsyncLoading,
+      enabled: formState is! SignInInProgress && googleState is! AsyncLoading,
       onChanged: notifier.onChanged,
       validator: notifier.validator,
     );

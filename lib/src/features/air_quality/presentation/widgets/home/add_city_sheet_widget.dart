@@ -30,7 +30,7 @@ class AddCitySheetWidget extends ConsumerWidget {
             child: Text('Add another city', style: textTheme.titleBold),
           ),
           const SizedBox(height: 14),
-          const SearchBarWidget(),
+          const AddCitySearchBarWidget(),
           const SearchLoadingIndicatorWidget(),
           const Expanded(child: SearchResultsWidget()),
         ],
@@ -39,20 +39,13 @@ class AddCitySheetWidget extends ConsumerWidget {
   }
 }
 
-class SearchBarWidget extends ConsumerWidget {
-  const SearchBarWidget({super.key});
+class AddCitySearchBarWidget extends ConsumerWidget {
+  const AddCitySearchBarWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(searchBarNotifierProvider.notifier);
-    return Padding(
-      padding: kHorizontalPadding24,
-      child: SearchBar(
-        hintText: 'Search city',
-        leading: const Icon(PhosphorIconsRegular.magnifyingGlass),
-        onChanged: notifier.onChanged,
-      ),
-    );
+    return PSearchBar(onChanged: notifier.onChanged);
   }
 }
 

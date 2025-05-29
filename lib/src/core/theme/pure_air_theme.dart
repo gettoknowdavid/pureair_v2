@@ -52,7 +52,7 @@ class PureAirTheme {
         shape: RoundedRectangleBorder(side: borderSide),
         labelStyle: textTheme.caption,
       ),
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         titleTextStyle: textTheme.titleBold,
         contentTextStyle: textTheme.body?.copyWith(height: 1.3),
         shape: RoundedRectangleBorder(side: borderSide),

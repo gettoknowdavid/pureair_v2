@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/constants/constants.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
+import 'package:pureair_v2/src/features/auth/auth.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -35,13 +36,19 @@ class HomePage extends ConsumerWidget {
   }
 }
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
+      body: Center(
+        child: FilledButton(
+          onPressed: () => ref.read(authFacadeProvider).signOut(),
+          child: const Text('Sign Out'),
+        ),
+      ),
     );
   }
 }
