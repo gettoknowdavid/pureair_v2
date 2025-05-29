@@ -8,3 +8,7 @@ analyzer:
     avoid_final_parameters: ignore
   plugins:
     - custom_lint
+  exclude:
+    - lib/objectbox.g.dart
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
