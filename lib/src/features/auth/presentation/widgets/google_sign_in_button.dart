@@ -4,11 +4,11 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/widgets/loading_indicator.dart';
 
-class GoogleSignInButton extends ConsumerWidget {
+class GoogleSignInButton extends StatelessWidget {
   const GoogleSignInButton({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final loading = ref.watch(googleSignInNotifierProvider) is AsyncLoading;
 

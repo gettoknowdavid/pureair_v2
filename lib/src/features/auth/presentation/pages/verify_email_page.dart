@@ -4,11 +4,11 @@ import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class VerifyEmailPage extends HookConsumerWidget {
+class VerifyEmailPage extends HookWidget {
   const VerifyEmailPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final textTheme = PureAirTextTheme.of(context)!;
 
     final notifier = ref.read(verifyEmailNotifierProvider.notifier);

@@ -4,11 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class SignInForm extends HookConsumerWidget {
-  const SignInForm({super.key});
+HookWIdg  const SignInForm({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final formKey = useMemoized(GlobalKey<FormState>.new);
 
     return Form(
@@ -30,11 +29,11 @@ class SignInForm extends HookConsumerWidget {
   }
 }
 
-class _EmailAddressWidget extends ConsumerWidget {
+class _EmailAddressWidget extends StatelessWidget {
   const _EmailAddressWidget();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final notifier = ref.watch(emailAddressNotifierProvider.notifier);
     final formState = ref.watch(signInNotifierProvider);
     final googleState = ref.watch(googleSignInNotifierProvider);
@@ -50,11 +49,11 @@ class _EmailAddressWidget extends ConsumerWidget {
   }
 }
 
-class _PasswordWidget extends ConsumerWidget {
+class _PasswordWidget extends StatelessWidget {
   const _PasswordWidget();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final notifier = ref.watch(passwordNotifierProvider.notifier);
     final formState = ref.watch(signInNotifierProvider);
     final googleState = ref.watch(googleSignInNotifierProvider);
@@ -70,11 +69,11 @@ class _PasswordWidget extends ConsumerWidget {
   }
 }
 
-class _SignInButton extends ConsumerWidget {
+class _SignInButton extends StatelessWidget {
   const _SignInButton();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     Future<void> signIn() async {
       if (Form.of(context).validate()) {
         return ref.read(signInNotifierProvider.notifier).signIn();

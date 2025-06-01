@@ -4,11 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class ForgotPasswordForm extends HookConsumerWidget {
+class ForgotPasswordForm extends HookWidget {
   const ForgotPasswordForm({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final formKey = useMemoized(GlobalKey<FormState>.new);
 
     return Form(
@@ -25,11 +25,11 @@ class ForgotPasswordForm extends HookConsumerWidget {
   }
 }
 
-class _EmailAddressWidget extends ConsumerWidget {
+class _EmailAddressWidget extends StatelessWidget {
   const _EmailAddressWidget();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final notifier = ref.watch(emailAddressNotifierProvider.notifier);
     return PTextFormField(
       labelText: 'Email Address',
@@ -43,11 +43,11 @@ class _EmailAddressWidget extends ConsumerWidget {
   }
 }
 
-class _SubmitButton extends ConsumerWidget {
+class _SubmitButton extends StatelessWidget {
   const _SubmitButton();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     Future<void> sendPasswordResetEmail() async {
       if (Form.of(context).validate()) {
         return ref

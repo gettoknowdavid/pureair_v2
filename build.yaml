@@ -1,0 +1,16 @@
+targets:
+  $default:
+    builders:
+      # injectable_generator:
+      #   generate_for:
+      #     - lib/src/injector/**.dart
+      retrofit_generator:
+        generate_for:
+          - lib/src/features/air_quality/repository/datasources/air_quality_remote_datasource.dart
+      json_serializable:
+        options:
+          include_if_null: false
+          explicit_to_json: true
+        generate_for:
+          - lib/**/models/*.dart
+          - lib/src/core/response/base_response.dart

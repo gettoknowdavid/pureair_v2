@@ -6,11 +6,11 @@ import 'package:pureair_v2/src/shared/shared.dart';
 
 const _topSpace = kToolbarHeight * 1.5;
 
-class SignInPage extends ConsumerWidget {
+class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final textTheme = PureAirTextTheme.of(context)!;
     ref
       ..listen(signInNotifierProvider, (previous, next) {

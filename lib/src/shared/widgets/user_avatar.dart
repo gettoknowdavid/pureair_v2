@@ -13,11 +13,11 @@ const _constraints = BoxConstraints(
   minWidth: 40,
 );
 
-class UserAvatar extends ConsumerWidget {
+class UserAvatar extends StatelessWidget {
   const UserAvatar({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.onSurface;
 
     final imageUrl = ref.watch(userProvider.select((value) => value?.imageUrl));

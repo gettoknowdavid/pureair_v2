@@ -5,11 +5,11 @@ import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class ForgotPasswordPage extends ConsumerWidget {
+class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final textTheme = PureAirTextTheme.of(context)!;
 
     ref.listen(forgotPasswordNotifierProvider, (previous, next) {

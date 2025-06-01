@@ -3,12 +3,18 @@ linter:
   rules:
     public_member_api_docs: false
 analyzer:
+  exclude:
+    - '**/*.g.dart'
+    - '**/*.freezed.dart'
+    - '**/*.config.dart'
+    - '**/*.gen.dart'
+    - '**/feature**/*_test.dart'
+    - 'lib/objectbox.g.dart'
   errors:
     invalid_annotation_target: ignore
     avoid_final_parameters: ignore
+    inference_failure_on_function_invocation: ignore
+    one_member_abstracts: ignore
+    cascade_invocations: ignore
   plugins:
-    - custom_lint
-  exclude:
-    - lib/objectbox.g.dart
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
+    - custom_lint        

@@ -29,11 +29,11 @@ class SignUpForm extends HookWidget {
   }
 }
 
-class _FullNameWidget extends ConsumerWidget {
+class _FullNameWidget extends StatelessWidget {
   const _FullNameWidget();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final notifier = ref.watch(fullNameNotifierProvider.notifier);
     final formState = ref.watch(signUpNotifierProvider);
     final googleState = ref.watch(googleSignInNotifierProvider);
@@ -47,11 +47,11 @@ class _FullNameWidget extends ConsumerWidget {
   }
 }
 
-class _EmailAddressWidget extends ConsumerWidget {
+class _EmailAddressWidget extends StatelessWidget {
   const _EmailAddressWidget();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final notifier = ref.watch(emailAddressNotifierProvider.notifier);
     final formState = ref.watch(signUpNotifierProvider);
     final googleState = ref.watch(googleSignInNotifierProvider);
@@ -66,11 +66,11 @@ class _EmailAddressWidget extends ConsumerWidget {
   }
 }
 
-class _PasswordWidget extends ConsumerWidget {
+class _PasswordWidget extends StatelessWidget {
   const _PasswordWidget();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final notifier = ref.watch(passwordNotifierProvider.notifier);
     final formState = ref.watch(signUpNotifierProvider);
     final googleState = ref.watch(googleSignInNotifierProvider);
@@ -85,11 +85,11 @@ class _PasswordWidget extends ConsumerWidget {
   }
 }
 
-class _SignUpButton extends ConsumerWidget {
+class _SignUpButton extends StatelessWidget {
   const _SignUpButton();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     Future<void> signUp() async {
       if (Form.of(context).validate()) {
         return ref.read(signUpNotifierProvider.notifier).signUp();

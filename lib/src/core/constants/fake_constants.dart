@@ -2,7 +2,7 @@ import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 const fakeParameter = Parameter(value: 0);
-const fakeIAQI = IAQI(
+const fakeIAQI = IAqi(
   humidity: fakeParameter,
   pressure: fakeParameter,
   temperature: fakeParameter,
@@ -29,6 +29,6 @@ final fakeAirQuality = AirQuality(
 final fakeStation = Station(lat: 1, lon: 1, uid: 1, aqi: '0', city: fakeCity);
 
 final fakeSearchData = SearchData(uid: 0, aqi: '0', station: fakeCity);
-final fakeSearchList = List.generate(3, (index) => fakeSearchData);
-final fakeCities = List.generate(5, (index) => fakeAirQuality);
-final fakeStations = List.generate(5, (index) => fakeCity);
+final List<SearchData> fakeSearchList = List.generate(3, (_) => fakeSearchData);
+final List<AirQuality> fakeCities = List.generate(5, (_) => fakeAirQuality);
+final List<City> fakeStations = List.generate(5, (_) => fakeCity);

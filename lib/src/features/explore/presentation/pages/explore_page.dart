@@ -39,11 +39,11 @@ class ExplorePage extends HookWidget {
   }
 }
 
-class ExploreMapWidget extends HookConsumerWidget {
+class ExploreMapWidget extends HookWidget {
   const ExploreMapWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final controller = useMapController(
       userTrackingOption: const UserTrackingOption(),
     );

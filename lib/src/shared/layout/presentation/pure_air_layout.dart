@@ -5,7 +5,7 @@ import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
 import 'package:pureair_v2/src/shared/layout/presentation/pure_air_bottom_navigation_bar.dart';
 
-class PureAirLayout extends ConsumerWidget {
+class PureAirLayout extends StatelessWidget {
   const PureAirLayout({
     required this.navigationShell,
     Key? key,
@@ -14,7 +14,7 @@ class PureAirLayout extends ConsumerWidget {
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     ref.listen<AuthState>(authNotifierProvider, (previous, next) {
       next.whenOrNull(
         authenticated: (user) {
