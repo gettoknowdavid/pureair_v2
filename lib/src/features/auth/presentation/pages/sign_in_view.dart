@@ -6,8 +6,8 @@ import 'package:pureair_v2/src/shared/shared.dart';
 
 const _topSpace = kToolbarHeight * 1.5;
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+class SignInView extends StatelessWidget {
+  const SignInView({super.key});
 
   @override
   Widget build(BuildContext context) {

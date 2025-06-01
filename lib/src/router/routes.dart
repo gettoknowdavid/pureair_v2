@@ -8,8 +8,8 @@ class R {
   static const String explore = '/explore';
   static const String ranks = '/ranks';
   static const String profile = '/profile';
-  static const String login = '/login';
-  static const String register = '/register';
+  static const String signIn = '/sign-in';
+  static const String signUp = '/sign-up';
   static const String forgotPassword = '/forgot-password';
   static const String verifyEmail = '/verify-email';
   static const String details = '/details';

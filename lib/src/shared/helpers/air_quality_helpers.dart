@@ -1,7 +1,5 @@
-// ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
-import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 
 /// Enum representing Air Quality Index categories.
 ///
@@ -47,9 +45,9 @@ const _data = IndexData(
   colors: _colors,
   longMessage: [
     'Enjoy outdoor activities! There are no health concerns.',
-    'Limit prolonged outdoor activities. Some people may experience health effects.',
-    'Reduce prolonged outdoor activities. Sensitive groups should take precautions.',
-    'Avoid prolonged outdoor activities. Everyone should limit outdoor activities.',
+    '''Limit prolonged outdoor activities. Some people may experience health effects.''',
+    '''Reduce prolonged outdoor activities. Sensitive groups should take precautions.''',
+    '''Avoid prolonged outdoor activities. Everyone should limit outdoor activities.''',
     'Stay indoors and avoid outdoor activities. Protect yourself with masks.',
     'Everyone should stay indoors and avoid all outdoor activities.',
   ],
@@ -153,7 +151,30 @@ Color getParameterColor(String parameter, num? value) {
     if (config == null) return Colors.transparent;
     final index = config.getIndexForValue(value);
     return config.colors[index];
-  } catch (e) {
+  } on Exception {
     return Colors.transparent;
+  }
+}
+
+/// Class representing thresholds and colors for air quality parameters.
+class ParameterInfo {
+  /// Creates an instance of [ParameterInfo].
+  const ParameterInfo({
+    required this.thresholds,
+    required this.colors,
+  });
+
+  /// Threshold values defining the categories for the parameter.
+  final List<double> thresholds;
+
+  /// Colors corresponding to the thresholds.
+  final List<Color> colors;
+
+  int getIndexForValue(num value) {
+    for (var i = 0; i < thresholds.length; i++) {
+      if (value <= thresholds[i]) return i;
+    }
+    // Return the last index if the value exceeds all thresholds.
+    return thresholds.length - 1;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
+import 'package:pureair_v2/src/router/routing.dart' show routerConfig;
 
 class PureAirApp extends StatelessWidget {
   const PureAirApp({super.key});
@@ -18,7 +19,6 @@ class PureAirAppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routerConfig = ref.watch(routerProvider);
     return MaterialApp.router(
       darkTheme: PureAirTheme.dark,
       debugShowCheckedModeBanner: false,

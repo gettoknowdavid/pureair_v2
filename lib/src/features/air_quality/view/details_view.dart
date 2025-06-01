@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
+import 'package:pureair_v2/src/router/routing.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
 class DetailsView extends StatelessWidget {
@@ -59,7 +59,7 @@ class DetailsAddCityButton extends StatelessWidget {
               onPressed: () {
                 final city = airQuality.city;
                 context.read<CitiesBloc>().add(CitiesAddCityPressed(city));
-                context.go(R.home);
+                const HomeRoute().go(context);
               },
             );
         }

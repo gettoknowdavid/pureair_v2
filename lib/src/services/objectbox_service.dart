@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:pureair_v2/objectbox.g.dart';
-import 'package:pureair_v2/src/features/air_quality/domain/domain.dart';
+import 'package:pureair_v2/src/features/air_quality/air_quality.dart' show City;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final objectboxProvider = Provider<Objectbox>(

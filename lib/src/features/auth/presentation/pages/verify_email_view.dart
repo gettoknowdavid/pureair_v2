@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class VerifyEmailPage extends HookWidget {
-  const VerifyEmailPage({super.key});
+class VerifyEmailView extends HookWidget {
+  const VerifyEmailView({super.key});
 
   @override
   Widget build(BuildContext context) {

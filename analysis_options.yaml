@@ -16,5 +16,6 @@ analyzer:
     inference_failure_on_function_invocation: ignore
     one_member_abstracts: ignore
     cascade_invocations: ignore
+    type_annotate_public_apis: ignore
   plugins:
     - custom_lint        

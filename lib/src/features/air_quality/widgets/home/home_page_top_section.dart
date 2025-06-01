@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/auth/application/application.dart';
+import 'package:pureair_v2/src/router/routing.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
 class HomePageTopSection extends StatelessWidget {
@@ -18,7 +19,7 @@ class HomePageTopSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const _NameWidget(),
-            AddCityButton(onPressed: () => context.push(R.addCity)),
+            AddCityButton(onPressed: () => const AddCityRoute().push(context)),
           ],
         ),
         const SizedBox(height: 4),

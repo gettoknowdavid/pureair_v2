@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:osm_flutter_hooks/osm_flutter_hooks.dart';
 import 'package:pureair_v2/src/features/explore/explore.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class ExplorePage extends HookWidget {
-  const ExplorePage({super.key});
+class ExploreView extends HookWidget {
+  const ExploreView({super.key});
 
   @override
   Widget build(BuildContext context) {
