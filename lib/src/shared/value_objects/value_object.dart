@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:pureair_v2/src/core/value_objects/value_error.dart';
-import 'package:pureair_v2/src/core/value_objects/value_failure.dart';
+import 'package:pureair_v2/src/shared/value_objects/value_exception.dart';
 
 abstract class IValueObject {
   bool get isValid;
@@ -11,18 +10,13 @@ abstract class IValueObject {
 abstract class ValueObject<T> implements IValueObject {
   const ValueObject();
 
-  Either<ValueFailure<T>, T> get value;
+  Either<ValueException<T>, T> get value;
 
-  Either<ValueFailure<T>, Unit> get failureOrUnit {
+  Either<ValueException<T>, Unit> get failureOrUnit {
     return value.fold(left, (_) => right(unit));
   }
 
-  T get getOrCrash {
-    return value.fold(
-      (failure) => throw UnexpectedValueError(failure),
-      id,
-    );
-  }
+  T get getOrCrash => value.fold((failure) => throw failure, id);
 
   T getOrElse(T dflt) => value.getOrElse(() => dflt);
 

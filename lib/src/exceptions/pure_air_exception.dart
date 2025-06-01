@@ -33,3 +33,23 @@ final class PureAirQualityUnavailable extends PureAirException {
 final class PureAirUnknownException extends PureAirException {
   const PureAirUnknownException([super.message = 'Unknown exception']);
 }
+
+final class InvalidEmailOrPasswordException extends PureAirException {
+  const InvalidEmailOrPasswordException([
+    super.message = 'Invalid email address or password.',
+  ]);
+}
+
+final class EmailAlreadyInUseException extends PureAirException {
+  const EmailAlreadyInUseException([
+    super.message =
+        'The email address is already in use. Please try signing in.',
+  ]);
+}
+
+final class PermissionDeniedException extends PureAirException {
+  const PermissionDeniedException([
+    super.message =
+        'Permission for this action has been denied. Try again later.',
+  ]);
+}

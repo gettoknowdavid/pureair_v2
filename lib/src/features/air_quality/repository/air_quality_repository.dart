@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:pureair_v2/src/core/core.dart' show  SingleLineString;
 import 'package:pureair_v2/src/exceptions/pure_air_exception.dart';
 import 'package:pureair_v2/src/features/air_quality/models/models.dart';
+import 'package:pureair_v2/src/shared/shared.dart' show SingleLineString;
 
 abstract class AirQualityRepository {
   /// Adds a [City] to the repository for saving

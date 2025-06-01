@@ -5,6 +5,3 @@ export 'result/result.dart';
 export 'theme/theme.dart';
 export 'use_case/no_params.dart';
 export 'use_case/use_case.dart';
-export 'value_objects/value_objects.dart';
-
-

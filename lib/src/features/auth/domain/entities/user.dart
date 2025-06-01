@@ -1,28 +1,32 @@
 import 'package:dartz/dartz.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pureair_v2/src/core/value_objects/i_entity.dart';
-import 'package:pureair_v2/src/core/value_objects/single_line_string.dart';
-import 'package:pureair_v2/src/core/value_objects/uid.dart';
-import 'package:pureair_v2/src/core/value_objects/value_failure.dart';
-import 'package:pureair_v2/src/features/auth/domain/value_objects/email_address.dart';
+import 'package:equatable/equatable.dart';
+import 'package:pureair_v2/src/shared/value_objects/value_objects.dart';
 
-part 'user.freezed.dart';
+final class User with EquatableMixin implements IEntity {
+  const User({
+    required this.uid,
+    required this.fullName,
+    required this.email,
+    required this.emailVerified,
+    this.imageUrl,
+  });
 
-@freezed
-class User with _$User implements IEntity<User> {
-  const factory User({
-    required Uid<User> uid,
-    required SingleLineString fullName,
-    required EmailAddress emailAddress,
-    required bool emailVerified,
-    String? imageUrl,
-  }) = _User;
+  @override
+  final ID uid;
+  final SingleLineString fullName;
+  final EmailAddress email;
+  final bool emailVerified;
+  final String? imageUrl;
+
+  @override
+  List<Object?> get props => [uid, fullName, email, emailVerified, imageUrl];
 }
 
+
 extension UserX on User {
-  Option<ValueFailure<dynamic>> get failureOption {
+  Option<ValueException<dynamic>> get failureOption {
     return fullName.failureOrUnit
-        .andThen(emailAddress.failureOrUnit)
+        .andThen(email.failureOrUnit)
         .fold(some, (r) => none());
   }
 }

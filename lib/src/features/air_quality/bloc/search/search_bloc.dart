@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/exceptions/pure_air_exception.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
+import 'package:pureair_v2/src/shared/shared.dart' show SingleLineString;
 import 'package:rxdart/rxdart.dart';
 
 part 'search_event.dart';
