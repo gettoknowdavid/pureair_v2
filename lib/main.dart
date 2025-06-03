@@ -1,18 +1,77 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/app.dart';
 import 'package:pureair_v2/firebase_options.dart';
+import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
+import 'package:pureair_v2/src/features/auth/auth.dart';
+import 'package:pureair_v2/src/injector/injector.dart';
 import 'package:pureair_v2/src/services/objectbox_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final objectbox = await Objectbox.create();
+  
   runApp(
-    ProviderScope(
-      overrides: [objectboxProvider.overrideWithValue(objectbox)],
-      child: const PureAirApp(),
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (ctx) => di<AuthRepository>()),
+        RepositoryProvider(create: (ctx) => di<AirQualityRepository>()),
+        RepositoryProvider(create: (ctx) => di<AddCityUseCase>()),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (ctx) => ObjectboxCubit(objectbox)),
+          BlocProvider(
+            create: (ctx) => AuthBloc(
+              repository: ctx.read<AuthRepository>(),
+            )..add(const AuthUserSubscribed()),
+          ),
+          BlocProvider(
+            create: (ctx) => ForgotPasswordCubit(
+              repository: ctx.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (ctx) => SignInCubit(
+              repository: ctx.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (ctx) => SignUpCubit(
+              repository: ctx.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (ctx) => VerifyEmailCubit(
+              repository: ctx.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (ctx) => CitiesBloc(
+              repository: ctx.read<AirQualityRepository>(),
+              addCityUseCase: ctx.read<AddCityUseCase>(),
+            ),
+          ),
+          BlocProvider(
+            create: (ctx) => DetailsCubit(
+              repository: ctx.read<AirQualityRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (ctx) => LocalizedBloc(
+              repository: ctx.read<AirQualityRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (ctx) => SearchBloc(
+              repository: ctx.read<AirQualityRepository>(),
+            ),
+          ),
+        ],
+        child: const PureAirApp(),
+      ),
     ),
   );
 }

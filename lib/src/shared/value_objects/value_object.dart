@@ -20,6 +20,12 @@ abstract class ValueObject<T> implements IValueObject {
 
   T getOrElse(T dflt) => value.getOrElse(() => dflt);
 
+  /// Returns the failure object [ValueException] if validation failed
+  /// (isLeft), otherwise null.
+  ValueException<T>? get failureOrNull {
+    return value.fold((failure) => failure, (_) => null);
+  }
+
   @override
   bool get isValid => value.isRight();
 

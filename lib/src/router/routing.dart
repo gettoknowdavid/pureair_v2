@@ -4,8 +4,7 @@ import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/features/explore/presentation/pages/explore_view.dart';
 import 'package:pureair_v2/src/router/routes.dart';
-import 'package:pureair_v2/src/shared/layout/layout.dart';
-import 'package:pureair_v2/src/shared/widgets/loading_indicator.dart';
+import 'package:pureair_v2/src/shared/shared.dart';
 
 part 'routing.g.dart';
 
@@ -16,6 +15,9 @@ final routerConfig = GoRouter(
   initialLocation: R.home,
   navigatorKey: rootNavigatorKey,
   routes: $appRoutes,
+  redirect: (context, state) {
+    return null;
+  },
 );
 
 @TypedGoRoute<LoadingRoute>(path: R.root, name: R.root)

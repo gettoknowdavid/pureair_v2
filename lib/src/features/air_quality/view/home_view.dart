@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pureair_v2/src/core/constants/constants.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
@@ -41,12 +40,12 @@ class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
       body: Center(
         child: FilledButton(
-          onPressed: () => ref.read(authFacadeProvider).signOut(),
+          onPressed: () => ctx.read<AuthBloc>().add(const AuthSignOutPressed()),
           child: const Text('Sign Out'),
         ),
       ),

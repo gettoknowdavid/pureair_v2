@@ -53,3 +53,7 @@ final class PermissionDeniedException extends PureAirException {
         'Permission for this action has been denied. Try again later.',
   ]);
 }
+
+final class ActionCanceledException extends PureAirException {
+  const ActionCanceledException([super.message = 'Action canceled']);
+}

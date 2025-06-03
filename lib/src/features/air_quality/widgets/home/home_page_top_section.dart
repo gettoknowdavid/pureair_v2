@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/src/core/core.dart';
-import 'package:pureair_v2/src/features/auth/application/application.dart';
+import 'package:pureair_v2/src/features/auth/auth.dart' show AuthBloc;
 import 'package:pureair_v2/src/router/routing.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
@@ -36,9 +35,9 @@ class _NameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = PureAirTextTheme.of(context)?.titleBold;
 
-    final fullName = ref.watch(userProvider.select((value) => value?.fullName));
-    final firstName = fullName?.getOrCrash.split(' ')[0];
-    final helloText = firstName == null ? 'Hello there!' : 'Hello $firstName';
+    final fullName = context.select((AuthBloc b) => b.state.user.fullName);
+    final firstName = fullName.getOrCrash.split(' ')[0];
+    final helloText = firstName.isEmpty ? 'Hello there!' : 'Hello $firstName';
 
     return Text(helloText, style: style);
   }

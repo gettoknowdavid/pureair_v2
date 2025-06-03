@@ -9,7 +9,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:google_sign_in/google_sign_in.dart' as _i116;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../features/air_quality/air_quality.dart' as _i36;
@@ -17,6 +19,8 @@ import '../features/air_quality/repository/air_quality_repository_impl.dart'
     as _i200;
 import '../features/air_quality/repository/datasources/air_quality_remote_datasource.dart'
     as _i626;
+import '../features/auth/auth.dart' as _i236;
+import '../features/auth/repository/auth_repository_impl.dart' as _i739;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -39,6 +43,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.token,
       instanceName: 'token',
     );
+    gh.factory<_i236.AuthRepository>(() => _i739.AuthRepositoryImpl(
+          firebaseAuth: gh<_i59.FirebaseAuth>(),
+          googleSignIn: gh<_i116.GoogleSignIn>(),
+        ));
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio(
           gh<String>(instanceName: 'baseUrl'),
           gh<String>(instanceName: 'token'),

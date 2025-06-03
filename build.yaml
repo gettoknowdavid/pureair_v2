@@ -12,7 +12,9 @@ targets:
           include_if_null: false
           explicit_to_json: true
         generate_for:
-          - lib/**/models/*.dart
+          - lib/src/features/air_quality/models/*.dart
+          - lib/src/features/auth/models/*.dart
+          - lib/src/features/explore/models/*.dart
           - lib/src/core/response/base_response.dart
       # go_router_builder:
       #   generate_for: 

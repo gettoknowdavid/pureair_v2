@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pureair_v2/src/core/core.dart';
-import 'package:pureair_v2/src/features/auth/auth.dart';
 
 typedef PMessenger = ScaffoldFeatureController<SnackBar, SnackBarClosedReason>;
 
@@ -29,26 +28,6 @@ extension PureAirSnackbarX on BuildContext {
           message,
           style: textTheme.caption?.copyWith(color: colors.onPrimary),
         ),
-      ),
-    );
-  }
-
-  PMessenger showAuthExceptionMessageOrElse(AuthException exception) {
-    return showErrorSnackBar(
-      exception.maybeWhen(
-        orElse: () => ErMsg.unknown,
-        message: (error) => error,
-      ),
-    );
-  }
-
-  PMessenger showSignInException(AuthException exception) {
-    return showErrorSnackBar(
-      exception.maybeWhen(
-        orElse: () => ErMsg.unknown,
-        canceled: () => ErMsg.cancelled,
-        permissionDenied: () => ErMsg.permissionDenied,
-        invalidEmailOrPassword: () => ErMsg.invalidEmailOrPassword,
       ),
     );
   }

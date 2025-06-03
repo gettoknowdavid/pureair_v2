@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:pureair_v2/src/core/core.dart';
-import 'package:pureair_v2/src/features/auth/application/application.dart';
+import 'package:pureair_v2/src/features/auth/auth.dart';
+import 'package:pureair_v2/src/router/routing.dart';
 
 const _constraints = BoxConstraints(
   maxHeight: 40,
@@ -20,7 +19,7 @@ class UserAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.onSurface;
 
-    final imageUrl = ref.watch(userProvider.select((value) => value?.imageUrl));
+    final imageUrl = context.select((AuthBloc b) => b.state.user.imageUrl);
 
     Widget image;
 
@@ -37,7 +36,7 @@ class UserAvatar extends StatelessWidget {
       elevation: 12,
       constraints: _constraints,
       shape: RoundedRectangleBorder(side: BorderSide(width: 3, color: color)),
-      onPressed: () => context.go(R.profile),
+      onPressed: () => const ProfileRoute().go(context),
       child: image,
     );
   }
