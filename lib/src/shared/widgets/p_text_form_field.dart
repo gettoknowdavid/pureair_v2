@@ -66,7 +66,6 @@ class PTextFormField extends FormField<String> {
   final bool required;
 
   @override
-  // ignore: library_private_types_in_public_apis
   _PTextFormFieldState createState() => _PTextFormFieldState();
 }
 

@@ -49,27 +49,3 @@ final class ForgotPasswordState with EquatableMixin {
   @override
   List<Object?> get props => [email, status, exception];
 }
-
-// final class ForgotPasswordInitial extends ForgotPasswordState {
-//   const ForgotPasswordInitial();
-// }
-
-// final class ForgotPasswordSendResetEmailInProgress extends ForgotPasswordState {
-//   const ForgotPasswordSendResetEmailInProgress();
-// }
-
-// final class ForgotPasswordSendResetEmailSuccess extends ForgotPasswordState {
-//   const ForgotPasswordSendResetEmailSuccess(this.email);
-//   final EmailAddress email;
-
-//   @override
-//   List<Object?> get props => [email];
-// }
-
-// final class ForgotPasswordFailure extends ForgotPasswordState {
-//   const ForgotPasswordFailure(this.exception);
-//   final PureAirException exception;
-
-//   @override
-//   List<Object?> get props => [exception];
-// }

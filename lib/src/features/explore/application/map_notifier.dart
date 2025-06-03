@@ -13,7 +13,7 @@
 // part 'map_notifier.g.dart';
 // part 'map_state.dart';
 
-// final mapCompleterProvider = StateProvider<Completer<GoogleMapController>>((_) {
+//final mapCompleterProvider=StateProvider<Completer<GoogleMapController>>((_) {
 //   return Completer<GoogleMapController>();
 // });
 
@@ -37,7 +37,7 @@
 //   final lng2 = northeast.longitude;
 
 //   final facade = ref.read(airQualityFacadeProvider);
-//   final stationsOnMap = await facade.stationsOnMap('$lat1,$lng1,$lat2,$lng2');
+//   final stationsOnMap =await facade.stationsOnMap('$lat1,$lng1,$lat2,$lng2');
 //   final result = stationsOnMap.getOrElse(() => []);
 //   return result;
 // }

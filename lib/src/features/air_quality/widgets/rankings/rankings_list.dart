@@ -13,7 +13,7 @@
 //     return stationsState.when(
 //       data: (_) => _RankingsView(cities: ref.watch(rankingsProvider)),
 //       error: (error, _) => Text(error.toString()),
-//       loading: () => Skeletonizer(child: _RankingsView(cities: fakeStations)),
+//       loading: ()=>Skeletonizer(child: _RankingsView(cities: fakeStations)),
 //     );
 //   }
 // }

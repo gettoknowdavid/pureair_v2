@@ -6,7 +6,11 @@ part 'search_data.g.dart';
 
 @JsonSerializable()
 final class SearchData with EquatableMixin {
-  const SearchData({required this.uid, required this.aqi, required this.station,});
+  const SearchData({
+    required this.uid,
+    required this.aqi,
+    required this.station,
+  });
 
   factory SearchData.fromJson(Map<String, dynamic> json) =>
       _$SearchDataFromJson(json);
@@ -17,7 +21,7 @@ final class SearchData with EquatableMixin {
 
   @override
   List<Object?> get props => [uid, aqi, station];
-  
+
   SearchData copyWith({
     int? uid,
     String? aqi,

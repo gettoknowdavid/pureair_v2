@@ -3,9 +3,9 @@ import 'dart:async' show TimeoutException;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' show DioException;
 import 'package:injectable/injectable.dart';
-import 'package:pureair_v2/src/shared/value_objects/single_line_string.dart';
 import 'package:pureair_v2/src/exceptions/pure_air_exception.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
+import 'package:pureair_v2/src/shared/value_objects/single_line_string.dart';
 
 const timeLimit = Duration(seconds: 30);
 

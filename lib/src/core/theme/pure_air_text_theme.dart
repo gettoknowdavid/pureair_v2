@@ -111,18 +111,21 @@ class _Typography {
   _Typography(this._c);
   final ColorScheme _c;
 
-  late final heading1 = _font(24);
-  late final body = _font(14);
-  late final bodyBold = _font(14, weight: FontWeight.bold);
-  late final titleRegular = _font(18);
-  late final titleBold = _font(18, weight: FontWeight.bold);
-  late final subtitle = _font(16);
-  late final caption = _font(12);
-  late final captionBold = _font(12, weight: FontWeight.bold);
-  late final formLabel = _font(14, weight: FontWeight.w600, color: _c.primary);
-  late final formHint = _font(16, color: _c.onSurface.withValues(alpha: 0.4));
-  late final button = _font(14, weight: FontWeight.w600);
-  late final tiny = _font(11, color: _c.onSurface.withValues(alpha: 0.6));
+  late final TextStyle heading1 = _font(24);
+  late final TextStyle body = _font(14);
+  late final TextStyle bodyBold = _font(14, weight: FontWeight.bold);
+  late final TextStyle titleRegular = _font(18);
+  late final TextStyle titleBold = _font(18, weight: FontWeight.bold);
+  late final TextStyle subtitle = _font(16);
+  late final TextStyle caption = _font(12);
+  late final TextStyle captionBold = _font(12, weight: FontWeight.bold);
+  late final TextStyle formLabel =
+      _font(14, weight: FontWeight.w600, color: _c.primary);
+  late final TextStyle formHint =
+      _font(16, color: _c.onSurface.withValues(alpha: 0.4));
+  late final TextStyle button = _font(14, weight: FontWeight.w600);
+  late final TextStyle tiny =
+      _font(11, color: _c.onSurface.withValues(alpha: 0.6));
 
   TextStyle get _s => const TextStyle(fontFamily: PureAirFontFamily.figtree);
 
