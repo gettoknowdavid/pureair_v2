@@ -16,7 +16,7 @@ const fakeForecastData = ForecastData(
   uvi: fakeDailyForecasts,
 );
 const fakeForecast = Forecast(data: fakeForecastData);
-final fakeCity = City(name: BoneMock.name);
+final fakeCity = City(name: BoneMock.name, country: BoneMock.country);
 final fakeAirQuality = AirQuality(
   value: 0,
   dominantPol: BoneMock.subtitle,

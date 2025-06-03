@@ -1,8 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/objectbox.g.dart';
 import 'package:pureair_v2/src/features/air_quality/models/city.dart';
 import 'package:pureair_v2/src/services/objectbox_service.dart';
 
-class AirQualityLocalDatasource {
+@lazySingleton
+final class AirQualityLocalDatasource {
   AirQualityLocalDatasource({
     required Objectbox objectbox,
   }) : _objectbox = objectbox;

@@ -15,9 +15,6 @@ final routerConfig = GoRouter(
   initialLocation: R.home,
   navigatorKey: rootNavigatorKey,
   routes: $appRoutes,
-  redirect: (context, state) {
-    return null;
-  },
 );
 
 @TypedGoRoute<LoadingRoute>(path: R.root, name: R.root)
@@ -36,7 +33,7 @@ class SignInRoute extends GoRouteData {
   Widget build(context, state) => const SignInView();
 }
 
-@TypedGoRoute<SignUpRoute>(path: R.signUp, name: R.signIn)
+@TypedGoRoute<SignUpRoute>(path: R.signUp, name: R.signUp)
 class SignUpRoute extends GoRouteData {
   const SignUpRoute();
 

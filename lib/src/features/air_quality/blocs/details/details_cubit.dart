@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pureair_v2/src/exceptions/pure_air_exception.dart';
@@ -25,6 +27,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     emit(const DetailsLoadInProgress());
 
     if (airQuality != null && geo == null) {
+      log(airQuality.toJson().toString());
       return emit(DetailsLoadSuccess(airQuality));
     }
 

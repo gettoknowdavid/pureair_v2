@@ -53,7 +53,6 @@ class AirQualityCard extends HookWidget {
           PContainer(height: smallHeight, backgroundColor: backgroundColor),
           Skeletonizer(
             enabled: isLoading,
-            effect: const PulseEffect(),
             child: PContainer(
               margin: const EdgeInsets.all(8),
               padding: kAllPadding24,

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/src/core/use_case/use_case.dart';
 import 'package:pureair_v2/src/exceptions/exceptions.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
@@ -85,6 +86,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
   }
 }
 
+@lazySingleton
 class AddCityUseCase implements UseCase<void, City> {
   const AddCityUseCase({
     required AirQualityRepository repository,

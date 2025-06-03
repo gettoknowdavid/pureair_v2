@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchResultsWidget extends StatelessWidget {
   const SearchResultsWidget({super.key});
@@ -37,13 +38,16 @@ class _SearchResultWidget extends HookWidget {
     if (results.isEmpty) return const SizedBox();
 
     final scrollController = useScrollController();
-    return ListView.separated(
-      shrinkWrap: true,
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
-      itemCount: results.length,
-      controller: scrollController,
-      separatorBuilder: (context, index) => const SizedBox(height: 24),
-      itemBuilder: (context, index) => SearchResultCard(data: results[index]!),
+    return Skeletonizer(
+      enabled: isLoading,
+      child: ListView.separated(
+        shrinkWrap: true,
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+        itemCount: results.length,
+        controller: scrollController,
+        separatorBuilder: (context, index) => const SizedBox(height: 24),
+        itemBuilder: (context, i) => SearchResultCard(data: results[i]!),
+      ),
     );
   }
 }

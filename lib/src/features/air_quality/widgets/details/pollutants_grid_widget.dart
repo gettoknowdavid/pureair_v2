@@ -108,7 +108,7 @@ class _Color extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: getParameterColor(name, value),
+        color: getParameterColor(name, value) ,
         border: Border.all(
           color: Theme.of(context).colorScheme.onSurface,
           width: 0.5,

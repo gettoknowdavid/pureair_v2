@@ -88,15 +88,14 @@ class _DetailsChartView extends StatelessWidget {
                         showTitles: true,
                         getTitlesWidget: (double value, TitleMeta meta) {
                           String text;
-                          switch (value) {
-                            case 0.0:
-                              text = 'O3';
-                            case 1.0:
-                              text = 'PM10';
-                            case 2.0:
-                              text = 'PM25';
-                            default:
-                              text = '';
+                          if (value == (o3?.avg ?? 0)) {
+                            text = 'O3';
+                          } else if (value == (pm10?.avg ?? 0)) {
+                            text = 'PM10';
+                          } else if (value == (pm25?.avg ?? 0)) {
+                            text = 'PM25';
+                          } else {
+                            text = '';
                           }
                           return SideTitleWidget(meta: meta, child: Text(text));
                         },
@@ -123,7 +122,7 @@ class _DetailsChartView extends StatelessWidget {
                       showingTooltipIndicators: [0],
                       barRods: [
                         BarChartRodData(
-                          toY: e.value!.avg.toDouble(),
+                          toY: e.value?.avg.toDouble() ?? 0,
                           color: getParameterColor(e.key, e.value?.avg),
                           width: 50,
                           borderRadius: BorderRadius.zero,

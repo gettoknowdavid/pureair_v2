@@ -15,26 +15,36 @@ import 'package:google_sign_in/google_sign_in.dart' as _i116;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../features/air_quality/air_quality.dart' as _i36;
+import '../features/air_quality/blocs/cities/cities_bloc.dart' as _i471;
 import '../features/air_quality/repository/air_quality_repository_impl.dart'
     as _i200;
+import '../features/air_quality/repository/datasources/air_quality_local_datasource.dart'
+    as _i232;
 import '../features/air_quality/repository/datasources/air_quality_remote_datasource.dart'
     as _i626;
 import '../features/auth/auth.dart' as _i236;
 import '../features/auth/repository/auth_repository_impl.dart' as _i739;
+import '../services/objectbox_service.dart' as _i116;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(
       this,
       environment,
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
+    await gh.factoryAsync<_i116.Objectbox>(
+      () => registerModule.obj,
+      preResolve: true,
+    );
+    gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
+    gh.lazySingleton<_i116.GoogleSignIn>(() => registerModule.googleSignIn);
     gh.factory<String>(
       () => registerModule.baseUrl,
       instanceName: 'baseUrl',
@@ -47,6 +57,8 @@ extension GetItInjectableX on _i174.GetIt {
           firebaseAuth: gh<_i59.FirebaseAuth>(),
           googleSignIn: gh<_i116.GoogleSignIn>(),
         ));
+    gh.lazySingleton<_i232.AirQualityLocalDatasource>(() =>
+        _i232.AirQualityLocalDatasource(objectbox: gh<_i116.Objectbox>()));
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio(
           gh<String>(instanceName: 'baseUrl'),
           gh<String>(instanceName: 'token'),
@@ -60,6 +72,8 @@ extension GetItInjectableX on _i174.GetIt {
           local: gh<_i36.AirQualityLocalDatasource>(),
           remote: gh<_i36.AirQualityRemoteDatasource>(),
         ));
+    gh.lazySingleton<_i471.AddCityUseCase>(() =>
+        _i471.AddCityUseCase(repository: gh<_i36.AirQualityRepository>()));
     return this;
   }
 }

@@ -21,9 +21,7 @@ class IndexWidget extends StatelessWidget {
     final textTheme = PureAirTextTheme.of(context)!;
     final style = textTheme.titleBold?.copyWith(color: indexColor.textColor);
 
-    return Skeleton.replace(
-      height: height,
-      width: height,
+    return Skeleton.leaf(
       child: PContainer(
         height: height,
         width: height,

@@ -5,6 +5,7 @@ import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/router/routing.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchResultCard extends StatelessWidget {
   const SearchResultCard({required this.data, super.key});
@@ -26,14 +27,16 @@ class SearchResultCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
         child: Row(
           children: [
-            PContainer(
-              height: 50,
-              width: 50,
-              alignment: Alignment.center,
-              backgroundColor: backgroundColor,
-              child: Text(
-                data.aqi,
-                style: textTheme.titleBold?.copyWith(color: foregroundColor),
+            Skeleton.leaf(
+              child: PContainer(
+                height: 50,
+                width: 50,
+                alignment: Alignment.center,
+                backgroundColor: backgroundColor,
+                child: Text(
+                  data.aqi,
+                  style: textTheme.titleBold?.copyWith(color: foregroundColor),
+                ),
               ),
             ),
             const SizedBox(width: 10),

@@ -1,3 +1,5 @@
+//
+// ignore_for_file: avoid_catches_without_on_clauses
 
 import 'package:flutter/material.dart';
 
@@ -151,7 +153,8 @@ Color getParameterColor(String parameter, num? value) {
     if (config == null) return Colors.transparent;
     final index = config.getIndexForValue(value);
     return config.colors[index];
-  } on Exception {
+  } catch (_) {
+    
     return Colors.transparent;
   }
 }
