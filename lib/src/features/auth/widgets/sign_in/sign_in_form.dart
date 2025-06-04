@@ -40,7 +40,7 @@ class _EmailAddressWidget extends StatelessWidget {
     return PTextFormField(
       labelText: 'Email Address',
       hintText: 'john@example.com',
-      enabled: status == SignInStatus.inProgress,
+      enabled: status != SignInStatus.inProgress,
       onChanged: context.read<SignInCubit>().emailChanged,
       validator: (_) => email.failureOrNull?.message,
       keyboardType: TextInputType.emailAddress,
@@ -59,7 +59,7 @@ class _PasswordWidget extends StatelessWidget {
       labelText: 'Password',
       hintText: 'Your password',
       isPassword: true,
-      enabled: status == SignInStatus.inProgress,
+      enabled: status != SignInStatus.inProgress,
       onChanged: context.read<SignInCubit>().passwordChanged,
       validator: (_) => password.failureOrNull?.message,
     );
@@ -83,7 +83,7 @@ class _SignInButton extends StatelessWidget {
     return PrimaryButton(
       title: 'Sign In',
       loading: status == SignInStatus.inProgress,
-      disabled: status == SignInStatus.inProgress || isFormValid,
+      disabled: status == SignInStatus.inProgress || !isFormValid,
       onPressed: signIn,
     );
   }

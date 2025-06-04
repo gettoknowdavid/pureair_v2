@@ -39,7 +39,7 @@ class _FullNameWidget extends StatelessWidget {
     return PTextFormField(
       labelText: 'Full Name',
       hintText: 'John Doe',
-      enabled: status == SignUpStatus.inProgress,
+      enabled: status != SignUpStatus.inProgress,
       onChanged: context.read<SignUpCubit>().emailChanged,
       validator: (_) => fullName.failureOrNull?.message,
     );
@@ -56,7 +56,7 @@ class _EmailAddressWidget extends StatelessWidget {
     return PTextFormField(
       labelText: 'Email Address',
       hintText: 'john@example.com',
-      enabled: status == SignUpStatus.inProgress,
+      enabled: status != SignUpStatus.inProgress,
       onChanged: context.read<SignUpCubit>().emailChanged,
       validator: (_) => email.failureOrNull?.message,
       keyboardType: TextInputType.emailAddress,
@@ -75,7 +75,7 @@ class _PasswordWidget extends StatelessWidget {
       labelText: 'Password',
       hintText: 'Your password',
       isPassword: true,
-      enabled: status == SignUpStatus.inProgress,
+      enabled: status != SignUpStatus.inProgress,
       onChanged: context.read<SignUpCubit>().passwordChanged,
       validator: (_) => password.failureOrNull?.message,
     );
@@ -99,7 +99,7 @@ class _SignUpButton extends StatelessWidget {
     return PrimaryButton(
       title: 'Sign Up',
       loading: status == SignUpStatus.inProgress,
-      disabled: status == SignUpStatus.inProgress || isFormValid,
+      disabled: status == SignUpStatus.inProgress || !isFormValid,
       onPressed: signUp,
     );
   }
