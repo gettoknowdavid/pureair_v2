@@ -73,6 +73,9 @@ class _SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isFormValid = context.select((SignInCubit b) => b.state.isValid);
     final status = context.select((SignInCubit b) => b.state.status);
+    final isGoogleSignIn = context.select(
+      (SignInCubit b) => b.state.isGoogleSignIn,
+    );
 
     Future<void> signIn() async {
       if (Form.of(context).validate()) {
@@ -82,7 +85,7 @@ class _SignInButton extends StatelessWidget {
 
     return PrimaryButton(
       title: 'Sign In',
-      loading: status == SignInStatus.inProgress,
+      loading: status == SignInStatus.inProgress && !isGoogleSignIn,
       disabled: status == SignInStatus.inProgress || !isFormValid,
       onPressed: signIn,
     );
