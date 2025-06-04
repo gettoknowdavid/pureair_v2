@@ -10,6 +10,18 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (ctx) => SignUpCubit(repository: ctx.read<AuthRepository>()),
+      child: const SignUpWidget(),
+    );
+  }
+}
+
+class SignUpWidget extends StatelessWidget {
+  const SignUpWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     final textTheme = PureAirTextTheme.of(context)!;
 
     return BlocListener<SignUpCubit, SignUpState>(
@@ -22,7 +34,6 @@ class SignUpView extends StatelessWidget {
             final message = state.exception?.message ?? 'Unknown exception';
             context.showErrorSnackBar(message);
           case SignUpStatus.success:
-            context.read<VerifyEmailCubit>().sendVerificationMail();
             const VerifyEmailRoute().go(context);
         }
       },
@@ -42,17 +53,7 @@ class SignUpView extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               const SignUpForm(),
-              const SizedBox(height: 24),
-              Text(
-                'Or',
-                textAlign: TextAlign.center,
-                style: textTheme.captionBold,
-              ),
-              const SizedBox(height: 24),
-              const GoogleSignInButton(),
-              const SizedBox(height: 18),
-              const FacebookSignInButton(),
-              const SizedBox(height: 30),
+              const SizedBox(height: 60),
               const SignInRedirectionButton(),
               const SizedBox(height: 20),
               const TermsConditionPolicyLink(),

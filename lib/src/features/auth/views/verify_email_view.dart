@@ -6,8 +6,20 @@ import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/router/router.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class VerifyEmailView extends HookWidget {
+class VerifyEmailView extends StatelessWidget {
   const VerifyEmailView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (ctx) => VerifyEmailCubit(repository: ctx.read<AuthRepository>(),),
+      child: const VerifyEmailWidget(),
+    );
+  }
+}
+
+class VerifyEmailWidget extends HookWidget {
+  const VerifyEmailWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +30,11 @@ class VerifyEmailView extends HookWidget {
     final status = context.select((VerifyEmailCubit bloc) => bloc.state.status);
     final verificationInProgress = status == VerifyEmailStatus.inProgress;
     final isSendingMail = status == VerifyEmailStatus.emailSendInProgress;
+
+    useEffect(() {
+      bloc.sendVerificationMail();
+      return null;
+    }, const []);
 
     useInterval(
       bloc.silentlyCheckVerificationStatus,

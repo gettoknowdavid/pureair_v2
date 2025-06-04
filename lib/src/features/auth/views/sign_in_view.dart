@@ -13,6 +13,18 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (ctx) => SignInCubit(repository: ctx.read<AuthRepository>()),
+      child: const SignInWidget(),
+    );
+  }
+}
+
+class SignInWidget extends StatelessWidget {
+  const SignInWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     final textTheme = PureAirTextTheme.of(context)!;
 
     return BlocListener<SignInCubit, SignInState>(

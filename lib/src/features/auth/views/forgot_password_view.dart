@@ -10,6 +10,20 @@ class ForgotPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (ctx) => ForgotPasswordCubit(
+        repository: ctx.read<AuthRepository>(),
+      ),
+      child: const ForgotPasswordWidget(),
+    );
+  }
+}
+
+class ForgotPasswordWidget extends StatelessWidget {
+  const ForgotPasswordWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     final textTheme = PureAirTextTheme.of(context)!;
 
     return BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
