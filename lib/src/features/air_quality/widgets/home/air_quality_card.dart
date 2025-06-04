@@ -36,7 +36,7 @@ class AirQualityCard extends HookWidget {
     }
 
     void onDelete() {
-      context.read<CitiesBloc>().add(CitiesRemoveCityPressed(city));
+      context.read<CitiesBloc>().add(CitiesRemoveCityPressed(airQuality));
       showActions.value = false;
     }
 

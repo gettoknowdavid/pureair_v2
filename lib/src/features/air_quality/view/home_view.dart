@@ -10,11 +10,13 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> onRefresh() async {
+      context.read<LocalizedBloc>().add(const LocalizedStarted());
+      context.read<CitiesBloc>().add(const CitiesStarted());
+    }
+
     return RefreshIndicator.adaptive(
-      onRefresh: () => Future.wait([
-        context.read<LocalizedBloc>().stream.first,
-        context.read<CitiesBloc>().stream.first,
-      ]),
+      onRefresh: onRefresh,
       child: const Scaffold(
         appBar: HomeAppBar(),
         body: SingleChildScrollView(

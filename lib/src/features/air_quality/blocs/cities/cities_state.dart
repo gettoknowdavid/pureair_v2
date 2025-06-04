@@ -17,7 +17,7 @@ final class CitiesLoadInProgress extends CitiesState {
 
 final class CitiesLoadSuccess extends CitiesState {
   const CitiesLoadSuccess(this.cities);
-  final Set<AirQuality?> cities;
+  final List<AirQuality?> cities;
 
   @override
   List<Object?> get props => [cities];

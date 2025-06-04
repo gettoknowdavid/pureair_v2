@@ -50,6 +50,7 @@ class DetailsViewWidget extends HookWidget {
     final isLocalized = listEquals<double>(localizedCity?.geo, city?.geo);
     final isAlreadySaved = context.watch<CitiesBloc>().isAlreadySaved(city);
     final shouldShowAddButton = !isAlreadySaved && !isLocalized;
+    
     return Scaffold(
       appBar: AppBar(
         leading: const PBackButton(),
@@ -88,7 +89,7 @@ class DetailsAddCityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DetailsCubit, DetailsState>(
-      builder: (context, state) {
+      builder: (ctx, state) {
         switch (state) {
           case DetailsLoadFailure():
           case DetailsLoadInProgress():
@@ -96,9 +97,8 @@ class DetailsAddCityButton extends StatelessWidget {
           case DetailsLoadSuccess(:final airQuality):
             return AddCityButton(
               onPressed: () {
-                final city = airQuality.city;
-                context.read<CitiesBloc>().add(CitiesAddCityPressed(city));
-                const HomeRoute().go(context);
+                ctx.read<CitiesBloc>().add(CitiesAddCityPressed(airQuality));
+                const HomeRoute().go(ctx);
               },
             );
         }

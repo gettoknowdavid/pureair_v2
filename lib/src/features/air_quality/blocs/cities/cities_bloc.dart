@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/src/core/use_case/use_case.dart';
 import 'package:pureair_v2/src/exceptions/exceptions.dart';
@@ -30,14 +33,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
   ) async {
     emit(const CitiesLoadInProgress());
     final cities = await _repository.getCitiesAirQualityData();
-    emit(
-      cities.fold(
-        CitiesLoadFailure.new,
-        (airQualities) => CitiesLoadSuccess(
-          Set<AirQuality?>.from(airQualities),
-        ),
-      ),
-    );
+    emit(cities.fold(CitiesLoadFailure.new, CitiesLoadSuccess.new));
   }
 
   Future<void> _onCitiesAddCityPressed(
@@ -46,23 +42,27 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
   ) async {
     if (state is CitiesLoadSuccess) {
       final cities = (state as CitiesLoadSuccess).cities;
-      final city = event.city;
-      if (cities.map((v) => v?.city.geo).contains(city.geo)) {
-        const exception = PureAirException('City already added to the list');
-        emit(const CitiesLoadFailure(exception));
-      } else {
-        final cityWithUid = city.copyWith(uid: city.geo?.generateCityUid);
-        final failureOrSuccess = await _addCityUseCase(cityWithUid);
-        emit(
-          failureOrSuccess.fold(
-            CitiesLoadFailure.new,
-            (newCity) {
-              final updatedCities = cities..add(newCity);
-              return CitiesLoadSuccess(updatedCities);
-            },
-          ),
-        );
-      }
+
+      // Optimistically update the list
+      log('cities => $cities');
+      final optimisticUpdate = [event.airQuality, ...cities];
+      log('optimisticUpdate => $optimisticUpdate');
+      emit(CitiesLoadSuccess(optimisticUpdate));
+
+      final city = event.airQuality.city;
+      final cityWithUid = city.copyWith(uid: city.geo?.generateCityUid);
+      final failureOrSuccess = await _addCityUseCase(cityWithUid);
+      failureOrSuccess.fold(
+        (exception) {
+          // Remove added city air quality data
+          final updatedCities =
+              cities.where((c) => !listEquals(c?.city.geo, city.geo)).toList();
+          Future.microtask(() => emit(CitiesLoadSuccess(updatedCities)));
+
+          emit(CitiesLoadFailure(exception));
+        },
+        (_) {},
+      );
     }
   }
 
@@ -71,16 +71,22 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
     Emitter<CitiesState> emit,
   ) {
     if (state is CitiesLoadSuccess) {
-      final city = event.city;
       final cities = (state as CitiesLoadSuccess).cities;
+
+      // Optimistically update the list
+
+      final city = event.airQuality.city;
+      log('cities => $cities');
+      final optimisticUpdate =
+          cities.where((c) => !listEquals(c?.city.geo, city.geo)).toList();
+      log('optimisticUpdate => $optimisticUpdate');
+      emit(CitiesLoadSuccess(optimisticUpdate));
+
       if (cities.isEmpty) return;
       final failureOrSuccess = _repository.removeCity(city);
       failureOrSuccess.fold(
         (exception) => emit(CitiesLoadFailure(exception)),
-        (_) {
-          cities.removeWhere((c) => c!.city.geo == city.geo);
-          emit(CitiesLoadSuccess(cities));
-        },
+        (_) {},
       );
     }
   }

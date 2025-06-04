@@ -9,6 +9,7 @@ class CitiesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CitiesBloc, CitiesState>(
+      buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         switch (state) {
           case CitiesInitial():
@@ -18,7 +19,7 @@ class CitiesWidget extends StatelessWidget {
           case CitiesLoadFailure(:final exception):
             return Text(exception.message);
           case CitiesLoadSuccess(:final cities):
-            return _CitiesView(cities.toList());
+            return _CitiesView(cities);
         }
       },
     );

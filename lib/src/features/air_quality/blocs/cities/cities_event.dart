@@ -12,17 +12,17 @@ final class CitiesStarted extends CitiesEvent {
 }
 
 final class CitiesAddCityPressed extends CitiesEvent {
-  const CitiesAddCityPressed(this.city);
-  final City city;
+  const CitiesAddCityPressed(this.airQuality);
+  final AirQuality airQuality;
 
   @override
-  List<Object?> get props => [city];
+  List<Object?> get props => [airQuality];
 }
 
 final class CitiesRemoveCityPressed extends CitiesEvent {
-  const CitiesRemoveCityPressed(this.city);
-  final City city;
+  const CitiesRemoveCityPressed(this.airQuality);
+  final AirQuality airQuality;
 
   @override
-  List<Object?> get props => [city];
+  List<Object?> get props => [airQuality];
 }
