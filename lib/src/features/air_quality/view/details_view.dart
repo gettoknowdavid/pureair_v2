@@ -6,18 +6,33 @@ import 'package:pureair_v2/src/router/routing.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
 class DetailsView extends StatelessWidget {
-  const DetailsView({required this.showAddButton, super.key});
-  final bool showAddButton;
+  const DetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizedCity = context.select(
+      (LocalizedBloc b) => switch (b.state) {
+        LocalizedLoadSuccess(:final airQuality) => airQuality.city,
+        _ => null,
+      },
+    );
+
+    final city = context.select(
+      (DetailsCubit b) => switch (b.state) {
+        DetailsLoadSuccess(:final airQuality) => airQuality.city,
+        _ => null,
+      },
+    );
+    final isLocalized = localizedCity?.geo == city?.geo;
+    final isAlreadySaved = context.watch<CitiesBloc>().isAlreadySaved(city);
+    final shouldShowAddButton = !isAlreadySaved || !isLocalized;
     return Scaffold(
       appBar: AppBar(
         leading: const PBackButton(),
         centerTitle: true,
         title: const Text('Details'),
         actions: [
-          if (showAddButton) const DetailsAddCityButton(),
+          if (!shouldShowAddButton) const DetailsAddCityButton(),
           const SizedBox(width: 18),
         ],
       ),

@@ -45,8 +45,8 @@ dependencies:
   latlong2: ^0.9.1
   logger: ^2.5.0
   lottie: ^3.3.0
-  objectbox: ^4.0.3
-  objectbox_flutter_libs: ^4.0.3
+  objectbox: ^4.3.0
+  objectbox_flutter_libs: ^4.3.0
 #  open_mail_app: ^0.4.5
   osm_flutter_hooks: ^1.4.1
   path: any

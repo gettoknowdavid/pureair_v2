@@ -84,6 +84,15 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
       );
     }
   }
+
+  bool isAlreadySaved(City? city) {
+    if (state is CitiesLoadSuccess) {
+      final cities = (state as CitiesLoadSuccess).cities;
+      final geos = cities.map((a) => a?.city.geo).toSet();
+      return geos.contains(city?.geo);
+    }
+    return false;
+  }
 }
 
 @lazySingleton

@@ -65,7 +65,7 @@ class DetailsRoute extends GoRouteData {
   const DetailsRoute();
 
   @override
-  Widget build(context, state) => const DetailsView(showAddButton: false);
+  Widget build(context, state) => const DetailsView();
 }
 
 /*
