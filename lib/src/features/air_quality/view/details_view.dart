@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -45,16 +46,17 @@ class DetailsViewWidget extends HookWidget {
         _ => null,
       },
     );
-    final isLocalized = localizedCity?.geo == city?.geo;
+
+    final isLocalized = listEquals<double>(localizedCity?.geo, city?.geo);
     final isAlreadySaved = context.watch<CitiesBloc>().isAlreadySaved(city);
-    final shouldShowAddButton = !isAlreadySaved || !isLocalized;
+    final shouldShowAddButton = !isAlreadySaved && !isLocalized;
     return Scaffold(
       appBar: AppBar(
         leading: const PBackButton(),
         centerTitle: true,
         title: const Text('Details'),
         actions: [
-          if (!shouldShowAddButton) const DetailsAddCityButton(),
+          if (shouldShowAddButton) const DetailsAddCityButton(),
           const SizedBox(width: 18),
         ],
       ),
