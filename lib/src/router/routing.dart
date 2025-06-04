@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
@@ -15,7 +17,15 @@ final routerConfig = GoRouter(
   initialLocation: R.home,
   navigatorKey: rootNavigatorKey,
   routes: $appRoutes,
+  redirect: _handleRedirect,
 );
+
+FutureOr<String?> _handleRedirect(BuildContext context, GoRouterState state) {
+  final status = AuthStreamScope.of(context).status;
+  final isAllowedPath = status.allowedPaths.contains(state.fullPath);
+  if (!isAllowedPath) return status.redirectPath;
+  return null;
+}
 
 @TypedGoRoute<LoadingRoute>(path: R.root, name: R.root)
 class LoadingRoute extends GoRouteData {

@@ -24,7 +24,7 @@ final class AuthState with EquatableMixin {
 
 AuthStatus _status(User? user) {
   if (user == null || user == User.empty) return AuthStatus.unauthenticated;
-  if (user.emailVerified) return AuthStatus.unverified;
+  if (!user.emailVerified) return AuthStatus.unverified;
   return AuthStatus.authenticated;
 }
 
@@ -66,6 +66,12 @@ extension AuthStatusX on AuthStatus {
         ],
     };
   }
+
+  bool get isInProgress => this == AuthStatus.inProgress;
+  bool get isUnauthenticated => this == AuthStatus.unauthenticated;
+  bool get isAuthenticated => this == AuthStatus.authenticated;
+  bool get isUnverified => this == AuthStatus.unverified;
+  bool get isFailure => this == AuthStatus.failure;
 }
 
 // sealed class AuthState with EquatableMixin {

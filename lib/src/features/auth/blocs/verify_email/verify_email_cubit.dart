@@ -18,13 +18,19 @@ class VerifyEmailCubit extends Cubit<VerifyEmailState> {
 
   Future<void> checkVerificationStatus() async {
     emit(state.withVerifyEmailInProgress());
-    final response = await _repository.checkVerificationStatus();
-    emit(response.fold(state.withVerifiedOption, state.withVerifiedOption));
+    await _checkStatus();
   }
 
   Future<void> sendVerificationMail() async {
     emit(state.withVerifyEmailInProgress());
     final response = await _repository.sendVerificationEmail();
     emit(response.fold(state.withFailure, state.withEmailSendSuccess));
+  }
+
+  Future<void> silentlyCheckVerificationStatus() => _checkStatus();
+
+  Future<void> _checkStatus() async {
+    final response = await _repository.checkVerificationStatus();
+    emit(response.fold(state.withVerifiedOption, state.withVerifiedOption));
   }
 }

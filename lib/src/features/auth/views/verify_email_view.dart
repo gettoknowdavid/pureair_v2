@@ -14,12 +14,15 @@ class VerifyEmailView extends HookWidget {
     final textTheme = PureAirTextTheme.of(context)!;
 
     final bloc = context.read<VerifyEmailCubit>();
-    
+
     final status = context.select((VerifyEmailCubit bloc) => bloc.state.status);
     final verificationInProgress = status == VerifyEmailStatus.inProgress;
     final isSendingMail = status == VerifyEmailStatus.emailSendInProgress;
 
-    useInterval(bloc.checkVerificationStatus, const Duration(seconds: 10));
+    useInterval(
+      bloc.silentlyCheckVerificationStatus,
+      const Duration(seconds: 10),
+    );
 
     return BlocListener<VerifyEmailCubit, VerifyEmailState>(
       listener: (context, state) {
