@@ -4,8 +4,20 @@ import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
-class AddCitySheetWidget extends StatelessWidget {
-  const AddCitySheetWidget({super.key});
+class AddCityBottomSheet extends StatelessWidget {
+  const AddCityBottomSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (ctx) => SearchBloc(repository: ctx.read<AirQualityRepository>()),
+      child: const AddCityBottomSheetWidget(),
+    );
+  }
+}
+
+class AddCityBottomSheetWidget extends StatelessWidget {
+  const AddCityBottomSheetWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

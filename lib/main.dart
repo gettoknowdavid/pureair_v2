@@ -30,45 +30,15 @@ Future<void> main() async {
             )..add(const AuthUserSubscribed()),
           ),
           BlocProvider(
-            create: (ctx) => ForgotPasswordCubit(
-              repository: ctx.read<AuthRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (ctx) => SignInCubit(
-              repository: ctx.read<AuthRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (ctx) => SignUpCubit(
-              repository: ctx.read<AuthRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (ctx) => VerifyEmailCubit(
-              repository: ctx.read<AuthRepository>(),
-            ),
-          ),
-          BlocProvider(
             create: (ctx) => CitiesBloc(
               repository: ctx.read<AirQualityRepository>(),
               addCityUseCase: ctx.read<AddCityUseCase>(),
             )..add(const CitiesStarted()),
           ),
           BlocProvider(
-            create: (ctx) => DetailsCubit(
-              repository: ctx.read<AirQualityRepository>(),
-            ),
-          ),
-          BlocProvider(
             create: (ctx) => LocalizedBloc(
               repository: ctx.read<AirQualityRepository>(),
             )..add(const LocalizedStarted()),
-          ),
-          BlocProvider(
-            create: (ctx) => SearchBloc(
-              repository: ctx.read<AirQualityRepository>(),
-            ),
           ),
         ],
         child: const PureAirApp(),

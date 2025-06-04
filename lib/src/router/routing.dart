@@ -72,10 +72,12 @@ class ForgotPasswordRoute extends GoRouteData {
 
 @TypedGoRoute<DetailsRoute>(path: R.details, name: R.details)
 class DetailsRoute extends GoRouteData {
-  const DetailsRoute();
+  const DetailsRoute(this.lat, this.lon);
+  final double lat;
+  final double lon;
 
   @override
-  Widget build(context, state) => const DetailsView();
+  Widget build(context, state) => DetailsView(geo: [lat, lon]);
 }
 
 /*
@@ -121,7 +123,7 @@ class AddCityRoute extends GoRouteData {
     return const BottomSheetPage<void>(
       isScrollControlled: true,
       useRootNavigator: true,
-      child: AddCitySheetWidget(),
+      child: AddCityBottomSheet(),
     );
   }
 }

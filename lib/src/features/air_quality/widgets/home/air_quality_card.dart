@@ -42,8 +42,8 @@ class AirQualityCard extends HookWidget {
 
     return InkWell(
       onTap: () {
-        context.read<DetailsCubit>().initialize(airQuality: airQuality);
-        const DetailsRoute().push(context);
+        final geo = airQuality.city.geo;
+        if (geo != null) DetailsRoute(geo[0], geo[1]).push(context);
       },
       onLongPress: onShowActions,
       onDoubleTap: onShowActions,

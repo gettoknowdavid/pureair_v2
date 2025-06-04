@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pureair_v2/src/core/core.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
@@ -20,8 +19,8 @@ class SearchResultCard extends StatelessWidget {
     final foregroundColor = backgroundColor.textColor;
     return InkWell(
       onTap: () {
-        context.read<DetailsCubit>().initialize(geo: station.geo);
-        const DetailsRoute().push(context);
+        final geo = station.geo;
+        if (geo != null) DetailsRoute(geo[0], geo[1]).push(context);
       },
       child: PContainer(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
