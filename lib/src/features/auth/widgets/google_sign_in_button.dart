@@ -11,7 +11,8 @@ class GoogleSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final loading = context.select(
-      (SignInCubit b) => b.state.status == SignInStatus.inProgress,
+      (SignInCubit b) =>
+          b.state.status == SignInStatus.inProgress && b.state.isGoogleSignIn,
     );
 
     return FilledButton.icon(
