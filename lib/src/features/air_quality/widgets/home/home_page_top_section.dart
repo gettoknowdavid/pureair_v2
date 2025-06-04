@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/src/core/core.dart';
-import 'package:pureair_v2/src/features/auth/auth.dart' show AuthBloc;
+import 'package:pureair_v2/src/features/auth/auth.dart'
+    show AuthBloc, AuthStatus;
 import 'package:pureair_v2/src/router/routing.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
 
@@ -35,8 +36,14 @@ class _NameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = PureAirTextTheme.of(context)?.titleBold;
 
-    final fullName = context.select((AuthBloc b) => b.state.user.fullName);
-    final firstName = fullName.getOrCrash.split(' ')[0];
+    final fullName = context.select(
+      (AuthBloc b) => switch (b.state.status) {
+        AuthStatus.authenticated => b.state.user.fullName.getOrCrash,
+        _ => null,
+      },
+    );
+
+    final firstName = fullName?.split(' ')[0] ?? '';
     final helloText = firstName.isEmpty ? 'Hello there!' : 'Hello $firstName';
 
     return Text(helloText, style: style);

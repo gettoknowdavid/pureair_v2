@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/src/core/constants/constants.dart';
 import 'package:pureair_v2/src/features/air_quality/air_quality.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
+import 'package:pureair_v2/src/router/routing.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -41,12 +42,19 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
-      body: Center(
-        child: FilledButton(
-          onPressed: () => ctx.read<AuthBloc>().add(const AuthSignOutPressed()),
-          child: const Text('Sign Out'),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) => switch (state.status) {
+        AuthStatus.unauthenticated => const SignInRoute().go(context),
+        _ => null,
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Profile')),
+        body: Center(
+          child: FilledButton(
+            onPressed: () =>
+                ctx.read<AuthBloc>().add(const AuthSignOutPressed()),
+            child: const Text('Sign Out'),
+          ),
         ),
       ),
     );
