@@ -12,7 +12,9 @@ class VerifyEmailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (ctx) => VerifyEmailCubit(repository: ctx.read<AuthRepository>(),),
+      create: (ctx) => VerifyEmailCubit(
+        repository: ctx.read<AuthRepository>(),
+      ),
       child: const VerifyEmailViewWidget(),
     );
   }
