@@ -13,13 +13,13 @@ class VerifyEmailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (ctx) => VerifyEmailCubit(repository: ctx.read<AuthRepository>(),),
-      child: const VerifyEmailWidget(),
+      child: const VerifyEmailViewWidget(),
     );
   }
 }
 
-class VerifyEmailWidget extends HookWidget {
-  const VerifyEmailWidget({super.key});
+class VerifyEmailViewWidget extends HookWidget {
+  const VerifyEmailViewWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

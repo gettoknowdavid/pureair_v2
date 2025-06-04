@@ -12,13 +12,13 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (ctx) => SignUpCubit(repository: ctx.read<AuthRepository>()),
-      child: const SignUpWidget(),
+      child: const SignUpViewWidget(),
     );
   }
 }
 
-class SignUpWidget extends StatelessWidget {
-  const SignUpWidget({super.key});
+class SignUpViewWidget extends StatelessWidget {
+  const SignUpViewWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

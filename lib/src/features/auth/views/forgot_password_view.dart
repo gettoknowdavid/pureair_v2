@@ -14,13 +14,13 @@ class ForgotPasswordView extends StatelessWidget {
       create: (ctx) => ForgotPasswordCubit(
         repository: ctx.read<AuthRepository>(),
       ),
-      child: const ForgotPasswordWidget(),
+      child: const ForgotPasswordViewWidget(),
     );
   }
 }
 
-class ForgotPasswordWidget extends StatelessWidget {
-  const ForgotPasswordWidget({super.key});
+class ForgotPasswordViewWidget extends StatelessWidget {
+  const ForgotPasswordViewWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
