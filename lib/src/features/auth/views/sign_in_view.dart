@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pureair_v2/src/core/core.dart';
+import 'package:pureair_v2/src/exceptions/exceptions.dart';
 import 'package:pureair_v2/src/features/auth/auth.dart';
 import 'package:pureair_v2/src/router/routing.dart';
 import 'package:pureair_v2/src/shared/shared.dart';
@@ -21,6 +22,7 @@ class SignInView extends StatelessWidget {
           case SignInStatus.initial:
             return;
           case SignInStatus.failure:
+            if (state.exception is ActionCanceledException) return;
             final message = state.exception?.message ?? 'Unknown exception';
             context.showErrorSnackBar(message);
           case SignInStatus.success:
