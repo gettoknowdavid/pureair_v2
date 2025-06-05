@@ -77,7 +77,7 @@ class DetailsRoute extends GoRouteData {
   final double lon;
 
   @override
-  Widget build(context, state) => DetailsView(geo: [lat, lon]);
+  Widget build(context, state) => DetailsView(geo: Geo(lat, lon));
 }
 
 /*

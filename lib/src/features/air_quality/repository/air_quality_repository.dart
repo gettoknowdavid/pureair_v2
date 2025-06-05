@@ -19,7 +19,7 @@ abstract class AirQualityRepository {
   ///
   /// `lat`: The latitude
   /// `lon`: The longitude
-  Future<Either<PureAirException, AirQuality>> getByGeo(List<double> geo);
+  Future<Either<PureAirException, AirQuality>> getByGeo(Geo geo);
 
   /// Returns a list of [City] saved to the repository
   List<City?> getCities();

@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/src/core/use_case/use_case.dart';
 import 'package:pureair_v2/src/exceptions/exceptions.dart';
@@ -44,20 +41,18 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
       final cities = (state as CitiesLoadSuccess).cities;
 
       // Optimistically update the list
-      log('cities => $cities');
       final optimisticUpdate = [event.airQuality, ...cities];
-      log('optimisticUpdate => $optimisticUpdate');
       emit(CitiesLoadSuccess(optimisticUpdate));
 
       final city = event.airQuality.city;
-      final cityWithUid = city.copyWith(uid: city.geo?.generateCityUid);
+      final uid = city.geo?.toList().generateCityUid;
+      final cityWithUid = city.copyWith(uid: uid);
       final failureOrSuccess = await _addCityUseCase(cityWithUid);
       failureOrSuccess.fold(
         (exception) {
           // Remove added city air quality data
-          final updatedCities =
-              cities.where((c) => !listEquals(c?.city.geo, city.geo)).toList();
-          Future.microtask(() => emit(CitiesLoadSuccess(updatedCities)));
+          final list = cities.where((c) => c?.city.geo != city.geo).toList();
+          Future.microtask(() => emit(CitiesLoadSuccess(list)));
 
           emit(CitiesLoadFailure(exception));
         },
@@ -76,11 +71,8 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
       // Optimistically update the list
 
       final city = event.airQuality.city;
-      log('cities => $cities');
-      final optimisticUpdate =
-          cities.where((c) => !listEquals(c?.city.geo, city.geo)).toList();
-      log('optimisticUpdate => $optimisticUpdate');
-      emit(CitiesLoadSuccess(optimisticUpdate));
+      final list = cities.where((c) => c?.city.geo != city.geo).toList();
+      emit(CitiesLoadSuccess(list));
 
       if (cities.isEmpty) return;
       final failureOrSuccess = _repository.removeCity(city);

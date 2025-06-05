@@ -8,13 +8,13 @@ part 'details_state.dart';
 class DetailsCubit extends Cubit<DetailsState> {
   DetailsCubit({
     required AirQualityRepository repository,
-    required List<double> geo,
+    required Geo geo,
   })  : _repository = repository,
         _geo = geo,
         super(const DetailsLoadInProgress());
 
   final AirQualityRepository _repository;
-  final List<double> _geo;
+  final Geo _geo;
 
   Future<void> initialize() async {
     emit(const DetailsLoadInProgress());

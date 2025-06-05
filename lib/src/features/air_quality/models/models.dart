@@ -4,6 +4,7 @@ export 'city.dart';
 export 'daily_forecast.dart';
 export 'forecast.dart';
 export 'forecast_data.dart';
+export 'geo.dart';
 export 'i_aqi.dart';
 export 'parameter.dart';
 export 'search_data.dart';

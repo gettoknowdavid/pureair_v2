@@ -126,8 +126,10 @@ class _DetailsChartView extends StatelessWidget {
                           color: getParameterColor(e.key, e.value?.avg),
                           width: 50,
                           borderRadius: BorderRadius.zero,
-                          borderSide:
-                              BorderSide(width: 2, color: colors.onSurface),
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: colors.onSurface,
+                          ),
                         ),
                       ],
                     );

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,7 +8,7 @@ import 'package:pureair_v2/src/shared/shared.dart';
 
 class DetailsView extends StatelessWidget {
   const DetailsView({required this.geo, super.key});
-  final List<double> geo;
+  final Geo geo;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +46,10 @@ class DetailsViewWidget extends HookWidget {
       },
     );
 
-    final isLocalized = listEquals<double>(localizedCity?.geo, city?.geo);
+    final isLocalized = localizedCity?.geo == city?.geo;
     final isAlreadySaved = context.watch<CitiesBloc>().isAlreadySaved(city);
     final shouldShowAddButton = !isAlreadySaved && !isLocalized;
-    
+
     return Scaffold(
       appBar: AppBar(
         leading: const PBackButton(),

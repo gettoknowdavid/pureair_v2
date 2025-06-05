@@ -286,6 +286,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2+1"
+  cv:
+    dependency: "direct main"
+    description:
+      name: cv
+      sha256: c2394d602e298dc5a7e1406e145d85576957e0c98b80e5a13e30a4ea246ba962
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.6"
   dart_earcut:
     dependency: transitive
     description:

@@ -1,10 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:pureair_v2/src/features/air_quality/models/daily_forecast.dart';
 
-part 'forecast_data.g.dart';
-
-@JsonSerializable()
 final class ForecastData with EquatableMixin {
   const ForecastData({
     this.o3,
@@ -15,9 +11,6 @@ final class ForecastData with EquatableMixin {
     this.no2,
     this.so2,
   });
-
-  factory ForecastData.fromJson(Map<String, dynamic> json) =>
-      _$ForecastDataFromJson(json);
 
   final List<DailyForecast>? o3;
   final List<DailyForecast>? pm10;
@@ -49,6 +42,4 @@ final class ForecastData with EquatableMixin {
       so2: so2 ?? this.so2,
     );
   }
-
-  Map<String, dynamic> toJson() => _$ForecastDataToJson(this);
 }

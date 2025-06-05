@@ -1,19 +1,13 @@
-// 
+//
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:objectbox/objectbox.dart';
+import 'package:pureair_v2/src/features/air_quality/models/geo.dart';
 import 'package:uuid/uuid.dart';
 
-part 'city.g.dart';
-
-@Entity()
-@JsonSerializable()
 class City with EquatableMixin {
-  City({
+  const City({
     required this.name,
-    this.id = 0,
     this.isLocal = false,
     this.uid,
     this.geo,
@@ -27,21 +21,11 @@ class City with EquatableMixin {
     this.addedTime,
   });
 
-  factory City.fromJson(Map<String, dynamic> json) => _$CityFromJson(json);
-
-  int? id;
-
-  @Unique()
   final String? uid;
-
-  @Property(type: PropertyType.date)
   final DateTime? time;
-
-  @Property(type: PropertyType.date)
   final DateTime? addedTime;
-
   final String name;
-  final List<double>? geo;
+  final Geo? geo;
   final String? url;
   final String? location;
   final String? country;
@@ -65,11 +49,11 @@ class City with EquatableMixin {
         time,
         addedTime
       ];
-      
+
   City copyWith({
     String? name,
     String? uid,
-    List<double>? geo,
+    Geo? geo,
     String? url,
     String? location,
     String? country,
@@ -95,8 +79,6 @@ class City with EquatableMixin {
       addedTime: addedTime ?? this.addedTime,
     );
   }
-
-  Map<String, dynamic> toJson() => _$CityToJson(this);
 }
 
 extension CityGenUidX on List<double> {

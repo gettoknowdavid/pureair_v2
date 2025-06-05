@@ -7,6 +7,7 @@ targets:
       retrofit_generator:
         generate_for:
           - lib/src/features/air_quality/repository/datasources/air_quality_remote_datasource.dart
+          - lib/src/features/air_quality/dtos/remote_source.dart
       json_serializable:
         options:
           include_if_null: false

@@ -20,7 +20,7 @@ class SearchResultCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         final geo = station.geo;
-        if (geo != null) DetailsRoute(geo[0], geo[1]).push(context);
+        if (geo != null) DetailsRoute(geo.lat, geo.lon).push(context);
       },
       child: PContainer(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),

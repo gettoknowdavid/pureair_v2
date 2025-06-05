@@ -4,96 +4,93 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:8879831941698657121",
-      "lastPropertyId": "16:1722220878073453605",
+      "id": "1:5983920720666233240",
+      "lastPropertyId": "15:5971895285645136528",
       "name": "City",
       "properties": [
         {
-          "id": "1:7911599246466943103",
-          "name": "name",
-          "type": 9
-        },
-        {
-          "id": "2:7170802826332931318",
+          "id": "1:167936100403548986",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "4:4143829761053673035",
-          "name": "url",
-          "type": 9
-        },
-        {
-          "id": "5:3030478652986809463",
-          "name": "location",
-          "type": 9
-        },
-        {
-          "id": "6:3521992883607795156",
-          "name": "country",
-          "type": 9
-        },
-        {
-          "id": "9:5996690222341219374",
-          "name": "isLocal",
-          "type": 1
-        },
-        {
-          "id": "10:7138673289187560041",
-          "name": "aqi",
-          "type": 6
-        },
-        {
-          "id": "11:8360855935991675111",
-          "name": "flagUrl",
-          "type": 9
-        },
-        {
-          "id": "12:8919694622805033986",
-          "name": "localeName",
-          "type": 9
-        },
-        {
-          "id": "13:5680495930024147349",
-          "name": "geo",
-          "type": 29
-        },
-        {
-          "id": "14:5784728221168542113",
+          "id": "2:597831124246273750",
           "name": "uid",
           "type": 9,
           "flags": 2080,
-          "indexId": "2:2798996070014400149"
+          "indexId": "1:880734786128553198"
         },
         {
-          "id": "15:6432418159757405274",
+          "id": "3:1905804906514447815",
           "name": "time",
           "type": 10
         },
         {
-          "id": "16:1722220878073453605",
+          "id": "4:5056940774039670983",
           "name": "addedTime",
           "type": 10
+        },
+        {
+          "id": "5:2194018222926482868",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:668654913113753743",
+          "name": "url",
+          "type": 9
+        },
+        {
+          "id": "7:661898067994298784",
+          "name": "location",
+          "type": 9
+        },
+        {
+          "id": "8:8273710113315594902",
+          "name": "country",
+          "type": 9
+        },
+        {
+          "id": "9:5291114783004574029",
+          "name": "isLocal",
+          "type": 1
+        },
+        {
+          "id": "10:6515335236182221897",
+          "name": "aqi",
+          "type": 6
+        },
+        {
+          "id": "11:3939547259147225404",
+          "name": "flagUrl",
+          "type": 9
+        },
+        {
+          "id": "12:4571027007068589752",
+          "name": "localeName",
+          "type": 9
+        },
+        {
+          "id": "15:5971895285645136528",
+          "name": "geo2",
+          "type": 28
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "1:8879831941698657121",
-  "lastIndexId": "2:2798996070014400149",
+  "lastEntityId": "1:5983920720666233240",
+  "lastIndexId": "1:880734786128553198",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [
-    3217479393445281532
-  ],
+  "retiredIndexUids": [],
   "retiredPropertyUids": [
-    8982148694810945507,
-    131960312824099957,
-    7682503197998554483
+    2551799545849927837,
+    6540616954454110835
   ],
   "retiredRelationUids": [],
   "version": 1

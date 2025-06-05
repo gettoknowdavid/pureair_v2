@@ -19,3 +19,4 @@ analyzer:
     type_annotate_public_apis: ignore
     avoid_positional_boolean_parameters: ignore
     library_private_types_in_public_api: ignore
+    must_be_immutable: ignore
