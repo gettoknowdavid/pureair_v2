@@ -37,6 +37,11 @@ Future<void> main() async {
               repository: ctx.read<AirQualityRepository>(),
             )..add(const LocalizedStarted()),
           ),
+          BlocProvider(
+            create: (ctx) => SearchBloc(
+              repository: ctx.read<AirQualityRepository>(),
+            ),
+          )
         ],
         child: const PureAirApp(),
       ),

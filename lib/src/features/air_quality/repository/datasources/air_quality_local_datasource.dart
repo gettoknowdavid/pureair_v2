@@ -1,21 +1,32 @@
 import 'package:injectable/injectable.dart';
+import 'package:pureair_v2/src/database/database.dart';
+import 'package:pureair_v2/src/features/air_quality/repository/datasources/dtos/dtos.dart';
 
 @lazySingleton
 final class AirQualityLocalDatasource {
-  AirQualityLocalDatasource();
+  const AirQualityLocalDatasource({
+    required PureAirDatabase service,
+  }) : _service = service;
 
-  // void addCity(City city) => _objectbox.cityBox.put(city);
+  final PureAirDatabase _service;
 
-  // void clearSavedCities() => _objectbox.cityBox.removeAll();
+  Future<void> addCity(CityDto city) async {
+    city.id.v = await _service.database.insert(tableCities, city.toJson());
+  }
 
-  // List<City?> getCities() {
-  //   final builder = _objectbox.cityBox.query().order(City_.addedTime);
-  //   return builder.build().find();
-  // }
+  Future<void> clearSavedCities() => _service.database.delete(tableCities);
+
+  Future<List<CityDto?>> getCities() async {
+    final list = await _service.database.query(
+      tableCities,
+      orderBy: '$citiesColAddedTime DESC',
+    );
+    return DbCities(list);
+  }
 
   // Stream<List<City?>> getCitiesStream() {
   //   final builder = _objectbox.cityBox.query().order(City_.addedTime);
-  //   return builder.watch(triggerImmediately: true).map((query) => 
+  //   return builder.watch(triggerImmediately: true).map((query) =>
   //   query.find());
   // }
 
@@ -24,8 +35,11 @@ final class AirQualityLocalDatasource {
   //   return builder.build().findFirst();
   // }
 
-  // void removeCity(City city) {
-  //   final uid = city.geo!.toList().generateCityUid;
-  //   _objectbox.cityBox.query(City_.uid.equals(uid)).build().remove();
-  // }
+  Future<void> removeCity(CityDto city) async {
+    await _service.database.delete(
+      tableCities,
+      where: '$citiesColUid = ?',
+      whereArgs: <Object?>[city.uid.v],
+    );
+  }
 }

@@ -14,6 +14,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:google_sign_in/google_sign_in.dart' as _i116;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../database/database.dart' as _i660;
 import '../features/air_quality/air_quality.dart' as _i36;
 import '../features/air_quality/blocs/cities/cities_bloc.dart' as _i471;
 import '../features/air_quality/repository/air_quality_repository_impl.dart'
@@ -28,18 +29,20 @@ import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(
       this,
       environment,
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
-    gh.lazySingleton<_i232.AirQualityLocalDatasource>(
-        () => _i232.AirQualityLocalDatasource());
+    await gh.factoryAsync<_i660.PureAirDatabase>(
+      () => registerModule.database,
+      preResolve: true,
+    );
     gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
     gh.lazySingleton<_i116.GoogleSignIn>(() => registerModule.googleSignIn);
     gh.factory<String>(
@@ -54,6 +57,8 @@ extension GetItInjectableX on _i174.GetIt {
           firebaseAuth: gh<_i59.FirebaseAuth>(),
           googleSignIn: gh<_i116.GoogleSignIn>(),
         ));
+    gh.lazySingleton<_i232.AirQualityLocalDatasource>(() =>
+        _i232.AirQualityLocalDatasource(service: gh<_i660.PureAirDatabase>()));
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio(
           gh<String>(instanceName: 'baseUrl'),
           gh<String>(instanceName: 'token'),

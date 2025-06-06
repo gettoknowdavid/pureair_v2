@@ -22,7 +22,7 @@ abstract class AirQualityRepository {
   Future<Either<PureAirException, AirQuality>> getByGeo(Geo geo);
 
   /// Returns a list of [City] saved to the repository
-  List<City?> getCities();
+  Future<List<City?>> getCities();
 
   /// Returns the [AirQuality] data of the list of [City] save in the
   /// repository

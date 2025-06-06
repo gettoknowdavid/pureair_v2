@@ -45,7 +45,7 @@ class CitiesBloc extends Bloc<CitiesEvent, CitiesState> {
       emit(CitiesLoadSuccess(optimisticUpdate));
 
       final city = event.airQuality.city;
-      final uid = city.geo?.toList().generateCityUid;
+      final uid = city.geo?.generateCityUid;
       final cityWithUid = city.copyWith(uid: uid);
       final failureOrSuccess = await _addCityUseCase(cityWithUid);
       failureOrSuccess.fold(

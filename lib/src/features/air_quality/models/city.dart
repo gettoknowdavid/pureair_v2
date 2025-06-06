@@ -81,10 +81,10 @@ class City with EquatableMixin {
   }
 }
 
-extension CityGenUidX on List<double> {
+extension CityGenUidX on Geo {
   String get generateCityUid {
-    final formattedLatitude = this[0].toStringAsFixed(6);
-    final formattedLongitude = this[1].toStringAsFixed(6);
+    final formattedLatitude = lat.toStringAsFixed(6);
+    final formattedLongitude = lon.toStringAsFixed(6);
 
     final concatenatedValues = '$formattedLatitude|$formattedLongitude';
 

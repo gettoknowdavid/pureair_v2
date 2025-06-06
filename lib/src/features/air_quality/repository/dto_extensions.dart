@@ -56,12 +56,12 @@ extension CityToDtoX on City {
       ..url.v = url
       ..location.v = location
       ..country.v = country
-      ..isLocal.v = isLocal
+      ..isLocal.v = isLocal ? 1 : 0
       ..aqi.v = aqi
       ..flagUrl.v = flagUrl
       ..localeName.v = localeName
-      ..time.v = time
-      ..addedTime.v = addedTime;
+      ..time.v = time?.millisecondsSinceEpoch
+      ..addedTime.v = addedTime?.millisecondsSinceEpoch;
   }
 }
 
@@ -74,12 +74,15 @@ extension CityToDomainX on CityDto {
       url: url.v,
       location: location.v,
       country: country.v,
-      isLocal: isLocal.v ?? false,
+      isLocal: isLocal.v == 1,
       aqi: aqi.v,
       flagUrl: flagUrl.v,
       localeName: localeName.v,
-      time: time.v,
-      addedTime: addedTime.v,
+      time:
+          time.v != null ? DateTime.fromMillisecondsSinceEpoch(time.v!) : null,
+      addedTime: addedTime.v != null
+          ? DateTime.fromMillisecondsSinceEpoch(addedTime.v!)
+          : null,
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cv/cv.dart';
 import 'package:equatable/equatable.dart';
 
@@ -7,9 +5,8 @@ final class GeoDto extends CvModelBase with EquatableMixin {
   GeoDto();
 
   factory GeoDto.fromJson(Map<String, dynamic> map) {
-    log('FROM GEO =====> $map');
+    cvAddBuilder<GeoDto>((_) => GeoDto());
     final value = map.cv<GeoDto>();
-    log('FROM GEO =====> $value');
     return value;
   }
 

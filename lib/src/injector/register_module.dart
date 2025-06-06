@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pureair_v2/src/core/core.dart' show Env;
+import 'package:pureair_v2/src/database/database.dart';
 
 @module
 abstract class RegisterModule {
@@ -30,4 +31,7 @@ abstract class RegisterModule {
     ];
     return GoogleSignIn(scopes: scopes);
   }
+
+  @preResolve
+  Future<PureAirDatabase> get database => PureAirDatabase.create();
 }

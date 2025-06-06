@@ -1,4 +1,5 @@
 import 'dart:async' show TimeoutException;
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' show DioException;
@@ -23,7 +24,7 @@ final class AirQualityRepositoryImpl implements AirQualityRepository {
   @override
   Either<PureAirException, Unit> addCity(City city) {
     try {
-      // _local.addCity(city);
+      _local.addCity(city.toDto);
       return const Right(unit);
     } on Exception catch (error) {
       final exception = PureAirException(error.toString());
@@ -32,8 +33,7 @@ final class AirQualityRepositoryImpl implements AirQualityRepository {
   }
 
   @override
-  void clearSavedCities() {}
-  // void clearSavedCities() => _local.clearSavedCities();
+  void clearSavedCities() => _local.clearSavedCities();
 
   @override
   Future<Either<PureAirException, AirQuality>> getByGeo(Geo geo) async {
@@ -51,23 +51,30 @@ final class AirQualityRepositoryImpl implements AirQualityRepository {
   }
 
   @override
-  List<City?> getCities() => [];
-  // List<City?> getCities() => _local.getCities();
+  Future<List<City?>> getCities() async {
+    try {
+      final list = await _local.getCities();
+      return list.map((l) => l?.toDomain).toList();
+    } on Exception {
+      return [];
+    }
+  }
 
   @override
   Future<Either<PureAirException, List<AirQuality?>>>
       getCitiesAirQualityData() async {
-    // final cities = _local.getCities();
-    // final futures = cities.map((city) async {
-    //   final geo = city!.geo;
-    //   final response = await _remote.getByGeo(lat: geo.lat, lon: geo.lon);
-    //   return response.data;
-    // }).toList();
+    final cities = await _local.getCities();
+    log('CITIES FROM AIR_QUALITY_REPOSITORY ===> $cities');
+    final futures = cities.map((city) async {
+      final geo = city!.geo.v!;
+      final response = await _remote.getByGeo(lat: geo.lat.v!, lon: geo.lon.v!);
+      return response.data;
+    }).toList();
 
     try {
-      // final response = await Future.wait<AirQuality?>(futures);
-      // final data = response.toLocalAirQualityData;
-      return const Right([]);
+      final response = await Future.wait<AirQualityDto?>(futures);
+      final data = response.toLocalAirQualityData;
+      return Right(data);
     } on DioException catch (error) {
       final exception = _handleDioException(error);
       return Left(exception);
@@ -110,7 +117,7 @@ final class AirQualityRepositoryImpl implements AirQualityRepository {
   @override
   Either<PureAirException, Unit> removeCity(City city) {
     try {
-      // _local.removeCity(city);
+      _local.removeCity(city.toDto);
       return const Right(unit);
     } on Exception catch (error) {
       final exception = PureAirException(error.toString());
@@ -156,14 +163,15 @@ final class AirQualityRepositoryImpl implements AirQualityRepository {
   }
 }
 
-extension _AirQualityListX on List<AirQuality?> {
-  // List<AirQuality?> get toLocalAirQualityData {
-  //   final list = map((a) {
-  //     final uid = a!.city.geo?.toList().generateCityUid;
-  //     final updatedCity = a.city.copyWith(isLocal: false, uid: uid);
-  //     final updatedAQ = a.copyWith(city: updatedCity);
-  //     return updatedAQ;
-  //   }).toList();
-  //   return list;
-  // }
+extension _AirQualityListX on List<AirQualityDto?> {
+  List<AirQuality?> get toLocalAirQualityData {
+    final list = map((airQualityDto) {
+      final airQuality = airQualityDto?.toDomain;
+      final uid = airQuality!.city.geo?.generateCityUid;
+      final updatedCity = airQuality.city.copyWith(isLocal: false, uid: uid);
+      final updatedAQ = airQuality.copyWith(city: updatedCity);
+      return updatedAQ;
+    }).toList();
+    return list;
+  }
 }
